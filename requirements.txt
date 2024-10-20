@@ -1,1 +1,16 @@
+[sample requirements.txt]
+﻿pymongo
+certifi
+nltk
+numpy
+shap
+transformers
+google_play_scraper
+python-dotenv
+flask
+flask_cors
+h2ogpte==1.4.10
+torch
+emoji
 
+[Please add below the requirements we used for the project]
