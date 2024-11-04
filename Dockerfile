@@ -1,6 +1,6 @@
 FROM python:3.12
 
-WORKDIR ./server
+WORKDIR /
 
 RUN python -m venv venv
 
@@ -12,6 +12,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE 5001
-
-CMD ["python", "server.py"]
+CMD ["python", "main.py"]
