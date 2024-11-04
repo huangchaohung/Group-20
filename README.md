@@ -10,5 +10,3 @@
 
 # API documentation (endpoints, request/response formats)
 
-# [Optional] API documentation using Swagger/OpenAPI specification
-
