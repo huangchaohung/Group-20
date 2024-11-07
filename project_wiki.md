@@ -109,9 +109,9 @@ Many competitors emphasize digital and AI-driven campaigns, which the bank aims 
 # Data Understanding
 
 ## Data Sources and Collection Methods
-- **Customer Data**: Collected from bank databases, including demographic and transactional data.
-- **Behavioral Data**: Includes app and website interactions.
-- **External Data**: Economic indicators and relevant public data, if available.
+- **Banking Dataset - Marketing Targets**: (description) https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets
+- **Bank Personal Loan**: (description) https://www.kaggle.com/datasets/mahnazarjmand/bank-personal-loan/data
+- **Customer Comments**: (description)
 
 ## Initial Data Exploration Findings
 - **Demographics**: Younger customers are more responsive to digital campaigns.
