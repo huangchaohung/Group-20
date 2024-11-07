@@ -73,13 +73,21 @@ The project uses a dataset from Kaggle related to the direct marketing campaigns
    ```
 
 2. **Run the Docker Container**:  
-   Use the following command to run the container in detached mode:
+   Use the following command to run the container, specifying port `5001` (as per the `EXPOSE` statement in the Dockerfile):
    ```bash
-   docker run -d --env-file .env -p 8000:8000 bank-marketing-ai
+   docker run -d --env-file .env -p 5001:5001 bank-marketing-ai
    ```
 
 3. **Access the Application**:  
-   Once the container is running, access the API at `http://localhost:8000` in your browser or use a tool like Postman to test the endpoints.
+   Once the container is running, you can access the application API at `http://localhost:5001`. Use this URL in a browser or with a tool like Postman to test the endpoints.
+
+### Notes on Dockerfile Configuration
+
+- **Virtual Environment**: The Dockerfile creates a virtual environment (`venv`) within the container to manage dependencies.
+- **Environment Path**: The path to the virtual environment is set in the `ENV` statement to ensure that Python uses it by default.
+- **Port Exposure**: Port `5001` is exposed for the API, which should match the port in your code.
+- **Command**: The container runs `main.py` as the entry point, starting the application when the container is launched.
+
 
 ## API Documentation
 
