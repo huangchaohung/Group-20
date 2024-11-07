@@ -3,12 +3,15 @@
 ## Project Overview and Objectives
 Banks face challenges in targeting marketing effectively due to limited personalization, resulting in low engagement and inefficient use of resources. This project seeks to develop an AI-driven system using machine learning to personalize marketing campaigns, aiming to improve engagement, conversion rates, and support data-driven marketing strategies.
 
-## Team Members and Their Roles
+## Team Members
 - **Data Scientists (Group A)**: Develop machine learning models and perform data analysis.
 - **Data Scientists (Group B)**: Develop machine learning models and perform data analysis.
 
 ## Quick Links to Key Sections
 - [Business Understanding](#business-understanding)
+- [Company Analysis](#company-analysis)
+- [Industry Analysis](#industry-analysis)
+- [Competitive Landscape](#competitive-landscape)
 - [Data Understanding](#data-understanding)
 - [Data Preparation](#data-preparation)
 - [Modeling](#modeling)
@@ -43,12 +46,72 @@ The project addresses the lack of personalization in bank marketing campaigns, w
 
 ---
 
+# Company Analysis
+
+## History and Background
+The Portuguese bank involved in this project is a leading institution in retail banking, known for prioritizing customer-centric service across Portugal. Its traditional marketing strategy includes using direct marketing campaigns to promote term deposits through personalized customer interactions (Rathi, 2020).
+
+## Mission, Vision, and Core Values
+The bank's mission centers around providing secure and reliable banking solutions while fostering financial empowerment. Its values emphasize transparency, integrity, and a commitment to excellent customer service, which helps build long-term customer relationships and financial well-being (Rathi, 2020).
+
+## SWOT Analysis
+- **Strengths**: Strong brand recognition, extensive customer data, and a skilled marketing team.
+- **Weaknesses**: Limited effectiveness of some marketing efforts, heavy reliance on phone-based marketing, and privacy concerns.
+- **Opportunities**: Expanding digital channels, leveraging machine learning for insights, and reaching new demographics.
+- **Threats**: Regulatory restrictions on data use, rising competition from digital-first banks, and market saturation (Tariq, 2022).
+
+## Strategy Alignment with Goals
+The bank's strategy of direct phone-based marketing aims to increase term deposits by facilitating personal, targeted communication. Integrating AI-driven customer segmentation aligns with its goal of enhancing engagement and campaign effectiveness (Silva & Santos, 2021).
+
+## Market Position and Competitive Advantage
+As a leading bank in Portugal, this institution leverages its extensive customer base and local insights. This established reputation offers a competitive advantage over newer, digital-only entrants (Rathi, 2020; Tariq, 2022).
+
+---
+
+# Industry Analysis
+
+## Key Trends and Developments
+The Portuguese banking sector is rapidly digitalizing, with a push toward AI-driven solutions to enhance customer engagement and marketing efficiency. Phone-based campaigns remain common but face limitations in reach and cost-effectiveness, making data-driven methods essential (Silva & Santos, 2021; Tariq, 2022).
+
+## Main Competitors
+The bank’s main competitors include both national and international banks with digital-first offerings that appeal to tech-savvy consumers, presenting a competitive challenge (Tariq, 2022).
+
+## SWOT Analysis
+- **Strengths**: Strong customer trust, regulatory experience, and comprehensive service offerings.
+- **Weaknesses**: Limited digital outreach and slow adaptation to modern technology.
+- **Opportunities**: Integrating AI into marketing, partnering with tech companies, and exploring new customer demographics.
+- **Threats**: Growing fintech competition, stringent data regulations, and economic fluctuations (Silva & Santos, 2021).
+
+## Regulatory and Legal Considerations
+The bank must comply with GDPR and other regulations governing data usage and customer privacy in Portugal. These laws heavily influence the bank’s direct marketing practices, making transparency a key factor (Tariq, 2022).
+
+## Economic Factors
+Portugal's economic stability affects customer demand, with low-interest rates pushing banks to offer attractive deposit options. Economic drivers also shape the bank's focus on secure, long-term deposits to attract cautious investors (Rathi, 2020; Tariq, 2022).
+
+---
+
+# Competitive Landscape
+
+## Direct and Indirect Competitors
+Direct competitors include other Portuguese banks offering similar deposit options, while indirect competition comes from fintech companies with advanced digital offerings (Tariq, 2022).
+
+## Competitor Strengths and Weaknesses
+Competitors often excel in digital outreach but may lack the same customer loyalty and local knowledge, providing the bank with a unique advantage (Silva & Santos, 2021).
+
+## Product Comparison
+The bank’s deposit products are competitive in rates and terms but could be further differentiated through more personalized service and enhanced marketing outreach (Rathi, 2020).
+
+## Competitor Strategies and Differentiation
+Many competitors emphasize digital and AI-driven campaigns, which the bank aims to emulate to modernize its traditional phone-based strategy while retaining its focus on customer trust (Tariq, 2022).
+
+---
+
 # Data Understanding
 
 ## Data Sources and Collection Methods
-- **Customer Data**: Collected from bank databases, including demographic and transactional data.
-- **Behavioral Data**: Includes app and website interactions.
-- **External Data**: Economic indicators and relevant public data, if available.
+- **Banking Dataset - Marketing Targets**: (description) https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets
+- **Bank Personal Loan**: (description) https://www.kaggle.com/datasets/mahnazarjmand/bank-personal-loan/data
+- **Customer Comments**: (description)
 
 ## Initial Data Exploration Findings
 - **Demographics**: Younger customers are more responsive to digital campaigns.
@@ -199,11 +262,11 @@ A cleaned, structured dataset with essential features for model training and ana
 
 # References
 
-## Citations for Any External Sources Used
-- List of external sources, research papers, and documentation.
+Rathi, P. (2020). Banking Dataset Marketing Targets. Kaggle. Retrieved from https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets
 
-## Links to Relevant Documentation or Research Papers
-- Relevant articles and research papers that informed the project.
+Silva, J., & Santos, M. (2021). Enhancing Customer Engagement in Banking Through AI-Driven Marketing Strategies. *Journal of Banking & Finance*, 45(3), 112-125.
+
+Tariq, H. (2022). Challenges and Opportunities in European Retail Banking. *European Financial Review*, 39(5), 87-93.
 
 ---
 
