@@ -8,7 +8,7 @@ This project aims to enhance marketing efficiency for a Portuguese bank by devel
 - Leverage data-driven insights to improve personalized marketing.
 - Enhance marketing efficiency through AI and machine learning.
 
-For more details, please refer to the full [project report](/project_wiki.md).
+For more details, please refer to the full [project wiki](/project_wiki.md).
 
 ## Instructions for Setting Up the Environment and Running the Code
 
@@ -56,7 +56,9 @@ For more details, please refer to the full [project report](/project_wiki.md).
 
 The project uses a dataset from Kaggle related to the direct marketing campaigns of a Portuguese bank, which targets customers for term deposit products through phone-based outreach. 
 
-- **Dataset**: [Bank Marketing Dataset](https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets) (Rathi, 2020).
+- **Dataset 1**: [Bank Marketing Dataset](https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets) (Rathi, 2020).
+- **Dataset 2**: 
+- **Dataset 3**: 
 - **Data Preparation**:
   - **Data Cleaning**: Removes null values, standardizes column names, and formats categorical variables.
   - **Feature Engineering**: Adds new features, such as contact frequency and customer demographics.
@@ -117,11 +119,3 @@ The API serves as the interface to retrieve predictions for customer engagement 
     ```
 
 Additional details and usage examples are available in the [API documentation](docs/api_documentation.md).
-
----
-
-## References
-
-- Rathi, P. (2020). Banking Dataset Marketing Targets. Kaggle. Retrieved from https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets
-- Silva, J., & Santos, M. (2021). Enhancing Customer Engagement in Banking Through AI-Driven Marketing Strategies. *Journal of Banking & Finance*, 45(3), 112-125.
-- Tariq, H. (2022). Challenges and Opportunities in European Retail Banking. *European Financial Review*, 39(5), 87-93.
