@@ -79,13 +79,6 @@ The project uses a dataset from Kaggle related to the direct marketing campaigns
 3. **Access the Application**:  
    Once the container is running, you can access the application API at `http://localhost:5001`. Use this URL in a browser or with a tool like Postman to test the endpoints.
 
-### Notes on Dockerfile Configuration
-
-- **Virtual Environment**: The Dockerfile creates a virtual environment (`venv`) within the container to manage dependencies.
-- **Environment Path**: The path to the virtual environment is set in the `ENV` statement to ensure that Python uses it by default.
-- **Port Exposure**: Port `5001` is exposed for the API, which should match the port in your code.
-- **Command**: The container runs `main.py` as the entry point, starting the application when the container is launched.
-
 ## API Documentation
 
 The API serves as the interface to retrieve predictions for customer engagement based on demographic and marketing data. Below is a summary of the primary endpoints:
