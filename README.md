@@ -43,14 +43,12 @@ For more details, please refer to the full [project wiki](/project_wiki.md).
 ## Repository Structure
 
 - `data/`: Contains the raw dataset and preprocessed data files.
-- `src/`: Main code files, including data preprocessing, modeling, and evaluation scripts.
-- `models/`: Saved machine learning models and model configurations.
-- `notebooks/`: Jupyter notebooks for data exploration and initial experimentation.
-- `docs/`: Documentation files, including project report and additional reference materials.
-- `docker/`: Docker-related files, including the Dockerfile and configuration scripts.
-- `tests/`: Unit tests for validating code functionality.
+- `group_A`:
+- `group_B`:
+- `Dockerfile`:
+- `data_dictionary.xlsx`:
+- `project_wiki.md`: 
 - `requirements.txt`: Lists Python dependencies for the project.
-- `.env.example`: Example environment variable file.
 
 ## Data Sources and Data Preparation Steps
 
