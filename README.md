@@ -1,12 +1,127 @@
-# Project overview
 
-# Instructions for setting up the environment and running the code
+# Project Overview
 
-# Description of the repository structure
+This project aims to enhance marketing efficiency for a Portuguese bank by developing an AI-driven system to analyze customer data for personalized marketing campaigns. The main objective is to improve customer engagement and conversion rates for the bank's term deposit products through targeted outreach. Using phone-based campaigns, the system utilizes machine learning to segment customers and optimize marketing efforts, ultimately enabling data-driven decision-making within the bank's marketing strategy.
 
-# Data sources and any necessary data preparation steps
+### Key Goals:
+- Increase customer engagement and conversion rates.
+- Leverage data-driven insights to improve personalized marketing.
+- Enhance marketing efficiency through AI and machine learning.
 
-# Instructions for building and running the Docker container(s)
+For more details, please refer to the full [project report](docs/project_report.md).
 
-# API documentation (endpoints, request/response formats)
+## Instructions for Setting Up the Environment and Running the Code
 
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/your-username/bank-marketing-ai.git
+   cd bank-marketing-ai
+   ```
+
+2. **Install Python Dependencies**:  
+   This project uses Python 3.8+. It's recommended to set up a virtual environment:
+   ```bash
+   python3 -m venv env
+   source env/bin/activate  # On Windows use `env\Scripts\activate`
+   pip install -r requirements.txt
+   ```
+
+3. **Environment Variables**:  
+   Create a `.env` file in the project root and define the necessary environment variables:
+   ```plaintext
+   DB_USER=your_db_username
+   DB_PASSWORD=your_db_password
+   API_KEY=your_api_key
+   ```
+
+4. **Run the Project**:  
+   Once dependencies are installed, you can execute the primary scripts using:
+   ```bash
+   python main.py
+   ```
+
+## Repository Structure
+
+- `data/`: Contains the raw dataset and preprocessed data files.
+- `src/`: Main code files, including data preprocessing, modeling, and evaluation scripts.
+- `models/`: Saved machine learning models and model configurations.
+- `notebooks/`: Jupyter notebooks for data exploration and initial experimentation.
+- `docs/`: Documentation files, including project report and additional reference materials.
+- `docker/`: Docker-related files, including the Dockerfile and configuration scripts.
+- `tests/`: Unit tests for validating code functionality.
+- `requirements.txt`: Lists Python dependencies for the project.
+- `.env.example`: Example environment variable file.
+
+## Data Sources and Data Preparation Steps
+
+The project uses a dataset from Kaggle related to the direct marketing campaigns of a Portuguese bank, which targets customers for term deposit products through phone-based outreach. 
+
+- **Dataset**: [Bank Marketing Dataset](https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets) (Rathi, 2020).
+- **Data Preparation**:
+  - **Data Cleaning**: Removes null values, standardizes column names, and formats categorical variables.
+  - **Feature Engineering**: Adds new features, such as contact frequency and customer demographics.
+  - **Data Transformation**: Uses SQL queries for data preprocessing and joins where necessary to streamline data for machine learning models.
+
+## Instructions for Building and Running the Docker Container(s)
+
+1. **Build the Docker Image**:  
+   Ensure Docker is installed and running on your machine. Then, in the project root, build the Docker image:
+   ```bash
+   docker build -t bank-marketing-ai .
+   ```
+
+2. **Run the Docker Container**:  
+   Use the following command to run the container in detached mode:
+   ```bash
+   docker run -d --env-file .env -p 8000:8000 bank-marketing-ai
+   ```
+
+3. **Access the Application**:  
+   Once the container is running, access the API at `http://localhost:8000` in your browser or use a tool like Postman to test the endpoints.
+
+## API Documentation
+
+The API serves as the interface to retrieve predictions for customer engagement based on demographic and marketing data. Below is a summary of the primary endpoints:
+
+- **POST /predict**  
+  - **Description**: Returns a prediction on whether a customer is likely to subscribe to a term deposit.
+  - **Request Format**:
+    ```json
+    {
+      "age": 45,
+      "job": "technician",
+      "marital": "married",
+      "education": "secondary",
+      "balance": 500,
+      "contact": "cellular",
+      "campaign": 2,
+      "previous": 1,
+      "poutcome": "success"
+    }
+    ```
+  - **Response Format**:
+    ```json
+    {
+      "prediction": "yes",
+      "probability": 0.82
+    }
+    ```
+
+- **GET /status**  
+  - **Description**: Returns the status of the API to ensure the service is running.
+  - **Response Format**:
+    ```json
+    {
+      "status": "running"
+    }
+    ```
+
+Additional details and usage examples are available in the [API documentation](docs/api_documentation.md).
+
+---
+
+## References
+
+- Rathi, P. (2020). Banking Dataset Marketing Targets. Kaggle. Retrieved from https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets
+- Silva, J., & Santos, M. (2021). Enhancing Customer Engagement in Banking Through AI-Driven Marketing Strategies. *Journal of Banking & Finance*, 45(3), 112-125.
+- Tariq, H. (2022). Challenges and Opportunities in European Retail Banking. *European Financial Review*, 39(5), 87-93.
