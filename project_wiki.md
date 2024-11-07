@@ -9,6 +9,9 @@ Banks face challenges in targeting marketing effectively due to limited personal
 
 ## Quick Links to Key Sections
 - [Business Understanding](#business-understanding)
+- [Company Analysis](#company-analysis)
+- [Industry Analysis](#industry-analysis)
+- [Competitive Landscape](#competitive-landscape)
 - [Data Understanding](#data-understanding)
 - [Data Preparation](#data-preparation)
 - [Modeling](#modeling)
@@ -63,6 +66,8 @@ The bank's strategy of direct phone-based marketing aims to increase term deposi
 ## Market Position and Competitive Advantage
 As a leading bank in Portugal, this institution leverages its extensive customer base and local insights. This established reputation offers a competitive advantage over newer, digital-only entrants (Rathi, 2020; Tariq, 2022).
 
+---
+
 # Industry Analysis
 
 ## Key Trends and Developments
@@ -82,6 +87,8 @@ The bank must comply with GDPR and other regulations governing data usage and cu
 
 ## Economic Factors
 Portugal's economic stability affects customer demand, with low-interest rates pushing banks to offer attractive deposit options. Economic drivers also shape the bank's focus on secure, long-term deposits to attract cautious investors (Rathi, 2020; Tariq, 2022).
+
+---
 
 # Competitive Landscape
 
