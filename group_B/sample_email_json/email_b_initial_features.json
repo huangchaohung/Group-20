@@ -1,0 +1,86 @@
+{
+    "Number of Images_0": 0,
+    "Number of Images_1-2": 0,
+    "Number of Images_3-5": 1,
+    "Number of Images_6+": 0,
+
+    "Text Length_Short": 0,
+    "Text Length_Medium": 1,
+    "Text Length_Long": 0,
+    "Text Length_Very_Long": 0,
+
+    "Font Emphasis_None": 0,
+    "Font Emphasis_Bold": 1,
+    "Font Emphasis_Italic": 0,
+    "Font Emphasis_Both": 0,
+
+    "Wording Focus_High Returns": 0,
+    "Wording Focus_Stable Income": 1,
+    "Wording Focus_How Money is Used": 0,
+    "Wording Focus_Security": 0,
+
+    "Tone_Formal": 0,
+    "Tone_Conversational": 1,
+    "Tone_Urgent": 0,
+    "Tone_Friendly": 0,
+
+    "Subject Line Type_Promotional": 0,
+    "Subject Line Type_Informative": 0,
+    "Subject Line Type_Personalized": 1,
+    "Subject Line Type_Question-based": 0,
+
+    "Image Type_Professional": 0,
+    "Image Type_Lifestyle": 1,
+    "Image Type_Infographic": 0,
+    "Image Type_Icons": 0,
+
+    "Layout Complexity_Simple": 0,
+    "Layout Complexity_Moderate": 1,
+    "Layout Complexity_Complex": 0,
+
+    "Target Audience_High Salary": 0,
+    "Target Audience_Low Salary": 0,
+    "Target Audience_Mid Salary": 1,
+    "Target Audience_Young Professionals": 0,
+
+    "Font Size_Small": 0,
+    "Font Size_Medium": 0,
+    "Font Size_Large": 1,
+
+    "Color Contrast_High": 0,
+    "Color Contrast_Medium": 1,
+    "Color Contrast_Low": 0,
+
+    "Testimonial Inclusion_None": 0,
+    "Testimonial Inclusion_Short": 0,
+    "Testimonial Inclusion_Detailed": 1,
+    "Testimonial Inclusion_User Reviews": 0,
+
+    "Data-Driven Content_None": 0,
+    "Data-Driven Content_Graphs": 1,
+    "Data-Driven Content_Projections": 0,
+    "Data-Driven Content_Comparisons": 0,
+
+    "Offer Type_Fixed Rate": 0,
+    "Offer Type_Variable Rate": 1,
+    "Offer Type_Bonus Rate": 0,
+    "Offer Type_Tiered Rate": 0,
+
+    "Email Length_Short": 0,
+    "Email Length_Medium": 1,
+    "Email Length_Long": 0,
+
+    "Personalization_None": 0,
+    "Personalization_Subject": 0,
+    "Personalization_Body and Subject": 1,
+    "Personalization_Offer": 0,
+
+    "Urgency Tone_None": 0,
+    "Urgency Tone_Mild Urgency": 0,
+    "Urgency Tone_Strong Urgency": 1,
+    "Urgency Tone_Exclusive Offer": 0,
+
+    "Bullet Points_None": 0,
+    "Bullet Points_Few": 1,
+    "Bullet Points_Many": 0
+}
