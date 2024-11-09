@@ -132,6 +132,12 @@ Many competitors emphasize digital and AI-driven campaigns, which the bank aims 
 
 ## Feature Engineering Techniques
 - Created features for customer lifetime value, frequency of transactions, and recent engagement metrics.
+- Principal Component Analysis (PCA): Applied PCA to reduce dimensionality, transforming original features into principal components that capture the most important variance, simplifying the dataset and enhancing model efficiency.
+
+## Synthetic Data Generation
+- Employed machine learning techniques, specifically a random forest model, 
+to generate synthetic data from the Bank Personal Loan dataset. 
+This increases the number of product (cd_account and securities) we can recommend to our customer based on a recommender system.
 
 ## SQL Queries Used for Data Transformation (with Explanations)
 - Examples of queries used for aggregating transaction data, joining tables, and filtering by recent activity.
@@ -151,8 +157,11 @@ A cleaned, structured dataset with essential features for model training and ana
 
 ## Detailed Description of the Chosen Model(s)
 - **Gradient Boosting Model**: Selected for its accuracy in predicting conversion likelihood.
+- **Random Forest Model**: Selected for its accuracy in synthetic data generation for data preparation.
+- **Gradient Boosting Model**: Selected for its accuracy in product recommendation system.
 
 ## Model Performance Metrics and Interpretation
+- **Accuracy**: Reflects the model’s overall correctness by measuring the proportion of true predictions (both positives and negatives) out of all predictions made.
 - **Precision**: Indicates model’s ability to correctly identify true positives.
 - **Recall**: Demonstrates how well the model identifies all positives.
 - **F1 Score**: Balances precision and recall for a comprehensive metric.
@@ -163,12 +172,16 @@ A cleaned, structured dataset with essential features for model training and ana
 
 ## Evaluation of Model Performance Against Business Objectives
 - Model meets criteria for engagement and conversion, with 15% improvement in predicted conversion rates.
+- Click Rate: Improved targeting and personalization have resulted in an uplift in click rate, indicating better engagement `with marketing materials.
+- Return on Investment (ROI): The model's predictions have led to a calculated ROI increase, demonstrating profitability by effectively targeting high-potential customers.
 
 ## Limitations of the Current Approach
-- Model accuracy may decline with rapidly changing customer behaviors.
+- Adaptability to Behavioral Shifts: Model accuracy may decline with rapidly changing customer behaviors, especially in dynamic markets where preferences and trends shift frequently.
+- Limited Real-Time Insight: The model may lack responsiveness due to reliance on historical data, potentially missing out on capturing immediate changes in customer interest.
 
 ## Suggestions for Model Improvements
-- Consider incorporating time-series data or real-time customer interactions.
+- Incorporate Time-Series Data: Integrating time-series data can enhance the model’s ability to recognize patterns and seasonal trends, improving long-term prediction accuracy.
+- Real-Time Customer Interactions: Including real-time interaction data, such as recent clicks and transactions, would make the model more adaptive and better suited to evolving customer behaviors.
 
 ---
 
