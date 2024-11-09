@@ -2,6 +2,7 @@ import pickle
 import pandas as pd
 from datetime import datetime
 import json
+import time
 
 # Directory path where models and encoders are stored
 model_directory = r"recommendation_models"
@@ -37,7 +38,9 @@ feature_descriptions = {
     "campaign": "Number of contacts performed during the current campaign.",
     "pdays": "Number of days since the last contact from a previous campaign (-1 if not contacted).",
     "previous": "Number of contacts performed before the current campaign.",
-    "poutcome": "Outcome of the previous marketing campaign (e.g., 'success', 'failure', 'unknown', 'other')."
+    "poutcome": "Outcome of the previous marketing campaign (e.g., 'success', 'failure', 'unknown', 'other').",
+    "duration": "Duration of marketing campaign engagement.",
+    "housing": "Subscribe to housing Loan (0/1)"
 }
 
 # Specific options for poutcome
@@ -153,8 +156,14 @@ def recommend_product():
     # Ensure only model-required features are used for prediction
     feature_df_scaled = feature_df_scaled.reindex(columns=feature_list)
 
+    print("======== Generating Results ========")
     # Predict using the scaled feature DataFrame
     prediction = model.predict(feature_df_scaled)
+    for _ in range(3):
+        # Artificially add time to make it look like its loading
+        time.sleep(1)
+        print(".")
+
     if prediction[0] == 0:
         print(f"User SHOULD NOT subscribe to {all_products[int(product_choice)-1]}")
     else:
