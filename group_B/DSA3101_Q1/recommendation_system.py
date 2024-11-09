@@ -13,7 +13,7 @@ loan_pipeline_path = f"{model_directory}/loan_xgb_classifier_0.pkl"
 securities_pipeline_path = f"{model_directory}/securities_xgb_classifier_0.pkl"
 term_deposit_pipeline_path = f"{model_directory}/term_deposit_xgb_classifier_0.pkl"
 all_features_path = f"{model_directory}/features.json"
-dataset_path = r"C:\Users\limti\PycharmProjects\DSA3101-Group-20\data\Combined_dataset.csv"
+dataset_path = r"../../data/Combined_dataset.csv"
 
 # Load the models, feature definitions, dataset, encoders, and scaler
 cd_account_pipeline = pickle.load(open(cd_account_pipeline_path, "rb"))
