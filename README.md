@@ -42,13 +42,23 @@ For more details, please refer to the full [project wiki](/project_wiki.md).
 
 ## Repository Structure
 
-- `data`: Contains the raw dataset and preprocessed data files. The final processed data is named "Combined_dataset.csv.
-- `group_A`: Contains all the codes and answers to the questions under subgroup A.
-- `group_B`: Contains all the codes and answers to the questions under subgroup B.
-- `Dockerfile`: Docker file to containerise the whole application.
-- `data_dictionary.xlsx`: Data dictionary file containing all the data information.
-- `project_wiki.md`: Full report of the project.
-- `requirements.txt`: Lists Python dependencies for the project.
+```
+/
+    ├── data/
+    │   └── cache_client.py
+    ├── group_A/
+    │   └── data_processor.py
+    ├── group_B/
+    │   ├── database_pipeline.py
+    │   ├── database_setup.py
+    │   └── database_updater.py
+    ├── Dockerfile
+    ├── README.md
+    ├── data_dictionary.xlsx
+    ├── main.py
+    ├── project_wiki.md
+    └── requirements.txt
+```
 
 ## Data Sources and Data Preparation Steps
 
