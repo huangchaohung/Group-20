@@ -12,4 +12,4 @@ if __name__ == "__main__":
     print("---------------------------")
     print("Group B")
     print("---------------------------")
-    ### Put all the Group A processing codes here
+    ### Put all the Group B processing codes here
