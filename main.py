@@ -8,7 +8,9 @@ if __name__ == "__main__":
     print("---------------------------")
     print("Group A")
     print("---------------------------")
-    ### Put all the Group A processing codes here
+    print("1. How can we effectively segment our customers based on their banking behaviour and preferences?")
+    ### run something, show a plot here
+    ### one paragraph answer the question
     print("---------------------------")
     print("Group B")
     print("---------------------------")
