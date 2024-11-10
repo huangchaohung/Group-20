@@ -131,9 +131,12 @@ Many competitors emphasize digital and AI-driven campaigns, which the bank aims 
 - Removal of duplicates, handling of missing values, and standardizing data formats.
 
 ## Feature Engineering Techniques
-- Created features for customer lifetime value, frequency of transactions, and recent engagement metrics.
+### Subgroup A
+- 
+### Subgroup B
+- 
 
-## SQL Queries Used for Data Transformation (with Explanations)
+## SQL Queries
 - Examples of queries used for aggregating transaction data, joining tables, and filtering by recent activity.
 
 ## Final Dataset Structure
@@ -212,14 +215,21 @@ A cleaned, structured dataset with essential features for model training and ana
 
 # Analytical Findings
 
-## Key Insights from the Data Analysis
-- High-engagement customers have a 20% higher conversion rate in targeted campaigns.
+## Subgroup A
+- Question 1:
+- Question 2:
+- Question 3:
+- Optional 1:
+- Optional 2:
+- Optional 3:
 
-## Visualizations and Their Interpretations
-- Engagement versus conversion rates by age group, showing age-related trends in responsiveness.
-
-## Answers to the Business Questions
-- Insights based on data analysis that answer the project’s key business questions.
+## Subgroup B
+- Question 1:
+- Question 2:
+- Question 3:
+- Optional 1:
+- Optional 2:
+- Optional 3:
 
 ---
 
