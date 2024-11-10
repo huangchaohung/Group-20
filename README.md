@@ -57,6 +57,7 @@ The project uses a dataset from Kaggle related to the direct marketing campaigns
 - **Dataset 1**: [Bank Marketing Dataset](https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets)
 - **Dataset 2**: [Bank Personal Loan](https://www.kaggle.com/datasets/mahnazarjmand/bank-personal-loan/data)
 - **Dataset 3**: [Bank Customer Segmentation](https://www.kaggle.com/datasets/shivamb/bank-customer-segmentation)
+- **Dataset 4**: [Customer comments dataset] ()
 - **Data Preparation**:
   - **Data Cleaning**: Removes null values, standardizes column names, and formats categorical variables.
   - **Feature Engineering**: Adds new features, such as contact frequency and customer demographics.
