@@ -52,6 +52,8 @@ Group-20/
     │   ├── database_pipeline.py
     │   ├── database_setup.py
     │   └── database_updater.py
+    │   │   ├── assets
+    │   │   └── variant.ts
     ├── Dockerfile
     ├── README.md
     ├── data_dictionary.xlsx
