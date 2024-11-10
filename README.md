@@ -43,7 +43,7 @@ For more details, please refer to the full [project wiki](/project_wiki.md).
 ## Repository Structure
 
 ```
-/
+Group-20/
     ├── data/
     │   └── cache_client.py
     ├── group_A/
