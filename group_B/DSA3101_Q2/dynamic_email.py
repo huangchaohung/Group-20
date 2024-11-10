@@ -7,13 +7,13 @@ def dynamic_email_modifier(recent_email_result, lr=0.5):
     Create a dynamic email modifier that adjusts based on click rates.
     """
     # Load current email results
-    email_a = pd.read_csv('../data/email_data/email_a.csv')
+    email_a = pd.read_csv('../../data/email_data/email_a.csv')
     email_b = recent_email_result
-    recent_email_result.to_csv('../data/email_data/email_b.csv', index=False)
+    recent_email_result.to_csv('../../data/email_data/email_b.csv', index=False)
 
     # Load feature configurations for each email
-    email_a_feature_path = r'../data/email_data/email_a_features.json'
-    email_b_feature_path = r'../data/email_data/email_b_features.json'
+    email_a_feature_path = r'../../data/email_data/email_a_features.json'
+    email_b_feature_path = r'../../data/email_data/email_b_features.json'
 
     with open(email_a_feature_path) as f:
         email_a_feature = json.load(f)
@@ -22,7 +22,7 @@ def dynamic_email_modifier(recent_email_result, lr=0.5):
         email_b_feature = json.load(f)
 
     # Load mutually exclusive groups
-    mutually_exclusive = eval(open('../data/email_data/mutually_exclusive.txt', 'r').read())
+    mutually_exclusive = eval(open('../../data/email_data/mutually_exclusive.txt', 'r').read())
 
     # Calculate click rates
     success_rate_a, success_rate_b = __calculate_email_percentage(email_a, email_b)
@@ -41,7 +41,7 @@ def dynamic_email_modifier(recent_email_result, lr=0.5):
         )
         email_a_feature = email_b_feature.copy()
         email_b_feature = adjusted_email_a_feature.copy()
-        email_b.to_csv('../data/email_data/email_a.csv', index=False)
+        email_b.to_csv('../../data/email_data/email_a.csv', index=False)
 
     # Save the adjusted features
     with open(email_a_feature_path, "w") as j:

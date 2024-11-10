@@ -42,25 +42,34 @@ For more details, please refer to the full [project wiki](/project_wiki.md).
 
 ## Repository Structure
 
-- `data/`: Contains the raw dataset and preprocessed data files.
-- `group_A`:
-- `group_B`:
-- `Dockerfile`:
-- `data_dictionary.xlsx`:
-- `project_wiki.md`: 
-- `requirements.txt`: Lists Python dependencies for the project.
+```
+Group-20/
+    ├── data/
+    │   └── cache_client.py
+    ├── group_A/
+    │   └── data_processor.py
+    ├── group_B/
+    │   ├── database_pipeline.py
+    │   ├── database_setup.py
+    │   └── database_updater.py
+    │   │   ├── assets
+    │   │   └── variant.ts
+    ├── Dockerfile
+    ├── README.md
+    ├── data_dictionary.xlsx
+    ├── main.py
+    ├── project_wiki.md
+    └── requirements.txt
+```
 
 ## Data Sources and Data Preparation Steps
 
 The project uses a dataset from Kaggle related to the direct marketing campaigns of a Portuguese bank, which targets customers for term deposit products through phone-based outreach. 
 
-- **Dataset 1**: [Bank Marketing Dataset](https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets) (Rathi, 2020).
-- **Dataset 2**:
-- **Dataset 3**:
-- **Data Preparation**:
-  - **Data Cleaning**: Removes null values, standardizes column names, and formats categorical variables.
-  - **Feature Engineering**: Adds new features, such as contact frequency and customer demographics.
-  - **Data Transformation**: Uses SQL queries for data preprocessing and joins where necessary to streamline data for machine learning models.
+- **Dataset 1**: [Bank Marketing Dataset](https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets)
+- **Dataset 2**: [Bank Personal Loan](https://www.kaggle.com/datasets/mahnazarjmand/bank-personal-loan/data)
+- **Dataset 3**: [Bank Customer Segmentation](https://www.kaggle.com/datasets/shivamb/bank-customer-segmentation)
+- **Dataset 4**: [Customer comments dataset] ()
 
 ## Instructions for Building and Running the Docker Container(s)
 
