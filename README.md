@@ -70,10 +70,6 @@ The project uses a dataset from Kaggle related to the direct marketing campaigns
 - **Dataset 2**: [Bank Personal Loan](https://www.kaggle.com/datasets/mahnazarjmand/bank-personal-loan/data)
 - **Dataset 3**: [Bank Customer Segmentation](https://www.kaggle.com/datasets/shivamb/bank-customer-segmentation)
 - **Dataset 4**: [Customer comments dataset] ()
-- **Data Preparation**:
-  - **Data Cleaning**: Removes null values, standardizes column names, and formats categorical variables.
-  - **Feature Engineering**: Adds new features, such as contact frequency and customer demographics.
-  - **Data Transformation**: Uses SQL queries for data preprocessing and joins where necessary to streamline data for machine learning models.
 
 ## Instructions for Building and Running the Docker Container(s)
 
