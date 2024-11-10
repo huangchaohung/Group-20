@@ -55,7 +55,7 @@ For more details, please refer to the full [project wiki](/project_wiki.md).
 The project uses a dataset from Kaggle related to the direct marketing campaigns of a Portuguese bank, which targets customers for term deposit products through phone-based outreach. 
 
 - **Dataset 1**: [Bank Marketing Dataset](https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets)
-- **Dataset 2**: 
+- **Dataset 2**: [Bank Personal Loan](https://www.kaggle.com/datasets/mahnazarjmand/bank-personal-loan/data)
 - **Dataset 3**: [Bank Customer Segmentation](https://www.kaggle.com/datasets/shivamb/bank-customer-segmentation)
 - **Data Preparation**:
   - **Data Cleaning**: Removes null values, standardizes column names, and formats categorical variables.
