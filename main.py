@@ -4,6 +4,12 @@ import group_B/xxxxxxx
 if __name__ == "__main__":
     print("Data processing")
     print("---------------------------")
-    print("Group A")    
+    ### Put all the data processing codes here
+    print("---------------------------")
+    print("Group A")
+    print("---------------------------")
+    ### Put all the Group A processing codes here
     print("---------------------------")
     print("Group B")
+    print("---------------------------")
+    ### Put all the Group A processing codes here
