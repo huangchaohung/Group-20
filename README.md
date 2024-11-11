@@ -66,17 +66,47 @@ Group-20/
     ├── group_B/
     │   ├── DSA3101_Q1/
     │   │   ├── recommendation_models/
-    │   │   │   ├── cd_account_
-    │   │   ├── email_a_features.json
-    │   │   ├── email_b.csv
-    │   │   └── mutually_exclusive.txt
-    │   ├── database_setup.py
-    │   └── database_updater.py
-    │   │   ├── assets
-    │   │   └── variant.ts
+    │   │   │   ├── cd_account_xgb_classifier_0.pkl
+    │   │   │   ├── contact_encoder.pkl
+    │   │   │   ├── default_encoder.pkl
+    │   │   │   ├── features.json
+    │   │   │   ├── job_encoder.pkl
+    │   │   │   ├── loan_xgb_classifier_0.pkl
+    │   │   │   ├── martial_encoder.pkl
+    │   │   │   ├── month_encoder.pkl
+    │   │   │   ├── poutcome_encoder.pkl
+    │   │   │   ├── scaler.pkl
+    │   │   │   ├── securities_xgb_classifier_0.pkl
+    │   │   │   └── term_deposit_xgb_classifier_0.pkl
+    │   │   ├── Recommendation_System_notebook.ipynb
+    │   │   └── recommendation_system.py
+    │   ├── DSA3101_Q2/
+    │   │   ├── sample_email_json/
+    │   │   │   ├── email_a_initial.csv
+    │   │   │   ├── email_a_initial_features.json
+    │   │   │   └── email_b_initial_features.json
+    │   │   ├── dynamic_email.py
+    │   │   └── email_campaign_adjustment_final.ipynb
+    │   ├── DSA3101_Q3/
+    │   │   ├── data/
+    │   │   │   └── digital_marketing_campaign_dataset.csv
+    │   │   ├── .DS_Store
+    │   │   ├── DSA3101_q3.ipynb
+    │   │   └── model.ipynb
+    │   ├── synthetic_data_model/
+    │   │   ├── cd_account_random_forest_0.pkl
+    │   │   └── securities_random_forest_0.pkl
+    │   ├── .DS_Store
+    │   ├── Email_Campaign_Adjustment.ipynb
+    │   ├── ROI.ipynb
+    │   └── product_synthetic_generation.ipynb
+    ├── src/
+    │   ├── __init__.py
+    ├── .DS_Store
     ├── Dockerfile
     ├── README.md
     ├── data_dictionary.xlsx
+    ├── email_marketing_campaigns_with_demographics.csv
     ├── main.py
     ├── project_wiki.md
     └── requirements.txt
