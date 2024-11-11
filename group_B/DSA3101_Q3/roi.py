@@ -5,6 +5,8 @@ import numpy as np
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+import warnings
+warnings.filterwarnings("ignore")
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_dir)
@@ -13,7 +15,6 @@ os.chdir(script_dir)
 def load_and_prepare_data(file_path, avg_revenue_per_conversion=60000):
     df = pd.read_csv(file_path)
     
-    # Drop redundant columns
     df.drop(
         columns=[
             'AdvertisingTool', 'AdvertisingPlatform', 'PagesPerVisit', 
@@ -52,7 +53,7 @@ def load_model(filename):
 # Model Analysis Function
 def analyze_models(df, top_features, strategy_input):
     # Filter data by the selected strategy
-    print(f"Analyzing for strategy: {strategy_input}")
+    
     df_strategy = df[df['CampaignChannel'] == strategy_input]
 
     X = df_strategy[top_features]
@@ -68,7 +69,7 @@ def analyze_models(df, top_features, strategy_input):
 
     best_model_name = None
     best_model = None
-    best_r2 = -float('inf')  # Start with a very low value to ensure any model's R2 will be higher
+    best_r2 = -float('inf')  
 
     # Load and evaluate each model
     for model_name, file_path in model_files.items():
@@ -79,7 +80,7 @@ def analyze_models(df, top_features, strategy_input):
             rmse = np.sqrt(mean_squared_error(y_test, y_pred))
             r2 = r2_score(y_test, y_pred)
 
-            print(f"{model_name} - MAE: {mae}, RMSE: {rmse}, R2: {r2}")
+            #print(f"{model_name} - MAE: {mae}, RMSE: {rmse}, R2: {r2}")
 
             # Track the best model by R²
             if r2 > best_r2:
