@@ -45,11 +45,31 @@ For more details, please refer to the full [project wiki](/project_wiki.md).
 ```
 Group-20/
     ├── data/
-    │   └── cache_client.py
+    │   ├── email_data/
+    │   │   ├── email_a.csv
+    │   │   ├── email_a_features.json
+    │   │   ├── email_b.csv
+    │   │   └── mutually_exclusive.txt
+    │   ├── Bank_Personal_Loan_Modelling.csv
+    │   ├── Combined_dataset.csv
+    │   ├── digital_marketing_campaign_dataset.csv
+    │   ├── test.csv
+    │   ├── test_Data.csv
+    │   ├── train.csv
+    │   └── train_data.csv
     ├── group_A/
-    │   └── data_processor.py
+    │   ├── Bonus qn 2 Real-Time Segmentation.ipynb
+    │   ├── Bonus qn 3 Predict Customer Churn.ipynb
+    │   ├── Draft Answer.docx
+    │   ├── draft description.docx
+    │   └── segmentation with campaign numerical.ipynb
     ├── group_B/
-    │   ├── database_pipeline.py
+    │   ├── DSA3101_Q1/
+    │   │   ├── recommendation_models/
+    │   │   │   ├── cd_account_
+    │   │   ├── email_a_features.json
+    │   │   ├── email_b.csv
+    │   │   └── mutually_exclusive.txt
     │   ├── database_setup.py
     │   └── database_updater.py
     │   │   ├── assets
@@ -80,9 +100,9 @@ The project uses a dataset from Kaggle related to the direct marketing campaigns
    ```
 
 2. **Run the Docker Container**:  
-   Use the following command to run the container, specifying port `5001` (as per the `EXPOSE` statement in the Dockerfile):
+   Use the following command to run the container, specifying port `5000` (as per the `EXPOSE` statement in the Dockerfile):
    ```bash
-   docker run -d --env-file .env -p 5001:5001 bank-marketing-ai
+   docker run -d --env-file .env -p 5000:5000 bank-marketing-ai
    ```
 
 3. **Access the Application**:  
