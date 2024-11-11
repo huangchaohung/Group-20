@@ -2,6 +2,7 @@ import json
 import random
 import pandas as pd
 random.seed(3101)
+
 def dynamic_email_modifier(recent_email_result, lr=0.5):
     """
     Create a dynamic email modifier that adjusts based on click rates.

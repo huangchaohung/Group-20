@@ -45,18 +45,68 @@ For more details, please refer to the full [project wiki](/project_wiki.md).
 ```
 Group-20/
     ├── data/
-    │   └── cache_client.py
+    │   ├── email_data/
+    │   │   ├── email_a.csv
+    │   │   ├── email_a_features.json
+    │   │   ├── email_b.csv
+    │   │   └── mutually_exclusive.txt
+    │   ├── Bank_Personal_Loan_Modelling.csv
+    │   ├── Combined_dataset.csv
+    │   ├── digital_marketing_campaign_dataset.csv
+    │   ├── test.csv
+    │   ├── test_Data.csv
+    │   ├── train.csv
+    │   └── train_data.csv
     ├── group_A/
-    │   └── data_processor.py
+    │   ├── Bonus qn 2 Real-Time Segmentation.ipynb
+    │   ├── Bonus qn 3 Predict Customer Churn.ipynb
+    │   ├── Draft Answer.docx
+    │   ├── draft description.docx
+    │   └── segmentation with campaign numerical.ipynb
     ├── group_B/
-    │   ├── database_pipeline.py
-    │   ├── database_setup.py
-    │   └── database_updater.py
-    │   │   ├── assets
-    │   │   └── variant.ts
+    │   ├── DSA3101_Q1/
+    │   │   ├── recommendation_models/
+    │   │   │   ├── cd_account_xgb_classifier_0.pkl
+    │   │   │   ├── contact_encoder.pkl
+    │   │   │   ├── default_encoder.pkl
+    │   │   │   ├── features.json
+    │   │   │   ├── job_encoder.pkl
+    │   │   │   ├── loan_xgb_classifier_0.pkl
+    │   │   │   ├── martial_encoder.pkl
+    │   │   │   ├── month_encoder.pkl
+    │   │   │   ├── poutcome_encoder.pkl
+    │   │   │   ├── scaler.pkl
+    │   │   │   ├── securities_xgb_classifier_0.pkl
+    │   │   │   └── term_deposit_xgb_classifier_0.pkl
+    │   │   ├── Recommendation_System_notebook.ipynb
+    │   │   └── recommendation_system.py
+    │   ├── DSA3101_Q2/
+    │   │   ├── sample_email_json/
+    │   │   │   ├── email_a_initial.csv
+    │   │   │   ├── email_a_initial_features.json
+    │   │   │   └── email_b_initial_features.json
+    │   │   ├── dynamic_email.py
+    │   │   └── email_campaign_adjustment_final.ipynb
+    │   ├── DSA3101_Q3/
+    │   │   ├── data/
+    │   │   │   └── digital_marketing_campaign_dataset.csv
+    │   │   ├── .DS_Store
+    │   │   ├── DSA3101_q3.ipynb
+    │   │   └── model.ipynb
+    │   ├── synthetic_data_model/
+    │   │   ├── cd_account_random_forest_0.pkl
+    │   │   └── securities_random_forest_0.pkl
+    │   ├── .DS_Store
+    │   ├── Email_Campaign_Adjustment.ipynb
+    │   ├── ROI.ipynb
+    │   └── product_synthetic_generation.ipynb
+    ├── src/
+    │   ├── __init__.py
+    ├── .DS_Store
     ├── Dockerfile
     ├── README.md
     ├── data_dictionary.xlsx
+    ├── email_marketing_campaigns_with_demographics.csv
     ├── main.py
     ├── project_wiki.md
     └── requirements.txt
@@ -80,9 +130,9 @@ The project uses a dataset from Kaggle related to the direct marketing campaigns
    ```
 
 2. **Run the Docker Container**:  
-   Use the following command to run the container, specifying port `5001` (as per the `EXPOSE` statement in the Dockerfile):
+   Use the following command to run the container, specifying port `5000` (as per the `EXPOSE` statement in the Dockerfile):
    ```bash
-   docker run -d --env-file .env -p 5001:5001 bank-marketing-ai
+   docker run -d --env-file .env -p 5000:5000 bank-marketing-ai
    ```
 
 3. **Access the Application**:  
