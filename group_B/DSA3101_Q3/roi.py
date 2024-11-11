@@ -1,12 +1,13 @@
+import os
+import pickle
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split, RandomizedSearchCV
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-import pickle
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(script_dir)
 
 # Feature Engineering Function
 def load_and_prepare_data(file_path, avg_revenue_per_conversion=60000):
@@ -24,7 +25,6 @@ def load_and_prepare_data(file_path, avg_revenue_per_conversion=60000):
     
     # Filter by campaign type
     df_marketing = df[df['CampaignType'].isin(['Conversion', 'Retention'])]
-
 
     # Calculate revenue and ROI
     df_marketing['Revenue'] = df_marketing['ConversionRate'] * avg_revenue_per_conversion
@@ -44,99 +44,81 @@ def load_and_prepare_data(file_path, avg_revenue_per_conversion=60000):
     
     return df_marketing
 
-# Model Training Function with Hyperparameter Tuning
-def train_and_tune_model(X_train, y_train, model_type):
-    if model_type == 'RandomForest':
-        model = RandomForestRegressor(random_state=42)
-        param_dist = {
-            'n_estimators': [50, 100, 150],
-            'max_depth': [None, 10, 20, 30],
-            'min_samples_split': [2, 5, 10],
-            'min_samples_leaf': [1, 2, 4]
-        }
-    elif model_type == 'GradientBoosting':
-        model = GradientBoostingRegressor(random_state=42)
-        param_dist = {
-            'n_estimators': [50, 100, 150],
-            'learning_rate': [0.01, 0.1, 0.2],
-            'max_depth': [3, 5, 7]
-        }
-    elif model_type == 'LinearRegression':
-        model = LinearRegression()
-        return model.fit(X_train, y_train)  # No hyperparameter tuning for Linear Regression
-
-    # Randomized Search with Cross Validation for Hyperparameter Tuning
-    search = RandomizedSearchCV(model, param_distributions=param_dist, n_iter=10, cv=3, random_state=42, n_jobs=-1)
-    search.fit(X_train, y_train)
-    best_model = search.best_estimator_
-    return best_model
-
-# Save Model Function
-def save_model(model, filename):
-    with open(filename, 'wb') as f:
-        pickle.dump(model, f)
+# Load Model Function
+def load_model(filename):
+    with open(filename, 'rb') as f:
+        return pickle.load(f)
 
 # Model Analysis Function
-def analyze_models(df, top_features):
-    strategies = df['CampaignChannel'].unique()
-    results = {}
+def analyze_models(df, top_features, strategy_input):
+    # Filter data by the selected strategy
+    print(f"Analyzing for strategy: {strategy_input}")
+    df_strategy = df[df['CampaignChannel'] == strategy_input]
 
-    for strategy in strategies:
-        print(f"========== {strategy} ==========")
-        X = df[df['CampaignChannel'] == strategy][top_features]
-        y = df[df['CampaignChannel'] == strategy]['ROI']
-        
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-        
-        # Dictionary to store models and results
-        models = {
-            'RandomForest': train_and_tune_model(X_train, y_train, 'RandomForest'),
-            'GradientBoosting': train_and_tune_model(X_train, y_train, 'GradientBoosting'),
-            'LinearRegression': train_and_tune_model(X_train, y_train, 'LinearRegression')
-        }
+    X = df_strategy[top_features]
+    y = df_strategy['ROI']
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    model_files = {
+        'RandomForest': f"Models/random_forest_model_{strategy_input}.pkl",
+        'GradientBoosting': f"Models/gradient_boosting_model_{strategy_input}.pkl",
+        'LinearRegression': f"Models/linear_regression_model_{strategy_input}.pkl"
+    }
 
-        best_model_name = None
-        best_r2_score = -np.inf
-        model_results = {}
-        
-        # Evaluate each model
-        for model_name, model in models.items():
+    best_model_name = None
+    best_model = None
+    best_r2 = -float('inf')  # Start with a very low value to ensure any model's R2 will be higher
+
+    # Load and evaluate each model
+    for model_name, file_path in model_files.items():
+        if os.path.exists(file_path):
+            model = load_model(file_path)
             y_pred = model.predict(X_test)
             mae = mean_absolute_error(y_test, y_pred)
             rmse = np.sqrt(mean_squared_error(y_test, y_pred))
             r2 = r2_score(y_test, y_pred)
-            
+
             print(f"{model_name} - MAE: {mae}, RMSE: {rmse}, R2: {r2}")
-            model_results[model_name] = {'mae': mae, 'rmse': rmse, 'r2': r2}
 
-            # Save the best model
-            if r2 > best_r2_score:
-                best_r2_score = r2
+            # Track the best model by R²
+            if r2 > best_r2:
+                best_r2 = r2
                 best_model_name = model_name
+                best_model = model
+        else:
+            print(f"Model file for {model_name} in strategy '{strategy_input}' not found.")
 
-            # Save model to a pickle file
-            save_model(model, f"Models/{model_name}_model_{strategy}.pkl")
-        print(f"Best model for {strategy} is {best_model_name} with R2 score: {best_r2_score}\n")
-        print(f"ROI mean: {y.mean()}")
-        
+    if best_model is not None:
+        # Use the best model to predict ROI for the given strategy
+        best_model_predictions = best_model.predict(X)
+        mean_predicted_roi = np.mean(best_model_predictions)
+        print(f"Predicted ROI for {strategy_input}: {mean_predicted_roi}\n")
+    else:
+        print(f"No valid model found for strategy '{strategy_input}'.")
 
 # Main function to run the complete pipeline
 def main():
     # Load and prepare data
-    file_path = 'data/digital_marketing_campaign_dataset.csv'
+    file_path = 'Data/digital_marketing_campaign_dataset.csv'
     df = load_and_prepare_data(file_path)
 
-    # Identify top features for model training
+    # Identify top features for model testing
     X = df.drop(columns=['ROI', 'CampaignChannel'])
     y = df['ROI']
-    rf = RandomForestRegressor(n_estimators=100, random_state=42)
-    rf.fit(X, y)
+    rf = load_model("Models/random_forest_model_overall.pkl")  # Load an overall RF model to get top features
     top_features = pd.Series(rf.feature_importances_, index=X.columns).nlargest(7).index
 
-    # Analyze models for each strategy
-    results = analyze_models(df, top_features)
-    
-    print(results)
+    # Take marketing strategy input from the user
+    strategy_input = input("Enter the marketing strategy (Email, PPC, Social Media, Referral, SEO): ").strip()
+
+    # Check if the input is valid
+    valid_strategies = ['Email', 'PPC', 'Social Media', 'Referral', 'SEO']
+    if strategy_input not in valid_strategies:
+        print(f"Invalid strategy input. Please choose from: {', '.join(valid_strategies)}")
+    else:
+        # Analyze models for the given strategy
+        analyze_models(df, top_features, strategy_input)
 
 if __name__ == "__main__":
     main()
