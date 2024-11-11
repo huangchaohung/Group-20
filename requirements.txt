@@ -1,8 +1,15 @@
-[sample requirements.txt]
 ﻿pymongo
 certifi
 nltk
+os
+json
+pickle
 numpy
+pandas
+scikit-learn
+zipcodes
+xgboost
+imblearn
 shap
 transformers
 google_play_scraper
@@ -13,4 +20,3 @@ h2ogpte==1.4.10
 torch
 emoji
 
-[Please add below the requirements we used for the project]

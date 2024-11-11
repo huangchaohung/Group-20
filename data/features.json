@@ -1,0 +1,22 @@
+{
+    "age": "Age of the customer",
+    "job": "Type of job held by the customer",
+    "marital": "Marital status of the customer",
+    "education": "Education level of the customer",
+    "default": "Whether the customer has defaulted on credit (yes/no)",
+    "balance": "Account balance of the customer",
+    "housing": "Whether the customer has a housing loan (1/0)",
+    "loan": "Whether the customer has a personal loan (1/0)",
+    "contact": "Type of contact communication (e.g., unknown, telephone)",
+    "duration": "Duration of last contact in seconds",
+    "campaign": "Number of contacts performed during this campaign",
+    "pdays": "Number of days since last contact from a previous campaign",
+    "previous": "Number of contacts performed before this campaign",
+    "poutcome": "Outcome of the previous marketing campaign",
+    "y": "Target variable indicating if the client has subscribed to a term deposit (yes/no)",
+    "cd_account": "Indicates if the customer has a certificate of deposit account (1/0)",
+    "securities": "Indicates if the customer has securities (1/0)",
+    "TransactionFrequency": "Frequency of transactions made by the customer",
+    "Recency": "Number of days since the customer’s last transaction",
+    "AverageTransactionAmount": "Average amount per transaction for the customer"
+}
