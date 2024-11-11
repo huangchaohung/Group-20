@@ -1,6 +1,6 @@
 FROM python:3.12
 
-WORKDIR /Group-20
+WORKDIR /Group-20/src
 
 RUN python -m venv venv
 
