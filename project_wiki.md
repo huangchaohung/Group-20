@@ -130,11 +130,58 @@ Many competitors emphasize digital and AI-driven campaigns, which the bank aims 
 ## Data Cleaning Processes
 - Removal of duplicates, handling of missing values, and standardizing data formats.
 
-## Feature Engineering Techniques
-### Subgroup A
-- 
-### Subgroup B
-- 
+
+### Synthetic Data Generation
+
+To enhance our dataset, we generated synthetic data for two additional columns, supporting [goal, e.g., enhanced product prediction and segmentation]. This process involved training a machine learning model with overlapping columns from two datasets to predict and generate the missing product data in our current dataset.
+
+#### Methodology Summary
+
+1. **Identifying Overlapping Columns**:
+   - Overlapping columns present in both the source dataset (which contained the target product data) and the current dataset were used as features for training a machine learning model to predict the missing product columns.
+
+2. **Model Training and Prediction**:
+   - Using [mention model type, e.g., Random Forest Regressor], we trained a model to predict the product columns based on overlapping features, thereby generating synthetic data aligned with real data distributions.
+
+3. **Validation and Quality Check**:
+   - Validation was conducted to ensure that the synthetic columns aligned well with existing data and maintained consistent distributions, reducing potential bias.
+
+For full details, refer to **Appendix C: Synthetic Data Generation Notebook**.
+
+
+## Feature Engineering
+
+In this project, feature engineering was performed to enhance the dataset and prepare it for analysis and modeling. Key steps included renaming columns, transforming categorical variables, and creating new features. Below is a summary of the main feature engineering steps applied:
+
+1. **Column Renaming**:
+   - The target variable `y` was renamed to `term_deposit` to provide clarity, making it easier to interpret and reference in subsequent analysis.
+
+2. **Categorical Encoding**:
+   - Categorical columns such as `job`, `marital`, `education`, `month`, and others were identified and prepared for analysis.
+   - Count plots were used for categorical variables to visualize the distribution, ensuring a better understanding of class imbalances or dominant categories.
+
+3. **Product Segmentation**:
+   - The dataset includes various products: `loan`, `term_deposit`, `cd_account`, and `securities`. These products were isolated to analyze individual customer engagement patterns and predict preferences for specific products.
+
+4. **Feature Engineering for Temporal Variables**:
+   - The `month` column was ordered and visualized to understand seasonality and monthly trends, which can help improve model performance by capturing temporal patterns.
+
+5. **Numerical Feature Selection**:
+   - Numerical columns were extracted for separate analysis and visualization, providing insights into features like `balance`, `day`, `duration`, `campaign`, and others. These variables were checked for outliers, skewness, and distributions.
+
+### Example Code Snippet
+In the notebook, the following code was used to process and visualize categorical and numerical columns:
+
+```python
+# Categorical feature identification
+categorical_columns = list(data.select_dtypes(include=['object']).columns) + ["term_deposit", "cd_account", "securities"]
+
+# Numerical feature extraction
+numeric_columns = [_col for _col in data.columns if _col not in categorical_columns]
+
+# Renaming target variable
+data.rename({"y": "term_deposit"}, axis="columns", inplace=True)
+```
 
 ## SQL Queries
 - Examples of queries used for aggregating transaction data, joining tables, and filtering by recent activity.
@@ -150,28 +197,115 @@ A cleaned, structured dataset with essential features for model training and ana
 - Logistic regression, decision trees, random forests, and gradient boosting.
 
 ## Model Selection Criteria
-- Chose models based on interpretability, accuracy, and computational efficiency.
+- Models were chosen based on interpretability, accuracy, computational efficiency, and their suitability for handling categorical and numerical data.
+
+## Detailed Description of the Modeling Process
+
+1. **Feature Selection**:
+   - **Recursive Feature Elimination (RFE)** was used to identify the most relevant features for each product separately. This was necessary as some features had high dimensionality and could introduce noise into the model if not carefully selected.
+
+2. **Data Preprocessing**:
+   - **Categorical Encoding**: Label encoding was applied to categorical columns (`job`, `marital`, `education`, etc.), saving the encoders for consistency across model training and future predictions.
+   - **Scaling**: Standard scaling was used for numerical features to normalize the data. This step helps ensure model stability and improve performance, particularly for models sensitive to feature scales.
+
+3. **Correlation Analysis**:
+   - **Correlation Check**: A correlation matrix was generated to assess relationships between product columns (`loan`, `term_deposit`, `cd_account`, and `securities`). Results showed low correlation, confirming the need to approach feature selection individually for each product model.
 
 ## Detailed Description of the Chosen Model(s)
-- **Gradient Boosting Model**: Selected for its accuracy in predicting conversion likelihood.
+- **Gradient Boosting Model**: Selected for its high accuracy in predicting conversion likelihood and ability to handle complex feature interactions effectively.
+- **Random Forest**: Applied as an additional model, valued for interpretability and robustness against overfitting, especially when used with RFE-selected features.
 
 ## Model Performance Metrics and Interpretation
-- **Precision**: Indicates model’s ability to correctly identify true positives.
-- **Recall**: Demonstrates how well the model identifies all positives.
-- **F1 Score**: Balances precision and recall for a comprehensive metric.
+- **Precision**: Measures the model’s ability to correctly identify true positives, critical for evaluating marketing effectiveness.
+- **Recall**: Indicates the model’s success in capturing all positives, which is essential for understanding campaign reach.
+- **F1 Score**: Provides a balanced metric, combining precision and recall for comprehensive evaluation.
+- **R² Score** (Random Forest and Gradient Boosting Models): Used to evaluate the overall fit of the model, especially for regression tasks related to campaign effectiveness.
+
+## Example Code Snippets
+
+### Feature Selection and Preprocessing
+
+```python
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.feature_selection import RFE
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+
+# Encode categorical variables
+for col in categorical_columns:
+    encoder = LabelEncoder()
+    processed_data[col] = encoder.fit_transform(processed_data[col])
+    with open(f"{model_directory}/{col}_encoder.pkl", "wb") as f:
+        pickle.dump(encoder, f)
+
+# Scale numerical columns
+scaler = StandardScaler()
+processed_data[numerical_columns] = scaler.fit_transform(processed_data[numerical_columns])
+
+# Feature selection with RFE for the 'term_deposit' model
+model = GradientBoostingClassifier()
+rfe = RFE(model, n_features_to_select=10)
+X_rfe = rfe.fit_transform(processed_data, y['term_deposit'])
+```
 
 ---
 
 # Evaluation
 
 ## Evaluation of Model Performance Against Business Objectives
-- Model meets criteria for engagement and conversion, with 15% improvement in predicted conversion rates.
+The models were evaluated to ensure they meet the business objectives of increasing customer engagement and conversion rates. Key performance metrics used for evaluation include:
+
+- **Accuracy**: Provides an overall measure of correct predictions.
+- **F1 Score**: Used as a balanced metric to evaluate both precision and recall, especially important given the potential class imbalance.
+- **Recall**: Measures the ability of the model to capture all true positive cases, ensuring maximum reach in marketing campaigns.
+- **Precision**: Indicates the proportion of correct positive predictions, which is essential to reduce false positives in targeted recommendations.
+
+These metrics demonstrated that the chosen models, particularly those using SMOTE for class balance, effectively aligned with business objectives, showing improvements in engagement and conversion predictions.
+
+## Model Comparison and Insights
+A **Grid Search with Cross-Validation** was employed to optimize model parameters, and the **Standard Scaling** and **Pipeline** setup ensured consistent preprocessing across model training and testing.
+
+- **Gradient Boosting Model**: Exhibited high F1 and accuracy scores, making it suitable for balanced performance.
+- **Random Forest**: Provided strong precision and recall scores, with feature interpretability aiding in customer segmentation insights.
 
 ## Limitations of the Current Approach
-- Model accuracy may decline with rapidly changing customer behaviors.
+- **Class Imbalance**: While SMOTE helps balance classes, it may introduce synthetic data noise, potentially impacting model robustness.
+- **Dependence on Static Features**: The models might underperform if customer behaviors change frequently, as they rely on historical data without time-series analysis.
 
 ## Suggestions for Model Improvements
-- Consider incorporating time-series data or real-time customer interactions.
+- **Implement Real-Time Model Updates**: Dynamic updates based on new customer data could improve accuracy.
+- **Incorporate Additional Data**: Time-based features could be added for a temporal perspective on customer behaviors.
+
+## Code Snippet for Model Evaluation
+
+```python
+from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
+from imblearn.over_sampling import SMOTE
+
+def model_pipeline(X, y, model, param_grid=None):
+    smote = SMOTE(random_state=3101)
+    X_resampled, y_resampled = smote.fit_resample(X, y)
+    
+    # Define pipeline and grid search for parameter tuning
+    pipeline = Pipeline([('scaler', StandardScaler()), ('model', model)])
+    if param_grid:
+        grid_search = GridSearchCV(pipeline, param_grid, cv=10, scoring='accuracy')
+        grid_search.fit(X_resampled, y_resampled)
+        best_pipeline = grid_search.best_estimator_
+    else:
+        best_pipeline = pipeline.fit(X_resampled, y_resampled)
+
+    # Metrics on test data
+    y_pred = best_pipeline.predict(X_test)
+    metrics = {
+        "accuracy": accuracy_score(y_test, y_pred),
+        "f1 Score": f1_score(y_test, y_pred, average="macro"),
+        "recall": recall_score(y_test, y_pred, average="macro"),
+        "precision": precision_score(y_test, y_pred, average="macro"),
+    }
+    return metrics
+```
+### Further Analysis and Visuals
+For a more detailed evaluation, please refer to the [Model Evaluation Section in the Notebook]([link/to/notebook](https://github.com/huangchaohung/Group-20/edit/main/project_wiki.md)).
 
 ---
 
@@ -282,6 +416,10 @@ Tariq, H. (2022). Challenges and Opportunities in European Retail Banking. *Euro
 
 # Appendices
 
+- **Appendix C: Synthetic Data Generation Notebook**
+  - **Description**: Documents the process of generating synthetic product columns using a machine learning model. Includes the full methodology and code.
+  - **Link**: [Link to `[product_synthetic_generation.ipynb](https://github.com/huangchaohung/Group-20/edit/main/project_wiki.md)`]
+ 
 ## Any Additional Information That Doesn't Fit into the Main Sections
 - Extended data exploration summaries and additional analyses.
 
