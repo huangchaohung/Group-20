@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Email Modification Results</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Dynamic Email Modification Results</h2>
+
+    <h3>Differences (Adjustments Needed)</h3>
+    {% if differences %}
+        <ul>
+        {% for feature, change in differences.items() %}
+            <li><strong>{{ feature }}:</strong> {{ change[0] }} &rarr; {{ change[1] }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No adjustments needed.</p>
+    {% endif %}
+
+    <h3>Similarities (No Change Needed)</h3>
+    {% if similarities %}
+        <ul>
+        {% for feature, value in similarities.items() %}
+            <li><strong>{{ feature }}:</strong> {{ value[0] }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No features are set to 1 in both emails.</p>
+    {% endif %}
+
+    {% if download_path %}
+        <a href="{{ url_for('download_features', download_path=download_path) }}" class="btn btn-success mt-3">Download Adjusted Features JSON</a>
+    {% endif %}
+</div>
+</body>
+</html>
