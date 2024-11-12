@@ -8,7 +8,7 @@ random.seed(3101)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def dynamic_email_modifier(recent_email_result, lr=0.5):
+def dynamic_email_modifier(recent_email_result):
     email_a = pd.read_csv(os.path.join(BASE_DIR, '../data/email_data/email_a.csv'))
     email_b = recent_email_result
     recent_email_result.to_csv(os.path.join(BASE_DIR, '../data/email_data/email_b.csv'), index=False)
@@ -28,7 +28,7 @@ def dynamic_email_modifier(recent_email_result, lr=0.5):
     # Determine if adjustments are needed
     if success_rate_a > success_rate_b:
         email_b_feature = __adjust_email_features(
-            email_b_feature, email_a_feature, success_rate_b, success_rate_a, lr, mutually_exclusive
+            email_b_feature, email_a_feature, success_rate_b, success_rate_a, mutually_exclusive
         )
     else:
         # If email_b has the best result, offer a random configuration
@@ -51,11 +51,18 @@ def __calculate_email_percentage(email_a, email_b):
     return success_rate_a, success_rate_b
 
 
-def __adjust_email_features(email_low, email_high, success_low, success_high, lr, mutually_exclusive_groups):
+def __adjust_email_features(email_low, email_high, success_low, success_high, mutually_exclusive_groups):
     new_email = email_low.copy()
     if success_low < success_high:
         for group in mutually_exclusive_groups:
+            high_impact_groups = [
+                ['Tone_Formal', 'Tone_Conversational', 'Tone_Urgent', 'Tone_Friendly'],
+                ['Wording Focus_High Returns', 'Wording Focus_Stable Income', 'Wording Focus_How Money is Used',
+                 'Wording Focus_Security'],
+                ['CTA Position_Early', 'CTA Position_Middle', 'CTA Position_Late']
+            ]
             for feature in group:
+                lr = 0.7 if group in high_impact_groups else 0.3
                 if new_email[feature] != email_high[feature]:
                     new_email[feature] += lr * (email_high[feature] - new_email[feature])
                     new_email[feature] += random.uniform(-0.05, 0.05)
