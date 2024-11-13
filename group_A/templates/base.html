@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            display: flex;
+        }
+        
+        .sidebar {
+          height: 100%;
+          width: 250px;
+          position: fixed;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          background-color: #343a40;
+          color: #ffffff;
+          overflow-x: hidden;
+          padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            color: #ffc107;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .sidebar ul a {
+            color: #e6b5b5;
+            text-decoration: none;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+        .section h2 {
+            color: #343a40;
+        }
+
+        .section img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+        }
+        
+        .main {
+          flex-grow: 1;
+          margin-left: 250px; /* Offset the main content to the right of the fixed sidebar */
+          padding: 20px;
+          background-color: #ffffff;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Dashboard</h2>
+            <ul>
+                {% for section, content in sections.items() %}
+                    <li><a href="#{{ section }}">{{ section }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul><a href="{{ url_for('predict') }}">Customer Segmentation Prediction</a></ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>
