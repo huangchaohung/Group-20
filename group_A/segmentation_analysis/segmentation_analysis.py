@@ -11,6 +11,7 @@ from campaign_data_analysis import numerical_analysis
 from balance import apply_SMOTE
 from campaign_model_evaluation import campaign_model_evaluation
 from campaign_model_evaluation import campaign_feature_visualization
+from real_time_evalution import real_time_segmentation_evaluation
 
 def customer_segmentation():
     # Load Data
@@ -29,9 +30,10 @@ def customer_segmentation():
     clusters, silhouette_avg = kmeans_pca(processed_df, 7)
     df['cluster'] = clusters
     df_full['cluster'] = clusters
-    #kmeans_pattern(processed_df)
-    #model_comparison(processed_df, silhouette_avg)
-    #visualization(df)
+    kmeans_pattern(processed_df)
+    model_comparison(processed_df, silhouette_avg)
+    visualization(df)
+    real_time_segmentation_evaluation(df)
 
     categorical_cols = ['job', 'marital', 'education', 'default', 'contact', 'poutcome']
     numerical_cols = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous', 'TransactionFrequency', 'Recency', 'AverageTransactionAmount', 'housing', 'loan', 'cd_account', 'securities']
@@ -40,7 +42,7 @@ def customer_segmentation():
     numerical_cols.append('cluster')
     df_full = df_full.drop(columns=['month','day'])
     X, y, X_train_resampled, X_test, y_train_resampled, y_test = apply_SMOTE(df_full, categorical_cols)
-    #campaign_model_evaluation(X, X_train_resampled, X_test, y_train_resampled, y_test)
+    campaign_model_evaluation(X, X_train_resampled, X_test, y_train_resampled, y_test)
     campaign_feature_visualization(df_full)
 
 
