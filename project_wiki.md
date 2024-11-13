@@ -658,6 +658,7 @@ From here, the email will be sent out and tested again to evaluate the performan
 
 This new email sent out had poor performance of about a 0.2 click rate, while the previous email had a click rate of 0.45. As such, we adjust the email to become more like the first email. The results of running this email would be something like this. 
 
+```
 Email A Click Rate: 0.432
 
 Email B Click Rate: 0.252
@@ -703,7 +704,7 @@ Urgency Tone_Strong Urgency: 0 -> 1
 Bullet Points_None: 1 -> 0
 
 Bullet Points_Few: 0 -> 1
-
+```
 
 We can see the changes made and then based on these new features, we can get a new email. 
 
