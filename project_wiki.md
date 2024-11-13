@@ -359,7 +359,9 @@ For a more detailed evaluation, please refer to the [Model Evaluation Section in
 
 ## Subgroup B
 - Question 1:
-- Question 2:
+- Question 2: 
+What strategies can we implement to optimize our marketing campaigns in real-time? Create an algorithm for dynamic campaign adjustment based on real-time performance metrics. Simulate the impact of proposed adjustments on campaign effectiveness.
+
 - Question 3:
 - Optional 1:
 - Optional 2:
@@ -380,6 +382,355 @@ For a more detailed evaluation, please refer to the [Model Evaluation Section in
 - Anticipated improvements in engagement and conversion rates for each recommendation.
 
 ---
+
+# Marketing Campaigns
+
+The marketing campaign chosen to reach out to potential clients would be through the use of emails. First, through our product recommendation system developed in the first question, we split our customers into the demographics based on what products we should recommend to them. For example, assuming we have identified a group of customers who should take up CD accounts, we will send an email to this group of individuals promoting the benefits of CD accounts, encouraging them to sign up. 
+
+## Email features
+An email will consist of several features. Heres how an email will be defined in our campaign.
+
+```python
+{
+    "Number of Images_0": 1,
+    "Number of Images_1-2": 0,
+    "Number of Images_3-5": 0,
+    "Number of Images_6+": 0,
+
+    "Text Length_Short": 1,
+    "Text Length_Medium": 0,
+    "Text Length_Long": 0,
+    "Text Length_Very_Long": 0,
+
+    "Font Emphasis_None": 1,
+    "Font Emphasis_Bold": 0,
+    "Font Emphasis_Italic": 0,
+    "Font Emphasis_Both": 0,
+
+    "Wording Focus_High Returns": 1,
+    "Wording Focus_Stable Income": 0,
+    "Wording Focus_How Money is Used": 0,
+    "Wording Focus_Security": 0,
+
+    "Tone_Formal": 1,
+    "Tone_Conversational": 0,
+    "Tone_Urgent": 0,
+    "Tone_Friendly": 0,
+
+    "Subject Line Type_Promotional": 1,
+    "Subject Line Type_Informative": 0,
+    "Subject Line Type_Personalized": 0,
+    "Subject Line Type_Question-based": 0,
+
+    "Image Type_Professional": 1,
+    "Image Type_Lifestyle": 0,
+    "Image Type_Infographic": 0,
+    "Image Type_Icons": 0,
+
+    "Layout Complexity_Simple": 1,
+    "Layout Complexity_Moderate": 0,
+    "Layout Complexity_Complex": 0,
+
+    "Target Audience_High Salary": 1,
+    "Target Audience_Low Salary": 0,
+    "Target Audience_Mid Salary": 0,
+    "Target Audience_Young Professionals": 0,
+
+    "Font Size_Small": 1,
+    "Font Size_Medium": 0,
+    "Font Size_Large": 0,
+
+    "Color Contrast_High": 1,
+    "Color Contrast_Medium": 0,
+    "Color Contrast_Low": 0,
+
+    "Testimonial Inclusion_None": 1,
+    "Testimonial Inclusion_Short": 0,
+    "Testimonial Inclusion_Detailed": 0,
+    "Testimonial Inclusion_User Reviews": 0,
+
+    "Data-Driven Content_None": 1,
+    "Data-Driven Content_Graphs": 0,
+    "Data-Driven Content_Projections": 0,
+    "Data-Driven Content_Comparisons": 0,
+
+    "Offer Type_Fixed Rate": 1,
+    "Offer Type_Variable Rate": 0,
+    "Offer Type_Bonus Rate": 0,
+    "Offer Type_Tiered Rate": 0,
+
+    "Email Length_Short": 1,
+    "Email Length_Medium": 0,
+    "Email Length_Long": 0,
+
+    "Personalization_None": 1,
+    "Personalization_Subject": 0,
+    "Personalization_Body and Subject": 0,
+    "Personalization_Offer": 0,
+
+    "Urgency Tone_None": 1,
+    "Urgency Tone_Mild Urgency": 0,
+    "Urgency Tone_Strong Urgency": 0,
+    "Urgency Tone_Exclusive Offer": 0,
+
+    "Bullet Points_None": 1,
+    "Bullet Points_Few": 0,
+    "Bullet Points_Many": 0
+}
+```
+
+## Example of an email
+
+An example of how this would look is like so 
+
+
+Subject Line: Secure High Returns with Our Fixed-Rate CD Accounts
+
+Body:
+
+[Insert Professional Image, e.g., a secure vault or bank logo]
+
+Dear Valued Customer,
+
+Are you looking for a secure and rewarding way to grow your wealth? Our **Certificate of Deposit (CD) accounts** offer a reliable investment opportunity with **fixed interest rates** designed to help you achieve your financial goals.
+
+With our CD accounts, you can:
+
+- **Enjoy guaranteed high returns** over the term of your deposit.
+- Benefit from a **safe, low-risk investment option**.
+
+Whether you’re planning for future expenses or simply looking for a dependable growth solution, our CD accounts offer stability and a secure return on your investment. Open an account today and let your money work for you.
+
+Warm regards,
+[Your Bank Name]
+
+## Email improvement
+
+From there, we will analyze the results of this email through different metrics such as "Click rates", "Subscription rates". In the spirit of improvement, we will create another email that we will send, and if this new email performs worse, heres where our adjustment comes in to create better emails. 
+
+Firstly, we identify a few groups of features that we deem are extremely important and have higher impact. The groups are as shown below.
+
+```python
+high_impact_groups = [
+    ['Tone_Formal', 'Tone_Conversational', 'Tone_Urgent', 'Tone_Friendly'],
+    ['Wording Focus_High Returns', 'Wording Focus_Stable Income', 'Wording Focus_How Money is Used', 'Wording Focus_Security'],
+    ['CTA Position_Early', 'CTA Position_Middle', 'CTA Position_Late']
+]
+```
+
+Next, we modify the email that has poorer performance to resemble the better performing email in terms of features. 
+
+```python
+def adjust_email_features(email_low, email_high, success_low, success_high, mutually_exclusive_groups, high_impact_groups):
+    new_email = email_low.copy()
+    
+    if success_low < success_high:
+        # Calculate feature similarity: count how many features are the same between the emails
+        matching_features = sum(1 for feature in email_low if email_low[feature] == email_high[feature])
+        total_features = len(email_low)
+        similarity_ratio = matching_features / total_features  # Ratio of matching features (0 to 1)
+
+        for group in mutually_exclusive_groups:
+            # Determine the learning rate based on the group impact
+            lr = 0.7 if group in high_impact_groups else 0.3
+
+            for feature in group:
+                if new_email[feature] != email_high[feature]:
+                    # Adjust the feature closer to the high-performing email
+                    new_email[feature] += lr * (email_high[feature] - new_email[feature])
+
+                    # Set noise based on feature similarity: more similarity means larger noise
+                    baseline_noise = 0.1
+                    noise_scaling = baseline_noise + 0.1 * similarity_ratio  # Higher similarity increases noise
+                    random_noise = random.uniform(-noise_scaling, noise_scaling)
+                    new_email[feature] += random_noise
+
+                    # Ensure binary values stay between 0 and 1
+                    new_email[feature] = max(0, min(1, new_email[feature]))
+
+            # Ensure mutual exclusivity in the group
+            max_feature = max(group, key=lambda f: new_email[f])
+            for feature in group:
+                new_email[feature] = 1 if feature == max_feature else 0
+
+    return new_email
+```
+
+Here the learning rate (lr) is the variable that controls how closely the new email is going to resemble the better email. A higher lr would result in the new email feature being closer in terms of value.
+
+A random value (small noise) has been added to help make sure that the emails will not be the same. 
+
+From here, the email will be sent out and tested again to evaluate the performance of the email. Asynchronously, we will be collecting data and analyzing to see if the weights for the learning rate need to be adjusted.
+
+## Simulation 
+
+### Email B features
+
+```python
+{
+    "Number of Images_0": 1,
+    "Number of Images_1-2": 0,
+    "Number of Images_3-5": 0,
+    "Number of Images_6+": 0,
+
+    "Text Length_Short": 1,
+    "Text Length_Medium": 0,
+    "Text Length_Long": 0,
+    "Text Length_Very_Long": 0,
+
+    "Font Emphasis_None": 0,
+    "Font Emphasis_Bold": 1,
+    "Font Emphasis_Italic": 0,
+    "Font Emphasis_Both": 0,
+
+    "Wording Focus_High Returns": 1,
+    "Wording Focus_Stable Income": 0,
+    "Wording Focus_How Money is Used": 0,
+    "Wording Focus_Security": 0,
+
+    "Tone_Formal": 0,
+    "Tone_Conversational": 1,
+    "Tone_Urgent": 0,
+    "Tone_Friendly": 0,
+
+    "Subject Line Type_Promotional": 0,
+    "Subject Line Type_Informative": 0,
+    "Subject Line Type_Personalized": 1,
+    "Subject Line Type_Question-based": 0,
+
+    "Image Type_Professional": 1,
+    "Image Type_Lifestyle": 0,
+    "Image Type_Infographic": 0,
+    "Image Type_Icons": 0,
+
+    "Layout Complexity_Simple": 1,
+    "Layout Complexity_Moderate": 0,
+    "Layout Complexity_Complex": 0,
+
+    "Target Audience_High Salary": 1,
+    "Target Audience_Low Salary": 0,
+    "Target Audience_Mid Salary": 0,
+    "Target Audience_Young Professionals": 0,
+
+    "Font Size_Small": 0,
+    "Font Size_Medium": 0,
+    "Font Size_Large": 1,
+
+    "Color Contrast_High": 1,
+    "Color Contrast_Medium": 0,
+    "Color Contrast_Low": 0,
+
+    "Testimonial Inclusion_None": 1,
+    "Testimonial Inclusion_Short": 0,
+    "Testimonial Inclusion_Detailed": 0,
+    "Testimonial Inclusion_User Reviews": 0,
+
+    "Data-Driven Content_None": 1,
+    "Data-Driven Content_Graphs": 0,
+    "Data-Driven Content_Projections": 0,
+    "Data-Driven Content_Comparisons": 0,
+
+    "Offer Type_Fixed Rate": 1,
+    "Offer Type_Variable Rate": 0,
+    "Offer Type_Bonus Rate": 0,
+    "Offer Type_Tiered Rate": 0,
+
+    "Email Length_Short": 1,
+    "Email Length_Medium": 0,
+    "Email Length_Long": 0,
+
+    "Personalization_None": 0,
+    "Personalization_Subject": 0,
+    "Personalization_Body and Subject": 1,
+    "Personalization_Offer": 0,
+
+    "Urgency Tone_None": 0,
+    "Urgency Tone_Mild Urgency": 0,
+    "Urgency Tone_Strong Urgency": 1,
+    "Urgency Tone_Exclusive Offer": 0,
+
+    "Bullet Points_None": 0,
+    "Bullet Points_Few": 1,
+    "Bullet Points_Many": 0
+}
+```
+
+This new email sent out had poor performance of about a 0.2 click rate, while the previous email had a click rate of 0.45. As such, we adjust the email to become more like the first email. The results of running this email would be something like this. 
+
+Email A Click Rate: 0.432
+Email B Click Rate: 0.252
+====== Changes Made ======
+Font Emphasis_None: 1 -> 0
+Font Emphasis_Bold: 0 -> 1
+Tone_Formal: 1 -> 0
+Tone_Conversational: 0 -> 1
+Subject Line Type_Promotional: 1 -> 0
+Subject Line Type_Personalized: 0 -> 1
+Target Audience_High Salary: 1 -> 0
+Target Audience_Mid Salary: 0 -> 1
+Font Size_Small: 1 -> 0
+Font Size_Large: 0 -> 1
+Testimonial Inclusion_None: 1 -> 0
+Testimonial Inclusion_Detailed: 0 -> 1
+Offer Type_Fixed Rate: 1 -> 0
+Offer Type_Variable Rate: 0 -> 1
+Personalization_None: 1 -> 0
+Personalization_Body and Subject: 0 -> 1
+Urgency Tone_None: 1 -> 0
+Urgency Tone_Strong Urgency: 0 -> 1
+Bullet Points_None: 1 -> 0
+Bullet Points_Few: 0 -> 1
+
+We can see the changes made and then based on these new features, we can get a new email. 
+
+### First email (poor performer)
+
+Subject Line: Earn Secure, High Returns with Our Fixed-Rate CD
+
+Body:
+
+[Professional Image: e.g., secure bank vault or logo]
+
+Hello,
+
+Are you looking for a secure and straightforward way to grow your savings? Our **Fixed-Rate Certificate of Deposit (CD)** offers a reliable investment option with **high, guaranteed returns**. This is a no-fuss, low-risk way to ensure your money works for you.
+
+Why choose our Fixed-Rate CD?
+
+- **Consistent, high returns** with a fixed interest rate
+- Stability and security for long-term financial growth
+Act now and start building a stable financial future with our trusted Fixed-Rate CD.
+
+Sincerely,
+[Your Bank Name]
+
+### New improved email
+
+Subject Line: [Your Name], Earn Higher Returns with Our Variable Rate CD!
+
+Body:
+
+[Professional Image: e.g., a business professional reviewing investment options]
+
+Hello [First Name],
+
+Are you ready to make the most of your savings? With our **Variable Rate Certificate of Deposit (CD)**, you can enjoy a unique opportunity to earn **higher returns as market rates rise**. It’s a flexible and rewarding way to grow your wealth over time.
+
+Why choose our Variable Rate CD?
+
+- **High earning potential** with market-driven returns
+- Flexibility to maximize gains over the deposit term
+- Backed by our industry-leading expertise
+
+Here’s what one of our valued customers had to say:
+
+**_"Opening a Variable Rate CD was the best decision I made for my future. The returns have consistently outpaced my previous investments, and I love knowing my money is in safe hands with [Bank Name]."_**
+
+This offer won’t last long—take advantage of this exclusive opportunity to make your money work harder for you.
+
+Best regards,
+[Your Bank Name]
+
 
 # Future Work
 
