@@ -383,7 +383,7 @@ What strategies can we implement to optimize our marketing campaigns in real-tim
 
 ---
 
-# Marketing Campaigns
+# Marketing Campaigns (Subgroup B: Question 2)
 
 The marketing campaign chosen to reach out to potential clients would be through the use of emails. First, through our product recommendation system developed in the first question, we split our customers into the demographics based on what products we should recommend to them. For example, assuming we have identified a group of customers who should take up CD accounts, we will send an email to this group of individuals promoting the benefits of CD accounts, encouraging them to sign up. 
 
