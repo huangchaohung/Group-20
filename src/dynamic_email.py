@@ -7,6 +7,11 @@ random.seed(3101)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+high_impact_groups = [
+    ['Tone_Formal', 'Tone_Conversational', 'Tone_Urgent', 'Tone_Friendly'],
+    ['Wording Focus_High Returns', 'Wording Focus_Stable Income', 'Wording Focus_How Money is Used', 'Wording Focus_Security'],
+    ['CTA Position_Early', 'CTA Position_Middle', 'CTA Position_Late']
+]
 
 def dynamic_email_modifier(recent_email_result):
     email_a = pd.read_csv(os.path.join(BASE_DIR, '../data/email_data/email_a.csv'))
@@ -28,7 +33,7 @@ def dynamic_email_modifier(recent_email_result):
     # Determine if adjustments are needed
     if success_rate_a > success_rate_b:
         email_b_feature = __adjust_email_features(
-            email_b_feature, email_a_feature, success_rate_b, success_rate_a, mutually_exclusive
+            email_b_feature, email_a_feature, success_rate_b, success_rate_a, mutually_exclusive, high_impact_groups
         )
     else:
         # If email_b has the best result, offer a random configuration
@@ -51,26 +56,33 @@ def __calculate_email_percentage(email_a, email_b):
     return success_rate_a, success_rate_b
 
 
-def __adjust_email_features(email_low, email_high, success_low, success_high, mutually_exclusive_groups):
+def __adjust_email_features(email_low, email_high, success_low, success_high, mutually_exclusive_groups, high_impact_groups):
     new_email = email_low.copy()
     if success_low < success_high:
+        # Calculate feature similarity: count how many features are the same between the emails
+        matching_features = sum(1 for feature in email_low if email_low[feature] == email_high[feature])
+        total_features = len(email_low)
+        similarity_ratio = matching_features / total_features  # Ratio of matching features (0 to 1)
         for group in mutually_exclusive_groups:
-            high_impact_groups = [
-                ['Tone_Formal', 'Tone_Conversational', 'Tone_Urgent', 'Tone_Friendly'],
-                ['Wording Focus_High Returns', 'Wording Focus_Stable Income', 'Wording Focus_How Money is Used',
-                 'Wording Focus_Security'],
-                ['CTA Position_Early', 'CTA Position_Middle', 'CTA Position_Late']
-            ]
+            # Determine the learning rate based on the group impact
+            lr = 0.7 if group in high_impact_groups else 0.3
             for feature in group:
-                lr = 0.7 if group in high_impact_groups else 0.3
                 if new_email[feature] != email_high[feature]:
+                    # Adjust the feature closer to the high-performing email
                     new_email[feature] += lr * (email_high[feature] - new_email[feature])
-                    new_email[feature] += random.uniform(-0.05, 0.05)
-                    new_email[feature] = max(0, min(1, new_email[feature]))
 
+                    # Set noise based on feature similarity: more similarity means larger noise
+                    baseline_noise = 0.1
+                    noise_scaling = baseline_noise + 0.1 * similarity_ratio  # Higher similarity increases noise
+                    random_noise = random.uniform(-noise_scaling, noise_scaling)
+                    new_email[feature] += random_noise
+                    # Ensure binary values stay between 0 and 1
+                    new_email[feature] = max(0, min(1, new_email[feature]))
+            # Ensure mutual exclusivity in the group
             max_feature = max(group, key=lambda f: new_email[f])
             for feature in group:
                 new_email[feature] = 1 if feature == max_feature else 0
+
     return new_email
 
 
