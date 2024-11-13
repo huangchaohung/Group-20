@@ -483,7 +483,7 @@ An email will consist of several features. Heres how an email will be defined in
 
 An example of how this would look is like so 
 
-
+```
 Subject Line: Secure High Returns with Our Fixed-Rate CD Accounts
 
 Body:
@@ -503,6 +503,7 @@ Whether you’re planning for future expenses or simply looking for a dependable
 
 Warm regards,
 [Your Bank Name]
+```
 
 ## Email improvement
 
@@ -558,7 +559,7 @@ def adjust_email_features(email_low, email_high, success_low, success_high, mutu
 
 Here the learning rate (lr) is the variable that controls how closely the new email is going to resemble the better email. A higher lr would result in the new email feature being closer in terms of value.
 
-A random value (small noise) has been added to help make sure that the emails will not be the same. 
+A random value (small noise) has been added to help make sure that the emails will not be the same, this noise scales to become larger depending on how similar the 2 emails are in terms of features to prevent convergence.
 
 From here, the email will be sent out and tested again to evaluate the performance of the email. Asynchronously, we will be collecting data and analyzing to see if the weights for the learning rate need to be adjusted.
 
@@ -658,33 +659,58 @@ From here, the email will be sent out and tested again to evaluate the performan
 This new email sent out had poor performance of about a 0.2 click rate, while the previous email had a click rate of 0.45. As such, we adjust the email to become more like the first email. The results of running this email would be something like this. 
 
 Email A Click Rate: 0.432
+
 Email B Click Rate: 0.252
+
 ====== Changes Made ======
+
 Font Emphasis_None: 1 -> 0
+
 Font Emphasis_Bold: 0 -> 1
+
 Tone_Formal: 1 -> 0
+
 Tone_Conversational: 0 -> 1
+
 Subject Line Type_Promotional: 1 -> 0
+
 Subject Line Type_Personalized: 0 -> 1
+
 Target Audience_High Salary: 1 -> 0
+
 Target Audience_Mid Salary: 0 -> 1
+
 Font Size_Small: 1 -> 0
+
 Font Size_Large: 0 -> 1
+
 Testimonial Inclusion_None: 1 -> 0
+
 Testimonial Inclusion_Detailed: 0 -> 1
+
 Offer Type_Fixed Rate: 1 -> 0
+
 Offer Type_Variable Rate: 0 -> 1
+
 Personalization_None: 1 -> 0
+
 Personalization_Body and Subject: 0 -> 1
+
 Urgency Tone_None: 1 -> 0
+
 Urgency Tone_Strong Urgency: 0 -> 1
+
 Bullet Points_None: 1 -> 0
+
 Bullet Points_Few: 0 -> 1
+
 
 We can see the changes made and then based on these new features, we can get a new email. 
 
 ### First email (poor performer)
 
+
+```
 Subject Line: Earn Secure, High Returns with Our Fixed-Rate CD
 
 Body:
@@ -703,9 +729,13 @@ Act now and start building a stable financial future with our trusted Fixed-Rate
 
 Sincerely,
 [Your Bank Name]
+```
+
 
 ### New improved email
 
+
+```
 Subject Line: [Your Name], Earn Higher Returns with Our Variable Rate CD!
 
 Body:
@@ -730,6 +760,7 @@ This offer won’t last long—take advantage of this exclusive opportunity to m
 
 Best regards,
 [Your Bank Name]
+```
 
 
 # Future Work
