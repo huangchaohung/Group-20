@@ -136,7 +136,7 @@ The project uses a dataset from Kaggle related to the direct marketing campaigns
    ```
 
 3. **Access the Application**:  
-   Once the container is running, you can access the application API at `http://localhost:5001`. Use this URL in a browser or with a tool like Postman to test the endpoints.
+   Once the container is running, you can access the application API at `http://localhost:5000`. Use this URL in a browser or with a tool like Postman to test the endpoints.
 
 ## API Documentation
 
