@@ -132,7 +132,7 @@ The project uses a dataset from Kaggle related to the direct marketing campaigns
 2. **Run the Docker Container**:  
    Use the following command to run the container, specifying port `5000` (as per the `EXPOSE` statement in the Dockerfile):
    ```bash
-   docker run -d --env-file .env -p 5000:5000 bank-marketing-ai
+   docker run -p 5000:5000 bank-marketing-ai
    ```
 
 3. **Access the Application**:  
