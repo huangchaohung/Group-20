@@ -470,13 +470,13 @@ Our segmentation model leverages key data points across various attributes of cu
 1. **Data Preparation**: Transactional data was normalized to ensure comparability, with product ownership categories and recency measures standardized for input uniformity.
 2. **Algorithm Selection**: We applied K-means clustering to identify natural groupings of customers. Cluster quantity was fine-tuned using the elbow method and silhouette scores, aiming to balance model simplicity with meaningful segmentation.
 
-<img src="image/elbow15.png" alt="elbow method" width="250"/>
+<img src="image/elbow15.png" alt="elbow method"/>
 
-<img src="image/Kmeans_Silhouette_Score_Pattern.png" alt="Kmeans_Silhouette_Score_Pattern" width="250"/>
+<img src="image/Kmeans_Silhouette_Score_Pattern.png" alt="Kmeans_Silhouette_Score_Pattern"/>
 
 3. **Cluster Interpretation**: Following clustering, we examined each segment for defining characteristics (e.g., focus on loans, high transaction frequency) to build accurate segment profiles.
 
-<img src="image/Kmeans_PCA.png" alt="Kmeans_PCA" width="250"/>
+<img src="image/Kmeans_PCA.png" alt="Kmeans_PCA"/>
 
 ---
 
@@ -484,7 +484,7 @@ Our segmentation model leverages key data points across various attributes of cu
 
 Each segment is described by unique behaviors and preferences, leading to specific engagement needs and marketing opportunities.
 
-<img src="image/Product_ownership.png" alt="Cluster diagram" width="250"/>
+<img src="image/Product_ownership.png" alt="Cluster diagram"/>
 
 ### Segment 0: Moderate Transaction Frequency, High Housing Loan Ownership
 - **Characteristics**: 
@@ -554,7 +554,7 @@ Each segment is described by unique behaviors and preferences, leading to specif
 
 ## Key Engagement Factors
 
-<img src="image/campaign_feature_importance.png" alt="Campaign feature importance" width="250"/>
+<img src="image/campaign_feature_importance.png" alt="Campaign feature importance"/>
 
 ### 1. **Duration of Previous Contact**
    - **Explanation**: The duration of the contact between previous campaigns (measured in days) plays a crucial role in determining the effectiveness of future engagements. A shorter time frame between contacts typically results in higher engagement.
@@ -567,7 +567,7 @@ Each segment is described by unique behaviors and preferences, leading to specif
 ### 2. **Outcome of Previous Contact (poutcome_success)**
    - **Explanation**: The outcome of past interactions with customers, particularly whether the previous campaign resulted in success (e.g., subscription or product adoption), significantly influences future engagement. Here is a table showing success rate:
 
-<img src="image/poutcome_summary_table.png" alt="Poutcome table" width="250"/>
+<img src="image/poutcome_summary_table.png" alt="Poutcome table"/>
 
    - **Insights**: 
      - Customers who responded positively to previous campaigns (e.g., subscribing to a term deposit or engaging with an offer) are more likely to engage in subsequent campaigns.
