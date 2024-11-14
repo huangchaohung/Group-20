@@ -1034,72 +1034,178 @@ Predicted ROI: 1.9171140411773933
 
 
 ### Random Forest
+```python
+# Randomized Search CV to get the best given parameters that will return the best results
+def rf_best_params(X_train, y_train):
+    param_dist = {
+        'n_estimators': [50, 100, 200],
+        'max_depth': [5, 10, 15],
+        'min_samples_split': [2, 5, 10],
+        'min_samples_leaf': [1, 2, 4]
+    }
+
+    random_search = RandomizedSearchCV(RandomForestRegressor(random_state=42), param_distributions=param_dist, n_iter=20, cv=5, scoring='neg_mean_squared_error', random_state=42)
+    random_search.fit(X_train, y_train)
+
+    best_params = random_search.best_params_
+    return best_params
+
+# Ensure the 'Models' directory exists
+if not os.path.exists('Models'):
+    os.makedirs('Models')
+
+# Get the unique strategies
+marketing_strategies = df_marketing['CampaignChannel'].unique().tolist()
+
+# Conduct analysis for each strategy
+for strategy in marketing_strategies:
+    print(f"========== {strategy} ==========")
+
+    # Filter dataset for the current strategy
+    X_strategy = df_marketing[df_marketing['CampaignChannel'] == strategy]
+    Y_strategy = X_strategy['ROI']
+    X_strategy = X_strategy.drop(columns=['ROI', 'CampaignChannel'])
+    X_strategy = X_strategy[top_features]
+
+    # Split the data
+    X_train, X_test, y_train, y_test = train_test_split(X_strategy, Y_strategy, test_size=0.2, random_state=42)
+
+    # Get the best parameters for RandomForestRegressor
+    best_params = rf_best_params(X_train, y_train)
+
+    # Train the model
+    model = RandomForestRegressor(**best_params, random_state=42)
+    model.fit(X_train, y_train)
+
+    # Make predictions
+    y_pred = model.predict(X_test)
+
+    # Calculate performance metrics
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+
+    # Display results
+    print(f"Mean Absolute Error (MAE): {mae}")
+    print(f"Root Mean Squared Error (RMSE): {rmse}")
+    print(f"R2 Score: {r2}")
+    print(f'Predicted ROI: {np.mean(y_pred)}')
+    print()
+
+    # Save the model
+    model_filename = f"Models/random_forest_model_{strategy}.pkl"
+    with open(model_filename, 'wb') as file:
+        pickle.dump(model, file)
+    
+```
+
 Results for random forest below:
 
+```
 ========== Email ==========
-Mean Absolute Error (MAE): 0.3635846723121918
-Root Mean Squared Error (RMSE): 1.4621629173026365
 R2 Score: 0.8999945739883014
-ROI Mean: 1.4581831090204065
-
+Predicted ROI: 1.5767875577365391
 ========== PPC ==========
-Mean Absolute Error (MAE): 0.13090542932784355
-Root Mean Squared Error (RMSE): 0.3614253063283053
 R2 Score: 0.990498427443445
-ROI Mean: 1.8895801537151282
-
+Predicted ROI: 1.2427470419154543
 ========== Social Media ==========
-Mean Absolute Error (MAE): 0.517514965653648
-Root Mean Squared Error (RMSE): 2.1296559773232175
 R2 Score: 0.8633737953258844
-ROI Mean: 2.1971547087470658
-
+Predicted ROI: 2.2731811451307222
 ========== Referral ==========
-Mean Absolute Error (MAE): 0.7038192118197603
-Root Mean Squared Error (RMSE): 3.1500072996704787
 R2 Score: 0.7735972963734217
-ROI Mean: 1.8996245008144463
-
+Predicted ROI: 2.374696632115653
 ========== SEO ==========
-Mean Absolute Error (MAE): 0.8148669522459936
-Root Mean Squared Error (RMSE): 3.3971226004689283
 R2 Score: 0.6674107186663398
-ROI Mean: 1.9732796784077806
+Predicted ROI: 2.7396803604615543
+```
 
 # Gradient Boosting
 
+```python
+# Ensure the 'Models' directory exists
+if not os.path.exists('Models'):
+    os.makedirs('Models')
+
+# Define the parameter grid for hyperparameter tuning
+param_grid = {
+    'n_estimators': [50, 100, 150],
+    'learning_rate': [0.1, 0.2, 0.3],
+    'max_depth': [3, 4, 5]
+}
+
+# Get the unique strategies
+marketing_strategies = df_marketing['CampaignChannel'].unique().tolist()
+
+# Conduct analysis for each strategy
+for strategy in marketing_strategies:
+    print(f"========== {strategy} ==========")
+
+    # Filter dataset for the current strategy
+    X_strategy = df_marketing[df_marketing['CampaignChannel'] == strategy]
+    Y_strategy = X_strategy['ROI']
+    X_strategy = X_strategy.drop(columns=['ROI', 'CampaignChannel'])
+    X_strategy = X_strategy[top_features]
+
+    # Split the data
+    X_train, X_test, y_train, y_test = train_test_split(X_strategy, Y_strategy, test_size=0.2, random_state=42)
+
+    # Initialize the model
+    model = GradientBoostingRegressor(random_state=42)
+
+    # Perform GridSearchCV for hyperparameter tuning
+    grid_search = RandomizedSearchCV(estimator=model, param_distributions=param_grid, scoring='neg_mean_squared_error', cv=3, n_jobs=-1)
+    grid_search.fit(X_train, y_train)
+
+    # Get the best parameters
+    best_params = grid_search.best_params_
+    
+
+    # Train the model with the best parameters
+    model = GradientBoostingRegressor(**best_params, random_state=42)
+    model.fit(X_train, y_train)
+
+    # Make predictions
+    y_pred = model.predict(X_test)
+
+    # Calculate performance metrics
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+
+    # Display results
+    print(f"Mean Absolute Error (MAE): {mae}")
+    print(f"Root Mean Squared Error (RMSE): {rmse}")
+    print(f"R2 Score: {r2}")
+    print(f'Predicted ROI: {np.mean(y_pred)}')
+    print()
+
+    # Save the model
+    model_filename = f"Models/gradient_boosting_model_{strategy}.pkl"
+    with open(model_filename, 'wb') as file:
+        pickle.dump(model, file)
+    
+
+```
+
 Gradient boosting model results below:
 
+```
 ========== Email ==========
-Mean Absolute Error (MAE): 0.31036795282328883
-Root Mean Squared Error (RMSE): 1.4629699982375177
 R2 Score: 0.8998841420419087
-ROI Mean: 1.4581831090204065
-
+Predicted ROI: 1.5392578749485981
 ========== PPC ==========
-Mean Absolute Error (MAE): 0.15835061863844893
-Root Mean Squared Error (RMSE): 0.37407659944440647
 R2 Score: 0.9898216013495315
-ROI Mean: 1.8895801537151282
-
+Predicted ROI: 1.252372127498507
 ========== Social Media ==========
-Mean Absolute Error (MAE): 0.8069433342812458
-Root Mean Squared Error (RMSE): 3.7075425880202606
-R2 Score: 0.5859170068090196
-ROI Mean: 2.1971547087470658
-
+R2 Score: 0.5862012779478349
+Predicted ROI: 2.2680550241447874
 ========== Referral ==========
-Mean Absolute Error (MAE): 0.37660525726015814
-Root Mean Squared Error (RMSE): 1.236299045631206
-R2 Score: 0.9651256954110944
-ROI Mean: 1.8996245008144463
-
+R2 Score: 0.9662770578315517
+Predicted ROI: 2.24952482745914
 ========== SEO ==========
-Mean Absolute Error (MAE): 0.5236326716013449
-Root Mean Squared Error (RMSE): 1.9131095551317019
-R2 Score: 0.8945211250078701
-ROI Mean: 1.9732796784077806
-
+R2 Score: 0.9063279671968358
+Predicted ROI: 2.467867182157421
+```
 We will dynamically select the best model to predict the ROI for each strategy.
 
 
