@@ -492,7 +492,7 @@ What strategies can we implement to optimize our marketing campaigns in real-tim
 
 To predict and mitigate customer churn using machine learning, we can break down the process into three main steps: model development, interpretation of key drivers of churn, and implementation of an early warning system with tailored retention strategies.
 
-For this question, we will be using [Churn Modelling data](data/Churn_Modelling.csv)
+For this question, we will be using [Churn Modelling data](data/Churn_Modelling.csv) for customer churn prediction:
 
 *Data Features*:
 
@@ -526,21 +526,19 @@ A SHAP summary bar graph below indicate that factors like the number of products
 
 
 ![SHAP Summary](image/shap_summary.png)
+
 **From the SHAP summary plot we could observe that:**
 
-1. Number Of Products has the strongest influence on churn prediction. 
-
+1. **Number Of Products has the strongest influence on churn prediction：**
 Customers with fewer products (represented by the red dots on the left) have a higher chance of churn, while those with more products (blue dots) are less likely to churn. 
 
-2. Age
-
+2. **Age：**
 Older customers (blue dots) are more likely to churn, as indicated by their impact on the positive SHAP values. 
 
-3. Memeber activity status
-
+3. **Memeber activity status：**
 Active members (blue) tend to have lower churn probabilities, while inactive members (red) have higher churn risks. 
 
-Other Influential Features: 
+4. **Other Influential Features:** 
 - Geographic location: 
 Customers from Germany (feature Geography_Germany) have a higher likelihood of churn compared to customers from Spain (feature Geography_Spain).
 - Balance:
