@@ -325,10 +325,20 @@ For a more detailed evaluation, please refer to the [Model Evaluation Section in
 - Sample code for calling the API and interpreting responses.
 
 ## Instructions for Running the Docker Container
-- Step-by-step guide for deploying the model using Docker.
+1. **Build the Docker Image**:  
+   Ensure Docker is installed and running on your machine. Then, in the project root, build the Docker image:
+   ```bash
+   docker build -t bank-marketing-ai -f Dockerfile .
+   ```
 
-## Monitoring and Maintenance Considerations
-- Regular retraining, logging of model predictions, and real-time performance monitoring.
+2. **Run the Docker Container**:  
+   Use the following command to run the container, specifying port `5000` (as per the `EXPOSE` statement in the Dockerfile):
+   ```bash
+   docker run -p 5000:5000 bank-marketing-ai
+   ```
+
+3. **Access the Application**:  
+   Once the container is running, you can access the application API at `http://localhost:5000`. Use this URL in a browser or with a tool like Postman to test the endpoints.
 
 ---
 
