@@ -1421,6 +1421,8 @@ Tariq, H. (2022). Challenges and Opportunities in European Retail Banking. *Euro
 - **Appendix C: Synthetic Data Generation Notebook**
   - **Description**: Documents the process of generating synthetic product columns using a machine learning model. Includes the full methodology and code.
   - **Link**: [Link to `[product_synthetic_generation.ipynb](https://github.com/huangchaohung/Group-20/blob/main/group_B/product_synthetic_generation.ipynb)`]
+  - **Description**: Documents the process of generating synthetic transaction information columns using a data merging through mapping. Includes the full methodology and code.
+  - **Link**: [Link to `[transaction_data_generation.py](https://github.com/huangchaohung/Group-20/blob/main/group_A/transaction_data_generation.py)`]
  
 ## Any Additional Information That Doesn't Fit into the Main Sections
 - Extended data exploration summaries and additional analyses.
