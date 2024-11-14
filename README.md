@@ -107,7 +107,7 @@ Group-20/
 ## Data Sources and Data Preparation Steps
 
 The project uses a dataset from Kaggle related to the direct marketing campaigns of a Portuguese bank, which targets customers for term deposit products through phone-based outreach. 
-Three supplementary datasets from Kaggle were used to generate the synthetic data required for this project.
+Three complementary datasets from Kaggle were used to generate the synthetic data required for this project.
 
 - **Main Dataset**: [Bank Marketing Dataset](https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets)
 - ***Complementary Dataset 1***: [Bank Personal Loan](https://www.kaggle.com/datasets/mahnazarjmand/bank-personal-loan/data)
