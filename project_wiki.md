@@ -523,7 +523,7 @@ A SHAP summary bar graph below indicate that factors like the number of products
 ![Feature Importance using SHAP](image/feature_importance.png)
 
 
-![SHAP Summary](image/shap_summary.png)
+<img src="image/shap_summary.png" alt="SHAP Summary" width="300"/>
 **From the SHAP summary plot we could observe that:**
 1. Number Of Products has the strongest influence on churn prediction. 
 
