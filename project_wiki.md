@@ -515,7 +515,8 @@ For this question, we will be using [Churn Modelling data](data/Churn_Modelling.
 We start by building a predictive model using *Gradient Boosting* that analyzes historical customer data, such as demographic information, number of products, account activity, and account balance. We train the model to identify patterns that are common among customers who left, allowing us to estimate the likelihood of churn for each current customer. 
 
 The model is then evaluated using metrics such as accuracy and AUC-ROC to ensure reliable performance.
-<img src="image/CustomerChurnGradientBoostingModelEvaluation.png" alt="Accuracy and AUC-ROC results" width="250"/>
+
+<img src="image/CustomerChurnGradientBoostingModelEvaluation.png" alt="Accuracy and AUC-ROC results" width="300"/>
 
 ### Interpretation of Key Drivers of Churn:
 To understand what drives churn, we apply Explainable AI techniques, such as SHAP (SHapley Additive exPlanations), which allow us to break down the impact of each feature on the churn prediction. 
@@ -524,24 +525,25 @@ A SHAP summary bar graph below indicate that factors like the number of products
 ![Feature Importance using SHAP](image/feature_importance.png)
 
 
-<img src="image/shap_summary.png" alt="SHAP Summary" width="100"/>
+![SHAP Summary](image/shap_summary.png)
 **From the SHAP summary plot we could observe that:**
+
 1. Number Of Products has the strongest influence on churn prediction. 
 
 Customers with fewer products (represented by the red dots on the left) have a higher chance of churn, while those with more products (blue dots) are less likely to churn. 
+
 2. Age
 
 Older customers (blue dots) are more likely to churn, as indicated by their impact on the positive SHAP values. 
+
 3. Memeber activity status
 
 Active members (blue) tend to have lower churn probabilities, while inactive members (red) have higher churn risks. 
 
 Other Influential Features: 
-- Geographic location
-
+- Geographic location: 
 Customers from Germany (feature Geography_Germany) have a higher likelihood of churn compared to customers from Spain (feature Geography_Spain).
-- Balance
-
+- Balance:
 Customers with higher balances (blue dots) tend to have lower churn risks, while those with lower balances are more likely to leave. 
 
 ### Early Warning System and Tailored Retention Strategies:
@@ -554,7 +556,9 @@ Thie Early Prediction model flags customers with high **churn risk scores of mor
 - Active customers with moderate balances will receive *standard follow-up and customer satisfaction surveys* (indicating a potentially less urgent but still important retention effort.)
 
 ![Summary Table of retention strategy](image/PresdictCustomerRentention_ShorterVer.png)
+
 By focusing on high-risk customers with personalized interventions, we can reduce churn rates more effectively and improve customer satisfaction. This combination of predictive modeling, interpretability, and actionable insights enables the organization to not only understand but also proactively address customer churn.
+
 ---
 # Recommendation System (Subgroup B: Question 1)
 
