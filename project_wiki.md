@@ -456,6 +456,10 @@ xgboost==2.1.2
 
 # Group A Question 1: How can we effectively segment our customers based on their banking behaviour and preferences?
 
+# Group A Question 3: How do customer behaviors and preferences vary across different segments?
+
+We answer these two questions together under the following section. It is more efficient and easier to explain.
+
 ## Segmentation Model
 
 ### Methodology
@@ -488,62 +492,91 @@ Each segment is described by unique behaviors and preferences, leading to specif
 
 ### Segment 0: Moderate Transaction Frequency, High Housing Loan Ownership
 - **Characteristics**: 
-  - Transaction frequency is moderate, with an average transaction amount around 843.47.
-  - Recent interactions indicated by low recency (~42.50).
-  - High ownership of housing loans (~99.78%) with no securities or CD accounts.
-- **Needs**:
+  - Moderate transaction frequency and amount
+  - Low recency, indicating recent but infrequent interactions.
+  - High ownership of housing loans with no securities or CD accounts.
+- **Insight**: This segment predominantly holds housing loans, which suggests a strong preference for long-term financial commitments.
+
+- **Needs and opportunities**:
   - **Financial Planning**: Assistance with managing or refinancing housing loans could meet this segment’s primary needs.
   - **Loyalty Programs**: Reduced fees on other services or discounted rates on additional loans may enhance engagement and retention.
   - **Cross-Selling Potential**: Customers comfortable with loans might respond well to bundled products like insurance or high-limit credit cards.
 
+---
+
 ### Segment 1: Low Transaction Activity, Low Product Ownership, High Housing Loan Ownership
-- **Characteristics**:
+- **Characteristics**: 
   - Lower transaction frequency and amount.
-  - Higher recency, suggesting recent but infrequent engagement.
-  - High ownership of housing loans but minimal other products.
-- **Needs**:
+  - Higher recency, indicating recent but sporadic engagement.
+  - High ownership of housing loans but minimal engagement with other products.
+- **Insight**: Customers in this segment primarily own housing loans but show minimal engagement with other products, signaling limited product interest.
+
+- **Needs and opportunities**:
   - **Re-Engagement Campaigns**: Highlight benefits of digital banking services or products like savings accounts to re-engage this segment.
   - **Educational Content**: Financial literacy materials on savings and basic financial management can increase understanding and comfort with more products.
   - **Customized Loan Offers**: Additional loan products with flexible terms or refinancing options can appeal to this segment's need for financial security.
 
+---
+
 ### Segment 2: Minimal Product Ownership and Transactions
-- **Characteristics**:
-  - Very low transaction frequency and amount, low engagement across all products.
-- **Needs**:
+- **Characteristics**: 
+  - Very low transaction frequency and amount.
+  - Low engagement across all products.
+- **Insight**: These customers may be new or minimally engaged, showing little interest in existing financial products, which suggests potential for relationship-building.
+
+- **Needs and opportunities**:
   - **Onboarding to Basic Products**: Introducing entry-level accounts, such as basic savings or debit card products, to build initial relationships.
   - **Financial Literacy Campaigns**: Resources on budgeting, saving, and basic financial services to increase comfort and drive initial engagement.
   - **Incentives for Engagement**: Offer introductory incentives like waived fees or cashback to encourage use of more bank services.
 
+---
+
 ### Segment 3: Moderate Transaction Frequency, Strong Product Ownership
-- **Characteristics**:
+- **Characteristics**: 
   - Moderate transaction frequency with significant securities account ownership.
-  - Likely more financially savvy and interested in investments.
-- **Needs**:
+  - Likely more financially savvy and interested in investment products.
+- **Insight**: Customers in this segment exhibit a strong interest in investment-related products, demonstrating greater financial literacy and a preference for wealth management.
+
+- **Needs and opportunities**:
   - **Investment Products**: This group may be interested in additional options like mutual funds, retirement accounts, or brokerage services.
   - **Wealth Management**: Advisory services to help diversify and grow their portfolio.
   - **Advanced Educational Content**: Seminars or online courses on investment strategies and market trends could increase loyalty.
 
+---
+
 ### Segment 4: High Transaction Frequency and Amount, Limited Loan Engagement
-- **Characteristics**:
-  - Highest transaction frequency and amount, with little ownership of housing loans.
-  - Likely high-value customers with high financial activity.
-- **Needs**:
+- **Characteristics**: 
+  - Highest transaction frequency and amount.
+  - Limited ownership of housing loans.
+- **Insight**: These customers prefer products offering liquidity and rewards rather than debt-based offerings, indicating a higher focus on active financial management.
+
+- **Needs and opportunities**:
   - **Premium Banking Services**: Offering VIP banking services, relationship managers, and exclusive perks for high-activity customers.
   - **Reward Programs**: Incentives like cashback or fee discounts to acknowledge their high activity.
   - **Cross-Sell Loan Products**: Products such as personal loans or lines of credit to support liquidity management.
 
+---
+
 ### Segment 5: High CD Account Ownership, Balanced in Housing Loans and Transaction Frequency
-- **Characteristics**:
+- **Characteristics**: 
   - High ownership of low-risk CD accounts, indicating a preference for stable investments.
-- **Needs**:
+  - Balanced engagement in housing loans and moderate transaction frequency.
+- **Insight**: Customers in this segment prefer secure, low-risk products, indicating a focus on stability and long-term savings.
+
+- **Needs and opportunities**:
   - **Low-Risk Investment Products**: Fixed deposits, government bonds, and retirement accounts tailored to their risk tolerance.
   - **Savings and Investment Advice**: Advice on diversifying with low-risk products to maintain engagement.
   - **Loyalty Programs**: Benefits for CD account holders to increase long-term commitment.
 
+---
+
 ### Segment 6: Loan-Focused, Moderate Engagement
-- **Characteristics**:
-  - Low to moderate transaction frequency, moderate transaction amounts, with a high focus on loans.
-- **Needs**:
+- **Characteristics**: 
+  - Low to moderate transaction frequency, moderate transaction amounts.
+  - High focus on loans with limited activity across other products.
+- **Insight**: These customers are primarily oriented around loans, with limited engagement in other products, suggesting a preference for borrowing over saving or investing.
+
+- **Needs and opportunities**:
   - **Specialized Loan Products**: Tailored offers that suit their loan-heavy profile, such as refinancing or bundling options.
   - **Engagement Strategies**: Targeted outreach to maintain engagement through personalized loan services.
 
@@ -598,45 +631,6 @@ To measure and optimize campaign effectiveness over time, the following key metr
 - **Churn Rate Reduction**: Reduction in churn rate among engaged customers demonstrates the long-term impact of effective campaigns, highlighting successful retention strategies.
 
 ---
-
-# Group A Question 3: How do customer behaviors and preferences vary across different segments?
-
-## Segment Analysis
-
-### Segment 0: **Moderate Transaction Frequency, High Housing Loan Ownership**
-   - **Behavior**: Customers in this segment exhibit moderate transaction frequency (average frequency around 1.34) and moderate transaction amounts (~$843.47). They also have low recency (~42.50), indicating more recent interactions.
-   - **Product Preferences**: Almost all customers in this segment hold housing loans, showing a strong preference for long-term financial commitments.
-   - **Opportunities**: Financial planning services and loyalty offers, such as discounted fees on other products, could increase engagement. Bundled products like insurance and credit cards may also appeal to this group’s familiarity with loans.
-
-### Segment 1: **Low Transaction Activity, Low Product Ownership, High Housing Loan Ownership**
-   - **Behavior**: This segment demonstrates low transaction frequency and amount, with high recency indicating sporadic engagement.
-   - **Product Preferences**: Primarily own housing loans with minimal engagement in other products.
-   - **Opportunities**: Re-engagement campaigns, financial literacy content, and customized loan products (e.g., refinancing options) could encourage more consistent activity and establish a foundation for additional product ownership.
-
-### Segment 2: **Minimal Product Ownership and Transactions**
-   - **Behavior**: Very low transaction frequency and amount, with limited product engagement.
-   - **Product Preferences**: These customers may be new or minimally engaged, showing little interest in existing financial products.
-   - **Opportunities**: Offering entry-level products, incentives like waived fees, and financial literacy campaigns could introduce them to basic banking and increase their engagement gradually.
-
-### Segment 3: **Moderate Transaction Frequency, Strong Product Ownership**
-   - **Behavior**: Customers in this group have moderate transaction frequency and amount, with notable ownership of securities accounts, indicating a more investment-savvy segment.
-   - **Product Preferences**: Significant interest in investment-related products.
-   - **Opportunities**: Expanding investment offerings (e.g., mutual funds, retirement plans), wealth management, and educational content on advanced investments can cater to their interest in financial growth and diversification.
-
-### Segment 4: **High Transaction Frequency and Amount, Low Engagement with Loans**
-   - **Behavior**: These customers exhibit the highest transaction frequency and amount but lack engagement with loans, likely being financially active but loan-averse.
-   - **Product Preferences**: Prefer products offering liquidity and rewards over debt-based offerings.
-   - **Opportunities**: Premium banking services, reward programs for high activity, and high-limit credit cards could match their financial profile and high transaction behavior. Personalized messages acknowledging their loyalty can enhance retention.
-
-### Segment 5: **High CD Account Ownership, Balanced Housing Loan and Transaction Frequency**
-   - **Behavior**: Customers with high ownership of Certificate of Deposit (CD) accounts, showing a preference for low-risk investments, balanced with moderate loan engagement and transaction frequency.
-   - **Product Preferences**: Strong inclination towards secure, bank-centric products.
-   - **Opportunities**: Offer low-risk investment products like government bonds or safe retirement accounts. Loyalty programs and tailored savings advice would likely resonate with this segment’s risk profile.
-
-### Segment 6: **Loan-Focused, Moderate Engagement**
-   - **Behavior**: Moderate engagement with a focus on loan products, showing low to moderate transaction frequency and moderate transaction amount.
-   - **Product Preferences**: Primarily oriented around loans, with limited activity across other products.
-   - **Opportunities**: Customized loan management services, refinancing options, and educational resources on diversified financial planning could encourage higher engagement.
 
 
 ## Subgroup A
