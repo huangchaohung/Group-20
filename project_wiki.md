@@ -109,9 +109,10 @@ Many competitors emphasize digital and AI-driven campaigns, which the bank aims 
 # Data Understanding
 
 ## Data Sources and Collection Methods
-- **Banking Dataset - Marketing Targets**: (description) https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets
-- **Bank Personal Loan**: (description) https://www.kaggle.com/datasets/mahnazarjmand/bank-personal-loan/data
-- **Customer Comments**: (description)
+- **Banking Dataset - Marketing Targets**: The main dataset containing bank customers' demographics and the bank products they consume. https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets
+- **Bank Personal Loan**: Complementary dataset for synthetic additional columns for other bank products. https://www.kaggle.com/datasets/mahnazarjmand/bank-personal-loan/data
+- **Bank Customer Segmentation** Complementary dataset for synthetic additional columns for other customer engagement data. https://www.kaggle.com/datasets/shivamb/bank-customer-segmentation
+- **Online Banking / Financial Review Dataset** Complementary dataset for customer comments analysis. https://www.kaggle.com/datasets/yanmaksi/reviews-data-for-classification-model?resource=download
 
 ## Initial Data Exploration Findings
 - **Demographics**: Younger customers are more responsive to digital campaigns.
@@ -334,13 +335,105 @@ For a more detailed evaluation, please refer to the [Model Evaluation Section in
 # Technical Implementation
 
 ## Repository Structure
-- Organized by data processing, modeling, evaluation, and deployment folders.
+```
+Group-20/
+    ├── data/
+    │   ├── email_data/
+    │   │   ├── email_a.csv
+    │   │   ├── email_a_features.json
+    │   │   ├── email_b.csv
+    │   │   └── mutually_exclusive.txt
+    │   ├── Bank_Personal_Loan_Modelling.csv
+    │   ├── Combined_dataset.csv
+    │   ├── digital_marketing_campaign_dataset.csv
+    │   ├── test.csv
+    │   ├── test_Data.csv
+    │   ├── train.csv
+    │   └── train_data.csv
+    ├── group_A/
+    │   ├── Bonus qn 2 Real-Time Segmentation.ipynb
+    │   ├── Bonus qn 3 Predict Customer Churn.ipynb
+    │   ├── Draft Answer.docx
+    │   ├── draft description.docx
+    │   └── segmentation with campaign numerical.ipynb
+    ├── group_B/
+    │   ├── DSA3101_Q1/
+    │   │   ├── recommendation_models/
+    │   │   │   ├── cd_account_xgb_classifier_0.pkl
+    │   │   │   ├── contact_encoder.pkl
+    │   │   │   ├── default_encoder.pkl
+    │   │   │   ├── features.json
+    │   │   │   ├── job_encoder.pkl
+    │   │   │   ├── loan_xgb_classifier_0.pkl
+    │   │   │   ├── martial_encoder.pkl
+    │   │   │   ├── month_encoder.pkl
+    │   │   │   ├── poutcome_encoder.pkl
+    │   │   │   ├── scaler.pkl
+    │   │   │   ├── securities_xgb_classifier_0.pkl
+    │   │   │   └── term_deposit_xgb_classifier_0.pkl
+    │   │   ├── Recommendation_System_notebook.ipynb
+    │   │   └── recommendation_system.py
+    │   ├── DSA3101_Q2/
+    │   │   ├── sample_email_json/
+    │   │   │   ├── email_a_initial.csv
+    │   │   │   ├── email_a_initial_features.json
+    │   │   │   └── email_b_initial_features.json
+    │   │   ├── dynamic_email.py
+    │   │   └── email_campaign_adjustment_final.ipynb
+    │   ├── DSA3101_Q3/
+    │   │   ├── data/
+    │   │   │   └── digital_marketing_campaign_dataset.csv
+    │   │   ├── .DS_Store
+    │   │   ├── DSA3101_q3.ipynb
+    │   │   └── model.ipynb
+    │   ├── synthetic_data_model/
+    │   │   ├── cd_account_random_forest_0.pkl
+    │   │   └── securities_random_forest_0.pkl
+    │   ├── .DS_Store
+    │   ├── Email_Campaign_Adjustment.ipynb
+    │   ├── ROI.ipynb
+    │   └── product_synthetic_generation.ipynb
+    ├── src/
+    │   ├── __init__.py
+    ├── .DS_Store
+    ├── Dockerfile
+    ├── README.md
+    ├── data_dictionary.xlsx
+    ├── email_marketing_campaigns_with_demographics.csv
+    ├── main.py
+    ├── project_wiki.md
+    └── requirements.txt
+```
 
 ## Setup Instructions
-- Steps for installing dependencies and configuring the project.
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/huangchaohung/Group-20.git
+   cd Group-20
+   ```
+
+2. **Install Python Dependencies**:  
+   This project uses Python 3.11+. It's recommended to set up a virtual environment:
+   ```bash
+   python3 -m venv env
+   source env/bin/activate  # On Windows use `env\Scripts\activate`
+   pip install -r requirements.txt
+   ```
+
+3. **Run the Project**:  
+   Once dependencies are installed, you can execute the primary scripts using:
+   ```bash
+   python main.py
+   ```
 
 ## Dependency Management
-- Requirements file listing dependencies with versions.
+﻿Flask==3.0.3
+Werkzeug==3.1.3
+pandas==2.2.2
+numpy==2.1.0
+scikit-learn==1.5.1
+matplotlib==3.9.2
+xgboost==2.1.2
 
 ## Code Style Guide Adherence
 - Follows PEP8 and internal coding standards.
