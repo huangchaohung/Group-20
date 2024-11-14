@@ -963,37 +963,75 @@ Post Feature selection, we will begin training the model using linear regression
 
 ### Linear Regression
 
-Results for linear regression below
+```python
+# Ensure the 'Models' directory exists
+if not os.path.exists('Models'):
+    os.makedirs('Models')
 
+# Get the top 7 features so that we have CLV Inclusive
+top_features = feature_importances.nlargest(7).index
+
+marketing_strategies = df_marketing['CampaignChannel'].unique().tolist()
+
+# Conduct analysis for each marketing strategy
+for strategy in marketing_strategies:
+    print(f"========== {strategy} ==========")
+
+    # Filter dataset for the current strategy
+    X_strategy = df_marketing[df_marketing['CampaignChannel'] == strategy]
+    Y_strategy = X_strategy['ROI']
+    X_strategy = X_strategy.drop(columns=['ROI', 'CampaignChannel'])
+    X_strategy = X_strategy[top_features]
+
+    # Split the data
+    X_train, X_test, y_train, y_test = train_test_split(X_strategy, Y_strategy, test_size=0.2, random_state=42)
+
+    # Train the model
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+
+    # Make predictions
+    y_pred = model.predict(X_test)
+
+    # Calculate performance metrics
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+
+    # Display results
+    print(f"Mean Absolute Error (MAE): {mae}")
+    print(f"Root Mean Squared Error (RMSE): {rmse}")
+    print(f"R2 Score: {r2}")
+    print(f'Predicted ROI: {np.mean(y_pred)}')
+    print()
+
+    # Save the model
+    model_filename = f"Models/linear_regression_model_{strategy}.pkl"
+    with open(model_filename, 'wb') as file:
+        pickle.dump(model, file)
+
+```
+
+Results for linear regression below:
+
+```
 ========== Email ==========
-Mean Absolute Error (MAE): 1.9251074787062414
-Root Mean Squared Error (RMSE): 3.746296124529667
 R2 Score: 0.3434977186033117
-ROI Mean: 1.4581831090204065
-
+Predicted ROI: 1.6946128351597802
 ========== PPC ==========
-Mean Absolute Error (MAE): 2.23897003707027
-Root Mean Squared Error (RMSE): 3.044893197613124
 R2 Score: 0.32562338597022045
-ROI Mean: 1.8895801537151282
-
+Predicted ROI: 1.3330641359771054
 ========== Social Media ==========
-Mean Absolute Error (MAE): 2.843349904873616
-Root Mean Squared Error (RMSE): 4.909859329905014
 R2 Score: 0.27380509728666835
-ROI Mean: 2.1971547087470658
-
+Predicted ROI: 2.4489878903419156
 ========== Referral ==========
-Mean Absolute Error (MAE): 2.5325268410516353
-Root Mean Squared Error (RMSE): 5.603152694203044
 R2 Score: 0.2836530701122941
-ROI Mean: 1.8996245008144463
-
+Predicted ROI: 1.8576880607150315
 ========== SEO ==========
-Mean Absolute Error (MAE): 2.5891701625823655
-Root Mean Squared Error (RMSE): 4.682717672043169
 R2 Score: 0.36805139997725345
-ROI Mean: 1.9732796784077806
+Predicted ROI: 1.9171140411773933
+```
+
 
 ### Random Forest
 Results for random forest below:
