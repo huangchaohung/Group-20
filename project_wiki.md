@@ -1209,7 +1209,7 @@ Predicted ROI: 2.467867182157421
 
 ## Conclusion
 
-We will dynamically select the best model to predict the ROI for each strategy. For marketing professionals looking to maximise ROI for their marketing strategies, they could focus more on the marketing strategy that has the highest predicted ROI and increase their resources channeled into such strategy to boost sales. We have created a website that easily allow them to visualise the predicted ROI for each of the marketing strategy.
+We will dynamically select the best model to predict the ROI for each strategy. For instance, random forest performed best on email, PPC and social media marketing strategies, whereas gradient boosting performed best on referral and SEO strategies, hence we will use the respective models to predict the ROI for each strategy. For marketing professionals looking to maximise ROI for their marketing strategies, they could focus more on the marketing strategy that has the highest predicted ROI and increase their resources channeled into such strategy to boost sales. We have created a website that easily allow them to visualise the predicted ROI for each of the marketing strategy.
 
 
 
