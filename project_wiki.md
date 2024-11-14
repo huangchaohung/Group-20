@@ -919,6 +919,43 @@ df_marketing['ROI'] = (df_marketing['Revenue'] - df_marketing['AdSpend']) / df_m
 df_marketing['CLV'] = (avg_revenue_per_conversion + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
 ```
 
+## Feature Selection
+To identify which features most impact ROI, we used a Random Forest Regressor to compute feature importance.
+
+```python
+X = df_marketing.drop(columns=['ROI', 'CampaignChannel'])
+y = df_marketing['ROI']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+rf = RandomForestRegressor(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+
+feature_importances = pd.Series(rf.feature_importances_, index=X_train.columns)
+feature_importances_sorted = feature_importances.sort_values(ascending=False)
+print("Feature importances (sorted):")
+print(feature_importances_sorted)
+
+```
+
+Below is the results for the most important features to predict ROI
+
+```python
+Feature importances (sorted):
+AdSpend              0.741362
+Revenue              0.127274
+ConversionRate       0.110763
+Income               0.008516
+LoyaltyPoints        0.002780
+Age                  0.002495
+CLV                  0.002034
+PreviousPurchases    0.001966
+EmailClicks          0.001271
+Conversion           0.000772
+Gender               0.000462
+CampaignType         0.000306
+```
+
+
 
 # Future Work
 
