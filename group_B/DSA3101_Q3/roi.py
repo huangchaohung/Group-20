@@ -12,7 +12,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_dir)
 
 # Feature Engineering Function
-def load_and_prepare_data(file_path, avg_revenue_per_conversion=60000):
+def load_and_prepare_data(file_path, ):
     df = pd.read_csv(file_path)
     
     df.drop(
@@ -28,11 +28,9 @@ def load_and_prepare_data(file_path, avg_revenue_per_conversion=60000):
     df_marketing = df[df['CampaignType'].isin(['Conversion', 'Retention'])]
 
     # Calculate revenue and ROI
-    df_marketing['Revenue'] = df_marketing['ConversionRate'] * avg_revenue_per_conversion
-    df_marketing['ROI'] = (df_marketing['Revenue'] - df_marketing['AdSpend']) / df_marketing['AdSpend']
-    
-    # Calculate CLV
-    df_marketing['CLV'] = (avg_revenue_per_conversion + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
+    df_marketing['ROI'] = (df_marketing['RevenueEarned'] - df_marketing['AdSpend']) / df_marketing['AdSpend'] 
+    # Calculate CLV, assuming a standard period of 1 year
+    df_marketing['CLV'] = (df_marketing['RevenueEarned'].mean() + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
     
     # Label Encoding
     gender_encoder = LabelEncoder()
@@ -101,14 +99,14 @@ def analyze_models(df, top_features, strategy_input):
 # Main function to run the complete pipeline
 def main():
     # Load and prepare data
-    file_path = 'Data/digital_marketing_campaign_dataset.csv'
+    file_path = 'Data/banking_marketing_strategies.csv'
     df = load_and_prepare_data(file_path)
 
     # Identify top features for model testing
     X = df.drop(columns=['ROI', 'CampaignChannel'])
     y = df['ROI']
     rf = load_model("Models/random_forest_model_overall.pkl")  # Load an overall RF model to get top features
-    top_features = pd.Series(rf.feature_importances_, index=X.columns).nlargest(7).index
+    top_features = pd.Series(rf.feature_importances_, index=X.columns).nlargest(6).index
 
     # Take marketing strategy input from the user
     strategy_input = input("Enter the marketing strategy (Email, PPC, Social Media, Referral, SEO): ").strip()
