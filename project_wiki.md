@@ -464,7 +464,7 @@ xgboost==2.1.2
 - Question 1:
 - Question 2: 
 What strategies can we implement to optimize our marketing campaigns in real-time? Create an algorithm for dynamic campaign adjustment based on real-time performance metrics. Simulate the impact of proposed adjustments on campaign effectiveness.
-- Question 3: 3. How can we measure and maximize the ROI of our personalized marketing efforts? Develop a model to calculate and predict ROI for different marketing strategies. Incorporate factors such as customer lifetime value, campaign costs, and conversion rates.
+- Question 3: How can we measure and maximize the ROI of our personalized marketing efforts? Develop a model to calculate and predict ROI for different marketing strategies. Incorporate factors such as customer lifetime value, campaign costs, and conversion rates.
 - Optional 1:
 - Optional 2:
 - Optional 3:
@@ -1206,7 +1206,11 @@ Predicted ROI: 2.24952482745914
 R2 Score: 0.9063279671968358
 Predicted ROI: 2.467867182157421
 ```
-We will dynamically select the best model to predict the ROI for each strategy.
+
+## Conclusion
+
+We will dynamically select the best model to predict the ROI for each strategy. For marketing professionals looking to maximise ROI for their marketing strategies, they could focus more on the marketing strategy that has the highest predicted ROI and increase their resources channeled into such strategy to boost sales. We have created a website that easily allow them to visualise the predicted ROI for each of the marketing strategy.
+
 
 
 # Future Work
