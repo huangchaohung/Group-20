@@ -485,6 +485,105 @@ What strategies can we implement to optimize our marketing campaigns in real-tim
 - Anticipated improvements in engagement and conversion rates for each recommendation.
 
 ---
+# Recommendation System (Subgroup B: Question 1)
+
+The recommendation system developed leverages machine learning models to analyze customer data and predict the likelihood of a customer subscribing to specific financial products. This tool enables bank agents to assess the potential success of recommending a product before approaching a customer.
+
+## Input Features
+
+The recommendation system considers the following features to evaluate customer eligibility for various products:
+
+- **Age**: Customer's age.
+- **Job**: Type of employment.
+- **Marital Status**: Marital condition of the customer.
+- **Education**: Highest education level attained.
+- **Balance**: Average yearly account balance.
+- **Housing Loan**: Whether the customer has a housing loan (yes/no).
+- **Duration**: Duration of the last contact in seconds.
+- **Campaign**: Number of contacts during this campaign.
+- **Pdays**: Number of days since the customer was last contacted.
+- **Previous**: Number of contacts performed before this campaign.
+- **Contact Method**: Type of communication used.
+
+These features are integral to building predictive models and optimizing customer targeting strategies.
+
+## Machine Learning Models
+
+Several machine learning models were evaluated, including decision trees, random forests, SVM, gradient boosting, and XGBoost classifiers. Among these, **XGBoost** consistently delivered the highest accuracy across products, making it the chosen model for deployment.
+
+### Model Performance Metrics
+
+Below are the evaluation results for the XGBoost model across different financial products:
+
+1. **CD Account**:
+   - Accuracy: 94.97%
+   - Precision: 81.01%
+   - Recall: 80.32%
+   - F1 Score: 80.69%
+
+2. **Loan**:
+   - Accuracy: 83.61%
+   - Precision: 67.38%
+   - Recall: 56.18%
+   - F1 Score: 57.18%
+
+3. **Securities**:
+   - Accuracy: 97.88%
+   - Precision: 69.46%
+   - Recall: 58.61%
+   - F1 Score: 61.81%
+
+4. **Term Deposit**:
+   - Accuracy: 90.34%
+   - Precision: 76.54%
+   - Recall: 76.91%
+   - F1 Score: 76.72%
+
+## Feature Importance
+
+The most influential features driving product recommendations were derived using the XGBoost classifier:
+
+### CD Account:
+1. **Campaign**
+2. **Balance**
+3. **Age**
+4. **Marital Status**
+5. **Previous**
+
+### Loan:
+1. **Campaign**
+2. **Job**
+3. **Month**
+4. **Housing**
+5. **Age**
+
+### Securities:
+1. **Balance**
+2. **Campaign**
+3. **Age**
+4. **Month**
+5. **Job**
+
+### Term Deposit:
+1. **Contact**
+2. **Campaign**
+3. **Duration**
+4. **Housing**
+5. **Previous**
+
+These insights allow bank agents to tailor recommendations and refine marketing strategies for each product.
+
+## Usage and Integration
+
+The system is integrated into a user-friendly website where agents can:
+1. Select the product to recommend.
+2. Input customer data through an intuitive form.
+3. Receive a machine learning-powered recommendation, indicating whether the customer is likely to subscribe to the product.
+
+This platform ensures data-driven decisions, increasing engagement and conversion rates while optimizing marketing efforts.
+
+#### For more details on the analysis, model evaluation, and feature visualizations, please refer to the corresponding Jupyter Notebook: [[Recommendation System Analysis]](https://github.com/huangchaohung/Group-20/blob/main/group_B/DSA3101_Q1/Recommendation_System_notebook.ipynb).
+---
 
 # Marketing Campaigns (Subgroup B: Question 2)
 
