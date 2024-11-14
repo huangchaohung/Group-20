@@ -78,7 +78,7 @@ The best Silhouette score is compared among the models with maximum seven cluste
 ### Limitations
 The model is sensitive to noise and outliners. If fed with new dataset with more outliners, the clustering may not perform as well. 
 
-## Analytical Findings
+## Analytical Findings and Recommandations
 
 ### Segment Profiles
 <img src="image/Kmeans_PCA.png" alt="Cluster PCA_0"/>
@@ -190,7 +190,7 @@ All features related with campaigns are included, including both the banking beh
 Categorical columns with multiple possible values are preprocessed with one-hot encoding. Numberical columns are scaled for models that is sensitive to feature scales such as KNN while not applied for tree-based models. 
 
 ### Data Imbalance Treatment
-The data is highly imbalanced with 1:5 NO to YES rate. Hence we applied SMOTE (Synthetic Minority Over-sampling Technique) to improve the performance of classifiers by balancing the class distribution.
+The data is highly imbalanced with 1:5 NO to YES rate. Hence we applied SMOTE (Synthetic Minority Over-sampling Technique) to improve the performance of classifiers by balancing the class distribution. It is a technique used to address class imbalance by generating synthetic samples for the minority class. It works by selecting a minority class sample, finding its nearest neighbors, and creating new synthetic instances by interpolating between the original sample and its neighbors.
 
 ### Correlation Analysis
 <img src="image/num_corr.png" alt="Classifier correlation"/>
@@ -209,12 +209,54 @@ This is a supervised learning task that train a classifier to predict whether th
 
 ## Evaluation
 ### Performance Metrics
+To evaluate the models' performance, the basic metrics including accuracy, precision, recall are examined, yet the difference among models is minimal due to the very imbalanced data - these metrics are misleadingly high since they may be high for the majority class but poor for the minority class. Hence the confusion matrix with true positive rate as well as the roc-auc score and curve are the major component to evaluate the chosen models. 
 
+<img src="image/confusion.png" alt="Confusion"/>
 
-### Limitations
-The model is sensitive to noise and outliners. If fed with new dataset with more outliners, the clustering may not perform as well. 
+The finally selected best performer is the gradient boost model. It has the highest accuracy, precision, recall, f1-score, and performance the best in the confusion matrix and the roc-auc score. 
 
+<img src="image/name_ROC.png" alt="ROC"/>
 
+## Analytical Findings
+
+### Key Engagement Factors
+
+<img src="image/campaign_feature_importance.png" alt="Campaign feature importance"/>
+
+### 1. **Duration of Previous Contact**
+   - **Explanation**: The duration of the contact between previous campaigns (measured in days) plays a crucial role in determining the effectiveness of future engagements. A shorter time frame between contacts typically results in higher engagement.
+   - **Insights**: 
+     - Longer durations between contacts may indicate diminished engagement due to customers forgetting or losing interest.
+     - Follow-ups conducted within a shorter time frame (closer to the initial contact) tend to yield higher conversion rates, suggesting that timely follow-ups keep customers engaged and more likely to act.
+   - **Implication**: 
+     - The bank should consider optimizing the timing between follow-ups to ensure customers feel valued and are more likely to convert. Shortening the interval between communications, especially after initial contacts, can be beneficial.
+
+### 2. **Outcome of Previous Contact (poutcome_success)**
+   - **Explanation**: The outcome of past interactions with customers, particularly whether the previous campaign resulted in success (e.g., subscription or product adoption), significantly influences future engagement. Here is a table showing success rate:
+
+<img src="image/poutcome_summary_table.png" alt="Poutcome table"/>
+
+   - **Insights**: 
+     - Customers who responded positively to previous campaigns (e.g., subscribing to a term deposit or engaging with an offer) are more likely to engage in subsequent campaigns.
+     - Successful outcomes create a sense of trust and satisfaction, which leads to increased likelihood of continued interaction.
+   - **Implication**: 
+     - By analyzing past successful outcomes, the bank can replicate successful elements in future campaigns (such as the type of offer, timing, and customer segment). Additionally, customers who had positive past experiences may be ideal candidates for more personalized or advanced offers.
+
+## Recommandation of metrics for tracking campaign effectiveness over time
+
+To measure and optimize campaign effectiveness over time, we propose the following key metrics:
+
+- **Conversion Rate**: Percentage of customers who take the desired action (e.g., subscription, product purchase). High conversion rates indicate effective messaging and targeting, while low rates suggest areas for improvement.
+  
+- **Engagement Rate by Cluster**: Evaluates response rates within specific segments (e.g., age groups, product holders). Tracking engagement across clusters allows us to identify which groups are most responsive to different types of campaigns.
+
+- **Follow-Up Success Rate**: Measures the impact of re-engagement efforts on customers who were previously contacted. This metric helps evaluate the success of follow-up strategies and the effectiveness of maintaining ongoing communication with high-value customers.
+
+- **Campaign ROI**: Calculating ROI for each campaign provides insights into the financial return on marketing investments, enabling the bank to allocate resources more effectively.
+
+- **Churn Rate Reduction**: Reduction in churn rate among engaged customers demonstrates the long-term impact of effective campaigns, highlighting successful retention strategies.
+
+---
 
 
 # Company Analysis
