@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Load and Prepare Data Function
-def load_and_prepare_data(file_path, avg_revenue_per_conversion=60000):
+def load_and_prepare_data(file_path):
     df = pd.read_csv(file_path)
     df.drop(columns=[
         'AdvertisingTool', 'AdvertisingPlatform', 'PagesPerVisit',
@@ -28,9 +28,9 @@ def load_and_prepare_data(file_path, avg_revenue_per_conversion=60000):
     df_marketing = df[df['CampaignType'].isin(['Conversion', 'Retention'])]
 
     # Calculate revenue and ROI
-    df_marketing['Revenue'] = df_marketing['ConversionRate'] * avg_revenue_per_conversion
-    df_marketing['ROI'] = (df_marketing['Revenue'] - df_marketing['AdSpend']) / df_marketing['AdSpend']
-    df_marketing['CLV'] = (avg_revenue_per_conversion + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
+    df_marketing['ROI'] = (df_marketing['RevenueEarned'] - df_marketing['AdSpend']) / df_marketing['AdSpend'] 
+    # Calculate CLV, assuming a standard period of 1 year
+    df_marketing['CLV'] = (df_marketing['RevenueEarned'].mean() + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
 
     # Label Encoding
     gender_encoder = LabelEncoder()
@@ -51,7 +51,7 @@ def load_model(filename):
 def get_top_features(df, overall_model_path):
     X = df.drop(columns=['ROI', 'CampaignChannel'])
     rf = load_model(overall_model_path)
-    top_features = pd.Series(rf.feature_importances_, index=X.columns).nlargest(7).index
+    top_features = pd.Series(rf.feature_importances_, index=X.columns).nlargest(6).index
     return top_features
 
 # Model Analysis Function
