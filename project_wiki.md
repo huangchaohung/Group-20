@@ -514,7 +514,7 @@ For this question, we will be using [Churn Modelling data](data/Churn_Modelling.
 We start by building a predictive model using *Gradient Boosting* that analyzes historical customer data, such as demographic information, number of products, account activity, and account balance. We train the model to identify patterns that are common among customers who left, allowing us to estimate the likelihood of churn for each current customer. 
 
 The model is then evaluated using metrics such as accuracy and AUC-ROC to ensure reliable performance.
-![Accuracy and AUC-ROC results](image/CustomerChurnGradientBoostingModelEvaluation.png)
+<img src="image/CustomerChurnGradientBoostingModelEvaluation.png" alt="Accuracy and AUC-ROC results" width="250"/>
 
 ### Interpretation of Key Drivers of Churn:
 To understand what drives churn, we apply Explainable AI techniques, such as SHAP (SHapley Additive exPlanations), which allow us to break down the impact of each feature on the churn prediction. 
@@ -523,7 +523,7 @@ A SHAP summary bar graph below indicate that factors like the number of products
 ![Feature Importance using SHAP](image/feature_importance.png)
 
 
-<img src="image/shap_summary.png" alt="SHAP Summary" width="300"/>
+<img src="image/shap_summary.png" alt="SHAP Summary" width="100"/>
 **From the SHAP summary plot we could observe that:**
 1. Number Of Products has the strongest influence on churn prediction. 
 
