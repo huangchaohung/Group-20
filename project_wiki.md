@@ -458,7 +458,10 @@ xgboost==2.1.2
 - Question 3:
 - Optional 1:
 - Optional 2:
-- Optional 3:
+- Optional 3: 
+How can we predict and mitigate customer churn using machine learning techniques?
+-Develop a machine learning model to predict the likelihood of customer churn.
+-Create an early warning system and recommend retention strategies.
 
 ## Subgroup B
 - Question 1:
@@ -485,6 +488,63 @@ What strategies can we implement to optimize our marketing campaigns in real-tim
 - Anticipated improvements in engagement and conversion rates for each recommendation.
 
 ---
+# Group A BQ3: Customer Churn Prediction Model
+
+To predict and mitigate customer churn using machine learning, we can break down the process into three main steps: model development, interpretation of key drivers of churn, and implementation of an early warning system with tailored retention strategies.
+
+For this question, we will be using [this Churn Modelling data](data/Churn_Modelling.csv)
+
+Data Features:
+**RowNumber**: The sequential number assigned to each row in the dataset.
+**CustomerId**: A unique identifier for each customer.
+**Surname**: The surname of the customer.
+**CreditScore**: The credit score of the customer.
+**Geography**: The geographical location of the customer (e.g., country or region).
+**Gender**: The gender of the customer.
+**Age**: The age of the customer.
+**Tenure**: The number of years the customer has been with the bank.
+**Balance**: The account balance of the customer.
+**NumOfProducts**: The number of bank products the customer has.
+**HasCrCard**: Indicates whether the customer has a credit card (binary: yes/no).
+**IsActiveMember**: Indicates whether the customer is an active member (binary: yes/no).
+**EstimatedSalary**: The estimated salary of the customer.
+**Exited**: Indicates whether the customer has exited the bank (binary: yes/no).
+
+### Model Development:
+We start by building a predictive model using Gradient Boosting that analyzes historical customer data, such as demographic information, number of products, account activity, and account balance. We train the model to identify patterns that are common among customers who left, allowing us to estimate the likelihood of churn for each current customer. The model is then evaluated using metrics such as accuracy and AUC-ROC to ensure reliable performance.
+![Accuracy and AUC-ROC results](image/CustomerChurnGradientBoostingModelEvaluation.png)
+
+### Interpretation of Key Drivers of Churn:
+To understand what drives churn, we apply Explainable AI techniques, such as SHAP (SHapley Additive exPlanations), which allow us to break down the impact of each feature on the churn prediction. A SHAP summary bar graph below indicate that factors like the number of products a customer holds, age, and whether they are an active account member have significant influence. This helps us understand which customer attributes most contribute to their risk of leaving, and it informs our retention strategies.
+![Feature Importance using SHAP](image/feature_importance.png)
+
+![SHAP Summary](image/shap_summary.png)
+From the SHAP summary plot we could observe that:
+1. Number Of Products has the strongest influence on churn prediction. 
+Customers with fewer products (represented by the red dots on the left) have a higher chance of churn, while those with more products (blue dots) are less likely to churn. 
+2. Age
+Older customers (blue dots) are more likely to churn, as indicated by their impact on the positive SHAP values. 
+3. Memeber activity status
+Active members (blue) tend to have lower churn probabilities, while inactive members (red) have higher churn risks. 
+Other Influential Features: 
+- Geographic location
+Customers from Germany (feature `Geography_Germany`) have a higher likelihood of churn compared to customers from Spain (feature `Geography_Spain`).
+- Balance
+Customers with higher balances (blue dots) tend to have lower churn risks, while those with lower balances are more likely to leave. 
+
+### Early Warning System and Tailored Retention Strategies:
+Based on the model’s predictions, we create an early warning system that assigns a churn risk score to each customer. This churn risk distribution allows banks to prioritize high-risk customers and implement personalized retention strategies. 
+![Churn Risk Distribution](image/churn_risk_histogram.png)
+
+
+Thie Early Prediction model flags customers with high churn risk scores of more than 0.7, which then receive targeted/personalised retention strategies:
+- Low product holdings or inactive customers are often recommended *incentives for increased engagement*; 
+- Low balance customers will receieve *financial counseling or a bonus interest rate* to encourage more substantial engagement or deposits;
+- Active customers with moderate balances will receive *standard follow-up and customer satisfaction surveys* (indicating a potentially less urgent but still important retention effort.)
+
+![Summary Table of retention strategy](image/PresdictCustomerRentention_ShorterVer.png)
+
+By focusing on high-risk customers with personalized interventions, we can reduce churn rates more effectively and improve customer satisfaction. This combination of predictive modeling, interpretability, and actionable insights enables the organization to not only understand but also proactively address customer churn.
 
 # Marketing Campaigns (Subgroup B: Question 2)
 
