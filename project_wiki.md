@@ -114,6 +114,7 @@ Many competitors emphasize digital and AI-driven campaigns, which the bank aims 
 - **Bank Customer Segmentation** Complementary dataset for synthetic additional columns for other customer engagement data. https://www.kaggle.com/datasets/shivamb/bank-customer-segmentation
 - **Online Banking / Financial Review Dataset** Complementary dataset for customer comments analysis. https://www.kaggle.com/datasets/yanmaksi/reviews-data-for-classification-model?resource=download
 - **Digital Marketing Dataset** Complementary dataset for ROI prediction of marketing strategies. https://www.kaggle.com/datasets/arpit2712/digital-marketing-company
+- **Banking Customer Churn Prediction Dataset** Complementary dataset for Customer Churn prediction. https://www.kaggle.com/datasets/saurabhbadole/bank-customer-churn-prediction-dataset/versions/1/data 
 
 ## Initial Data Exploration Findings
 - **Demographics**: Younger customers are more responsive to digital campaigns.
