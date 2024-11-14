@@ -596,6 +596,11 @@ Each segment is described by unique behaviors and preferences, leading to specif
 
 ---
 
+## Real-time Customer Segmmentation
+We also made a working prototype of a real-time customer segmentation function that takes in customer's banking behavior and preferences to classify the belonging segment. The prediction is trained by a gradient boost model and is highly accurate under train-test split. 
+<img src="image/real_time_segmentation_confusion.png" alt="Real-time segmentaion"/>
+
+We recommand the incorporation of this feature to give more customised services and campaigns. For further insights and visualizations, refer to the dashboard in the **[Jupyter Notebook](https://github.com/huangchaohung/Group-20/blob/main/src/main.py)**.
 
 ## Question 2: What are the key factors influencing customer engagement with our marketing campaigns?
 
