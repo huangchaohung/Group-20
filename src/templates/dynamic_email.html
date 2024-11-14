@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Email Modifier</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Dynamic Email Modifier</h2>
+    <form id="uploadForm" action="/dynamic_email" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">Upload your recent email results (CSV with 'click_rate' column):</label>
+            <input type="file" class="form-control-file" id="file" name="file" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

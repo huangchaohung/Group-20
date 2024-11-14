@@ -3,28 +3,45 @@ import pandas as pd
 from datetime import datetime
 import json
 import random
+import os
 
-# Define absolute paths for models and data
-MODEL_DIR = r"C:\Users\limti\PycharmProjects\DSA3101-Group-20\src\recommendation_models"
-FEATURES_JSON_PATH = r"C:\Users\limti\PycharmProjects\DSA3101-Group-20\src\recommendation_models\features.json"
+# Define the base directory using __file__
+BASE_DIR = os.path.dirname(__file__)
+
+# Define paths for models, feature definitions, and dataset relative to BASE_DIR
+MODEL_DIR = os.path.join(BASE_DIR, "recommendation_models")
+FEATURES_JSON_PATH = os.path.join(MODEL_DIR, "features.json")
+DATASET_PATH = os.path.join(BASE_DIR, "../data/Combined_dataset.csv")
 
 # Load models
-cd_account_pipeline = pickle.load(open(f'{MODEL_DIR}/cd_account_xgb_classifier_0.pkl', "rb"))
-loan_pipeline = pickle.load(open(f'{MODEL_DIR}/loan_xgb_classifier_0.pkl', "rb"))
-securities_pipeline = pickle.load(open(f'{MODEL_DIR}/securities_xgb_classifier_0.pkl', "rb"))
-term_deposit_pipeline = pickle.load(open(f'{MODEL_DIR}/term_deposit_xgb_classifier_0.pkl', "rb"))
+try:
+    cd_account_pipeline = pickle.load(open(os.path.join(MODEL_DIR, 'cd_account_xgb_classifier_0.pkl'), "rb"))
+    loan_pipeline = pickle.load(open(os.path.join(MODEL_DIR, 'loan_xgb_classifier_0.pkl'), "rb"))
+    securities_pipeline = pickle.load(open(os.path.join(MODEL_DIR, 'securities_xgb_classifier_0.pkl'), "rb"))
+    term_deposit_pipeline = pickle.load(open(os.path.join(MODEL_DIR, 'term_deposit_xgb_classifier_0.pkl'), "rb"))
+except Exception as e:
+    raise ValueError(f"Model loading error: {e}")
 
 # Load feature definitions from features.json
-with open(FEATURES_JSON_PATH, 'r') as f:
-    product_features = json.load(f)
+try:
+    with open(FEATURES_JSON_PATH, 'r') as f:
+        product_features = json.load(f)
+except Exception as e:
+    raise ValueError(f"Error loading features.json: {e}")
 
 # Load encoders for categorical features
 encoders = {}
 for feature in ["job", "marital", "education", "default", "contact", "poutcome", "month"]:
-    encoders[feature] = pickle.load(open(f"{MODEL_DIR}/{feature}_encoder.pkl", "rb"))
+    try:
+        encoders[feature] = pickle.load(open(os.path.join(MODEL_DIR, f"{feature}_encoder.pkl"), "rb"))
+    except Exception as e:
+        print(f"Warning: Encoder for '{feature}' could not be loaded: {e}")
 
-# Load scaler
-scaler = pickle.load(open(f'{MODEL_DIR}/scaler.pkl', "rb"))
+# Load the scaler
+try:
+    scaler = pickle.load(open(os.path.join(MODEL_DIR, 'scaler.pkl'), "rb"))
+except Exception as e:
+    raise ValueError(f"Scaler loading error: {e}")
 
 # Feature descriptions without removed options
 feature_descriptions = {

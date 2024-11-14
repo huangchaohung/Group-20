@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Customer Segmentation</h1>
+    {% for section, content in sections.items() %}
+        <div id="{{ section }}" class="section">
+            <h2>{{ section }}</h2>
+            <img src="{{ url_for('display_image', filename=content['image']) }}" alt="{{ section }}">
+            <p>{{ content['description'] }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

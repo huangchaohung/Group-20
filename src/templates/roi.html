@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ROI Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>ROI Analysis</h2>
+    {% if plot_url %}
+        <img src="data:image/png;base64,{{ plot_url }}" alt="ROI Analysis Graph" class="img-fluid">
+    {% else %}
+        <p>No ROI data available.</p>
+    {% endif %}
+</div>
+</body>
+</html>

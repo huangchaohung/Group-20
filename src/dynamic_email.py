@@ -1,96 +1,103 @@
 import json
 import random
 import pandas as pd
+import os
+
 random.seed(3101)
 
-def dynamic_email_modifier(recent_email_result, lr=0.5):
-    """
-    Create a dynamic email modifier that adjusts based on click rates.
-    """
-    # Load current email results
-    email_a = pd.read_csv('../data/email_data/email_a.csv')
-    email_b = recent_email_result
-    recent_email_result.to_csv('../data/email_data/email_b.csv', index=False)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-    # Load feature configurations for each email
-    email_a_feature_path = r'../data/email_data/email_a_features.json'
-    email_b_feature_path = r'../data/email_data/email_b_features.json'
+high_impact_groups = [
+    ['Tone_Formal', 'Tone_Conversational', 'Tone_Urgent', 'Tone_Friendly'],
+    ['Wording Focus_High Returns', 'Wording Focus_Stable Income', 'Wording Focus_How Money is Used', 'Wording Focus_Security'],
+    ['CTA Position_Early', 'CTA Position_Middle', 'CTA Position_Late']
+]
+
+def dynamic_email_modifier(recent_email_result):
+    email_a = pd.read_csv(os.path.join(BASE_DIR, '../data/email_data/email_a.csv'))
+    email_b = recent_email_result
+    recent_email_result.to_csv(os.path.join(BASE_DIR, '../data/email_data/email_b.csv'), index=False)
+
+    email_a_feature_path = os.path.join(BASE_DIR, '../data/email_data/email_a_features.json')
+    email_b_feature_path = os.path.join(BASE_DIR, '../data/email_data/email_b_features.json')
 
     with open(email_a_feature_path) as f:
         email_a_feature = json.load(f)
-
     with open(email_b_feature_path) as f:
         email_b_feature = json.load(f)
 
-    # Load mutually exclusive groups
-    mutually_exclusive = eval(open('../data/email_data/mutually_exclusive.txt', 'r').read())
+    mutually_exclusive = eval(open(os.path.join(BASE_DIR, '../data/email_data/mutually_exclusive.txt')).read())
 
-    # Calculate click rates
     success_rate_a, success_rate_b = __calculate_email_percentage(email_a, email_b)
-    print("Email A Click Rate:", success_rate_a)
-    print("Email B Click Rate:", success_rate_b)
 
-    # Compare and adjust features
+    # Determine if adjustments are needed
     if success_rate_a > success_rate_b:
-        adjusted_email_b_feature = __adjust_email_features(
-            email_b_feature, email_a_feature, success_rate_b, success_rate_a, lr, mutually_exclusive
+        email_b_feature = __adjust_email_features(
+            email_b_feature, email_a_feature, success_rate_b, success_rate_a, mutually_exclusive, high_impact_groups
         )
-        email_b_feature = adjusted_email_b_feature.copy()
     else:
-        adjusted_email_a_feature = __adjust_email_features(
-            email_a_feature, email_b_feature, success_rate_a, success_rate_b, lr, mutually_exclusive
-        )
-        email_a_feature = email_b_feature.copy()
-        email_b_feature = adjusted_email_a_feature.copy()
-        email_b.to_csv('../data/email_data/email_a.csv', index=False)
+        # If email_b has the best result, offer a random configuration
+        email_b_feature = __generate_random_features(mutually_exclusive)
 
-    # Save the adjusted features
-    with open(email_a_feature_path, "w") as j:
-        json.dump(email_a_feature, j)
-    with open(email_b_feature_path, "w") as j:
+    # Save the adjusted features to a new JSON file for download
+    download_path = os.path.join(BASE_DIR, '../data/email_data/adjusted_email_b_features.json')
+    with open(download_path, "w") as j:
         json.dump(email_b_feature, j)
 
-    # Output differences for diagnostic
     differences, similarities = __compare_emails(email_a_feature, email_b_feature)
-    print("====== Changes Made ======")
-    for _feature, _changes in differences.items():
-        print(f"{_feature}: {_changes[0]} -> {_changes[1]}")
+    return differences, similarities, download_path
+
 
 def __calculate_email_percentage(email_a, email_b):
-    # Calculate click rate averages
     clickrate_a = email_a['click_rate']
     clickrate_b = email_b['click_rate']
-
     success_rate_a = sum(clickrate_a) / len(clickrate_a)
     success_rate_b = sum(clickrate_b) / len(clickrate_b)
-
     return success_rate_a, success_rate_b
 
-def __adjust_email_features(email_low, email_high, success_low, success_high, lr, mutually_exclusive_groups):
-    # Create a new dictionary to avoid mutating the input
+
+def __adjust_email_features(email_low, email_high, success_low, success_high, mutually_exclusive_groups, high_impact_groups):
     new_email = email_low.copy()
     if success_low < success_high:
+        # Calculate feature similarity: count how many features are the same between the emails
+        matching_features = sum(1 for feature in email_low if email_low[feature] == email_high[feature])
+        total_features = len(email_low)
+        similarity_ratio = matching_features / total_features  # Ratio of matching features (0 to 1)
         for group in mutually_exclusive_groups:
+            # Determine the learning rate based on the group impact
+            lr = 0.7 if group in high_impact_groups else 0.3
             for feature in group:
                 if new_email[feature] != email_high[feature]:
-                    # Adjust feature closer to the high-performing email
+                    # Adjust the feature closer to the high-performing email
                     new_email[feature] += lr * (email_high[feature] - new_email[feature])
 
-                    # Add small random noise to avoid exact matching
-                    new_email[feature] += random.uniform(-0.05, 0.05)
-
+                    # Set noise based on feature similarity: more similarity means larger noise
+                    baseline_noise = 0.1
+                    noise_scaling = baseline_noise + 0.1 * similarity_ratio  # Higher similarity increases noise
+                    random_noise = random.uniform(-noise_scaling, noise_scaling)
+                    new_email[feature] += random_noise
                     # Ensure binary values stay between 0 and 1
                     new_email[feature] = max(0, min(1, new_email[feature]))
-
-            # Ensure only one feature in each mutually exclusive group is set to 1
+            # Ensure mutual exclusivity in the group
             max_feature = max(group, key=lambda f: new_email[f])
             for feature in group:
                 new_email[feature] = 1 if feature == max_feature else 0
 
     return new_email
 
+
+def __generate_random_features(mutually_exclusive_groups):
+    random_features = {}
+    for group in mutually_exclusive_groups:
+        for feature in group:
+            random_features[feature] = random.randint(0, 1)
+        max_feature = max(group, key=lambda f: random_features[f])
+        for feature in group:
+            random_features[feature] = 1 if feature == max_feature else 0
+    return random_features
+
+
 def __compare_emails(email_a, email_b):
-    # Compare features between two emails to detect differences
     differences = {}
     similarities = {}
     for feature in email_a:

@@ -4,6 +4,7 @@ from datetime import datetime
 import json
 import time
 import os
+import random
 
 # Directory path where models and encoders are stored
 model_directory = r"recommendation_models"
