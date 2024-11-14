@@ -1120,7 +1120,7 @@ R2 Score: 0.6674107186663398
 Predicted ROI: 2.7396803604615543
 ```
 
-# Gradient Boosting
+### Gradient Boosting
 
 ```python
 # Ensure the 'Models' directory exists
