@@ -26,15 +26,7 @@ For more details, please refer to the full [project wiki](/project_wiki.md).
    pip install -r requirements.txt
    ```
 
-3. **Environment Variables**:  
-   Create a `.env` file in the project root and define the necessary environment variables:
-   ```plaintext
-   DB_USER=your_db_username
-   DB_PASSWORD=your_db_password
-   API_KEY=your_api_key
-   ```
-
-4. **Run the Project**:  
+3. **Run the Project**:  
    Once dependencies are installed, you can execute the primary scripts using:
    ```bash
    python main.py
@@ -119,7 +111,7 @@ The project uses a dataset from Kaggle related to the direct marketing campaigns
 - **Dataset 1**: [Bank Marketing Dataset](https://www.kaggle.com/datasets/prakharrathi25/banking-dataset-marketing-targets)
 - **Dataset 2**: [Bank Personal Loan](https://www.kaggle.com/datasets/mahnazarjmand/bank-personal-loan/data)
 - **Dataset 3**: [Bank Customer Segmentation](https://www.kaggle.com/datasets/shivamb/bank-customer-segmentation)
-- **Dataset 4**: [Customer comments dataset] ()
+- **Dataset 4**: [Online Banking / Financial Review Dataset](https://www.kaggle.com/datasets/yanmaksi/reviews-data-for-classification-model?resource=download)
 
 ## Instructions for Building and Running the Docker Container(s)
 
