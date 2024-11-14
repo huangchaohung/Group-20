@@ -24,6 +24,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the entire src directory and data directory into the container
 COPY src/ /app/src/
 COPY data/ /app/data/
+COPY image/ /app/image/
 
 # Set environment variables for Flask and Python path
 ENV FLASK_APP=/app/src/main.py
