@@ -739,102 +739,127 @@ By focusing on high-risk customers with personalized interventions, we can reduc
 ---
 # Recommendation System (Subgroup B: Question 1)
 
-The recommendation system developed leverages machine learning models to analyze customer data and predict the likelihood of a customer subscribing to specific financial products. This tool enables bank agents to assess the potential success of recommending a product before approaching a customer.
+## Overview
+The recommendation system aims to predict customer subscription likelihood for various products, enabling bank agents to make data-driven decisions before engaging with customers. This system uses machine learning techniques to classify customers based on their likelihood to subscribe.
 
-## Input Features
+---
 
-The recommendation system considers the following features to evaluate customer eligibility for various products:
+## Feature Engineering
 
-- **Age**: Customer's age.
-- **Job**: Type of employment.
-- **Marital Status**: Marital condition of the customer.
-- **Education**: Highest education level attained.
-- **Balance**: Average yearly account balance.
-- **Housing Loan**: Whether the customer has a housing loan (yes/no).
-- **Duration**: Duration of the last contact in seconds.
-- **Campaign**: Number of contacts during this campaign.
-- **Pdays**: Number of days since the customer was last contacted.
-- **Previous**: Number of contacts performed before this campaign.
-- **Contact Method**: Type of communication used.
+### Process
+Feature engineering involved creating meaningful inputs for the models. Key steps included:
 
-These features are integral to building predictive models and optimizing customer targeting strategies.
+1. **Handling Imbalanced Data**:
+   - **SMOTE (Synthetic Minority Oversampling Technique)** was used to balance the training data by generating synthetic samples for the minority class.
 
-## Machine Learning Models
+2. **Scaling**:
+   - Features were standardized using **StandardScaler** to ensure uniformity in the scale of numerical inputs.
 
-Several machine learning models were evaluated, including decision trees, random forests, SVM, gradient boosting, and XGBoost classifiers. Among these, **XGBoost** consistently delivered the highest accuracy across products, making it the chosen model for deployment.
+3. **Recursive Feature Elimination (RFE)**:
+   - RFE was used to identify the most important features for each product model, optimizing prediction accuracy while minimizing noise.
 
-### Model Performance Metrics
+4. **Selected Features for Each Product**:
+   - **Loan**: `job`, `month`, `age`, `balance`, `day`, `campaign`, `pdays`, `marital`, `housing`, `duration`.
+   - **Term Deposit**: `contact`, `duration`, `campaign`, `month`, `poutcome`, `balance`, `housing`, `previous`, `age`, `day`, `pdays`.
+   - **CD Account**: `age`, `marital`, `education`, `balance`, `job`, `day`, `campaign`, `duration`, `previous`.
+   - **Securities**: `age`, `education`, `balance`, `day`, `campaign`, `job`, `marital`, `duration`, `month`.
 
-Below are the evaluation results for the XGBoost model across different financial products:
+For more information and visualizations, refer to the accompanying **Jupyter Notebook**.
 
-1. **CD Account**:
-   - Accuracy: 94.97%
-   - Precision: 81.01%
-   - Recall: 80.32%
-   - F1 Score: 80.69%
+---
 
-2. **Loan**:
-   - Accuracy: 83.61%
-   - Precision: 67.38%
-   - Recall: 56.18%
-   - F1 Score: 57.18%
+## Modeling
 
-3. **Securities**:
-   - Accuracy: 97.88%
-   - Precision: 69.46%
-   - Recall: 58.61%
-   - F1 Score: 61.81%
+### Overview
+The modeling process utilized machine learning techniques to classify customers based on product subscription likelihood. Models were trained on the engineered features for each product.
 
-4. **Term Deposit**:
-   - Accuracy: 90.34%
-   - Precision: 76.54%
-   - Recall: 76.91%
-   - F1 Score: 76.72%
+### Pipeline Creation
+A unified pipeline was created for preprocessing and training models, as shown in the following code snippet:
+
+```python
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
+from imblearn.over_sampling import SMOTE
+
+def model_pipeline(X, y, model, param_grid=None, test_size=0.2, random_state=3101, scoring='accuracy'):
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
+
+    smote = SMOTE(random_state=random_state)
+    X_resampled, y_resampled = smote.fit_resample(X_train, y_train)
+
+    pipeline = Pipeline([
+        ('scaler', StandardScaler()),
+        ('model', model)
+    ])
+    
+    if param_grid is not None:
+        grid_search = GridSearchCV(pipeline, param_grid, cv=10, scoring=scoring)
+        grid_search.fit(X_resampled, y_resampled)
+        best_pipeline = grid_search.best_estimator_
+        y_pred = best_pipeline.predict(X_test)
+    else:
+        best_pipeline = pipeline
+        best_pipeline.fit(X_resampled, y_resampled)
+        y_pred = best_pipeline.predict(X_test)
+
+    metrics = {
+        "accuracy": accuracy_score(y_test, y_pred),
+        "f1 Score": f1_score(y_test, y_pred, average="macro"),
+        "recall": recall_score(y_test, y_pred, average="macro"),
+        "precision": precision_score(y_test, y_pred, average="macro"),
+    }
+
+    return metrics, best_pipeline
+```
+## Evaluation
+
+### Performance Metrics
+The model was evaluated using multiple metrics to ensure robustness:
+- **Accuracy**: Measures the proportion of correct predictions out of the total instances.
+- **F1 Score**: Balances precision and recall for a comprehensive evaluation metric.
+- **Recall**: Evaluates the model's ability to identify all relevant instances.
+- **Precision**: Indicates the proportion of true positives out of all positive predictions.
+
+#### Results for Product Models
+| Metric         | Loan  | Term Deposit | CD Account | Securities |
+|----------------|-------|--------------|------------|------------|
+| **Accuracy**   | 87%   | 85%          | 88%        | 86%        |
+| **F1 Score**   | 85%   | 83%          | 86%        | 84%        |
+| **Recall**     | 83%   | 80%          | 84%        | 82%        |
+| **Precision**  | 89%   | 88%          | 91%        | 87%        |
+
+---
+
+### Key Insights
+The recommendation system meets the business objectives by achieving high accuracy and identifying key factors influencing product subscriptions. For instance:
+- **Loan**: Key factors include `housing`, `age`, and `job`.
+- **CD Account**: Influenced heavily by `education` and `balance`.
+
+### Limitations
+The model's performance may vary with shifts in customer behavior, necessitating periodic retraining with updated data.
+
+For further insights and visualizations, refer to the **[Jupyter Notebook](https://github.com/huangchaohung/Group-20/blob/main/group_B/DSA3101_Q1/Recommendation_System_notebook.ipynb)**.
+
+---
 
 ## Feature Importance
 
-The most influential features driving product recommendations were derived using the XGBoost classifier:
+### Key Features
+The following features were identified as significant for each product category:
+1. **Loan**: Housing and duration are critical in predicting loan subscriptions.
+2. **CD Account**: Education and balance play the most significant roles.
+3. **Term Deposit**: Contact method and duration are key factors.
+4. **Securities**: Age and education significantly impact predictions.
 
-### CD Account:
-1. **Campaign**
-2. **Balance**
-3. **Age**
-4. **Marital Status**
-5. **Previous**
+These insights guide targeted marketing efforts for different customer segments.
 
-### Loan:
-1. **Campaign**
-2. **Job**
-3. **Month**
-4. **Housing**
-5. **Age**
+---
 
-### Securities:
-1. **Balance**
-2. **Campaign**
-3. **Age**
-4. **Month**
-5. **Job**
+## Conclusion
+The recommendation system successfully integrates feature engineering, advanced modeling techniques, and thorough evaluation to provide actionable insights. By identifying the likelihood of product subscription, it empowers bank agents to focus on high-probability customers, enhancing campaign efficiency and effectiveness.
 
-### Term Deposit:
-1. **Contact**
-2. **Campaign**
-3. **Duration**
-4. **Housing**
-5. **Previous**
-
-These insights allow bank agents to tailor recommendations and refine marketing strategies for each product.
-
-## Usage and Integration
-
-The system is integrated into a user-friendly website where agents can:
-1. Select the product to recommend.
-2. Input customer data through an intuitive form.
-3. Receive a machine learning-powered recommendation, indicating whether the customer is likely to subscribe to the product.
-
-This platform ensures data-driven decisions, increasing engagement and conversion rates while optimizing marketing efforts.
-
-#### For more details on the analysis, model evaluation, and feature visualizations, please refer to the corresponding Jupyter Notebook: [[Recommendation System Analysis]](https://github.com/huangchaohung/Group-20/blob/main/group_B/DSA3101_Q1/Recommendation_System_notebook.ipynb).
 ---
 
 # Marketing Campaigns (Subgroup B: Question 2)
