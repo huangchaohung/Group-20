@@ -454,41 +454,55 @@ xgboost==2.1.2
 
 # Analytical Findings
 
-# Group A Question 1: How can we effectively segment our customers based on their banking behaviour and preferences?
+# Subgroup A: Customer Segmentation and Behavior Analysis
 
-# Group A Question 3: How do customer behaviors and preferences vary across different segments?
+This section consists of all business questions for subgroup A. It demonstrates the segmentation of customers and subsequent investigation into customers' behaviour and preference across different segments (Question 1&3). Then it explores the key factors influencing customer engagement with our marketing campaigns (Question 2). 
 
-We answer these two questions together under the following section. It is more efficient and easier to explain.
+## Question 1 & 3: How to effectively segment our customers based on their banking behavior and preferences? What are the unique characteristic in behavior and preferences across different customers?
 
-## Segmentation Model
+## Data Preparation
+### Feature Selection
+The segmentation should be based on customer banking behavior and preference in banking services and products, so only relevant features including transaction history, recency, average amount and product ownership information are selected as the dataset for this section.
 
-### Methodology
-Our segmentation model leverages key data points across various attributes of customer behavior and preferences. The following factors are the primary dimensions for effective segmentation:
+### Data Preprocessing
+Clustering models are often based on Euclidean distance, so feature scaling matters to ensure the clustering is not dominated by particular features. Categorical values are binary so binary encoding are applied.
 
-- **Transaction Frequency and Amount**: This indicates each customer's level of engagement with their accounts. Customers with higher transaction frequency and amount are likely more active in banking activities and may show greater receptivity to premium services.
-- **Product Ownership**: Key products considered include housing loans, CD (Certificate of Deposit) accounts, securities accounts, and other bank products. Product ownership helps identify customer priorities, such as preferences for stability (CD accounts) or growth (securities accounts).
-- **Engagement Recency**: This metric captures how recently a customer has interacted with the bank, giving insight into the level of ongoing engagement and relevance of targeted follow-ups.
-- **Demographic Attributes**: Characteristics such as age, balance levels, and other demographic data add context to behavioral data, helping to predict preferences and segmentation relevance.
+### Correlation Analysis
+<img src="image/characteristic_corr.png" alt="Clustering correlation"/>
+Results show low correlation for most features except a weak correlation between transaction frequency and recency. This weak correlation is due to the fact that more frequent transaction may indicate more recent account activity.
 
-### Clustering Algorithm
-1. **Data Preparation**: Transactional data was normalized to ensure comparability, with product ownership categories and recency measures standardized for input uniformity.
-2. **Algorithm Selection**: We applied K-means clustering to identify natural groupings of customers. Cluster quantity was fine-tuned using the elbow method and silhouette scores, aiming to balance model simplicity with meaningful segmentation.
+## Modeling
+### Modeling Techniques Considered
+For customer segmentation, an unsupervised clustering model should be adopted. K-means clustering, Gaussian mixture, mean-shift, DBSCAN are considered
 
-<img src="image/elbow15.png" alt="elbow method"/>
+### Detailed Description of the Chosen Models
+- **K-means**: Partitions data into a set number of clusters by minimizing the distance between points and their cluster centroids..
+- **Gaussian Mixture**: Models data as a mixture of several Gaussian distributions, each representing a cluster.
+- **Mean Shift**: Iteratively shifts data points toward areas of high density to form clusters. 
+- **DBSCAN (Density-Based Spatial Clustering of Applications with Noise)**: Groups data points that are close in space while marking points in sparse regions as noise.
 
-<img src="image/Kmeans_Silhouette_Score_Pattern.png" alt="Kmeans_Silhouette_Score_Pattern"/>
+### Parametric Tuning
+<img src="image/elbow40.png" alt="Elbow Method to 40"/> 
+<img src="image/elbow15.png" alt="Elbow Method to 15"/>
+<img src="image/Kmeans_Silhouette_Score_Pattern.png" alt="Silhouette Score Pattern"/> 
+To determine the number of clusters, elbow method and Silhouette score analysis are adopted. From the graphs, we decided to choose seven as the optimal number of cluster - not more because it is impractical to have too many clusters for a real banking campaign. 
 
-3. **Cluster Interpretation**: Following clustering, we examined each segment for defining characteristics (e.g., focus on loans, high transaction frequency) to build accurate segment profiles.
+## Evaluation
+### Performance Metrics
+<img src="image/Cluster_Model_Comparison.png" alt="Comparison of Clustering Models"/> 
+The best Silhouette score is compared among the models with maximum seven clusters. K-means model is selected for its good performance and interpretability. 
 
-<img src="image/Kmeans_PCA.png" alt="Kmeans_PCA"/>
+### Limitations
+The model is sensitive to noise and outliners. If fed with new dataset with more outliners, the clustering may not perform as well. 
 
----
+## Analytical Findings and Recommandations
 
-## Segment Profiles
-
+### Segment Profiles
+<img src="image/Kmeans_PCA.png" alt="Cluster PCA_0"/>
 Each segment is described by unique behaviors and preferences, leading to specific engagement needs and marketing opportunities.
-
-<img src="image/Product_ownership.png" alt="Cluster diagram"/>
+<img src="image/Transaction_Frequency.png" alt="Cluster diagram_0"/>
+<img src="image/Product_ownership.png" alt="Cluster diagram_1"/>
+<img src="image/Transaction_Amount.png" alt="Cluster diagram_2"/>
 
 ### Segment 0: Moderate Transaction Frequency, High Housing Loan Ownership
 - **Characteristics**: 
@@ -583,9 +597,46 @@ Each segment is described by unique behaviors and preferences, leading to specif
 ---
 
 
-# Group A Question 2: What are the key factors influencing customer engagement with our marketing campaigns?
+## Question 2: What are the key factors influencing customer engagement with our marketing campaigns?
 
-## Key Engagement Factors
+## Data Preparation
+### Feature Selection
+All features related with campaigns are included, including both the banking behavior, product perferences above and the demographics of customers, and records of last campaign the bank conducted. The target predicting value is the 'y'-whether the customer engage in this campaign by subscribing to the term deposit.
+
+### Data Preprocessing
+Categorical columns with multiple possible values are preprocessed with one-hot encoding. Numberical columns are scaled for models that is sensitive to feature scales such as KNN while not applied for tree-based models. 
+
+### Data Imbalance Treatment
+The data is highly imbalanced with 1:5 NO to YES rate. Hence we applied SMOTE (Synthetic Minority Over-sampling Technique) to improve the performance of classifiers by balancing the class distribution. It is a technique used to address class imbalance by generating synthetic samples for the minority class. It works by selecting a minority class sample, finding its nearest neighbors, and creating new synthetic instances by interpolating between the original sample and its neighbors.
+
+### Correlation Analysis
+<img src="image/num_corr.png" alt="Classifier correlation"/>
+In addition to the correlation in question 1&3, results show low correlation for most features except a moderate correlation between nunmber of days from last campaign and whether there is last campaign. This moderate correlation is due to the fact that only if there is a previous campaign, the number of days from that campaign can be positive.
+
+## Modeling
+### Modeling Techniques Considered
+This is a supervised learning task that train a classifier to predict whether the campaign is going to be successful on certain customer. Models including Logistic Regression, Random Forest, Gradient Boosting, K-Nearest Neighbour and Support Vector Machine are considered. 
+
+### Detailed Description of the Chosen Models
+- **Logistic Regression**: A linear model for binary classification that predicts probabilities using the logistic function.
+- **Random Forest**: An ensemble method that creates multiple decision trees and combines their predictions to reduce overfitting and improve accuracy.
+- **Gradient Boosting**: An ensemble technique that builds models sequentially to correct errors from previous models, improving accuracy.
+- **K-Nearest Neighbour**: A non-parametric classifier that assigns a data point to the majority class of its nearest neighbors.
+- **Support Vector Machine**: A classification algorithm that finds the hyperplane that maximizes the margin between classes.
+
+## Evaluation
+### Performance Metrics
+To evaluate the models' performance, the basic metrics including accuracy, precision, recall are examined, yet the difference among models is minimal due to the very imbalanced data - these metrics are misleadingly high since they may be high for the majority class but poor for the minority class. Hence the confusion matrix with true positive rate as well as the roc-auc score and curve are the major component to evaluate the chosen models. 
+
+<img src="image/confusion.png" alt="Confusion"/>
+
+The finally selected best performer is the gradient boost model. It has the highest accuracy, precision, recall, f1-score, and performance the best in the confusion matrix and the roc-auc score. 
+
+<img src="image/name_ROC.png" alt="ROC"/>
+
+## Analytical Findings
+
+### Key Engagement Factors
 
 <img src="image/campaign_feature_importance.png" alt="Campaign feature importance"/>
 
@@ -608,17 +659,9 @@ Each segment is described by unique behaviors and preferences, leading to specif
    - **Implication**: 
      - By analyzing past successful outcomes, the bank can replicate successful elements in future campaigns (such as the type of offer, timing, and customer segment). Additionally, customers who had positive past experiences may be ideal candidates for more personalized or advanced offers.
 
-### 3. **Housing Loan Ownership**
-   - **Explanation**: Housing loan ownership is a strong indicator of customer engagement. Customers with housing loans tend to have higher financial commitment to the bank, which increases the chances of continued interaction and product adoption.
-   - **Insights**: 
-     - Customers with housing loans are likely to engage more with loan-related products or services, such as refinancing options or credit products.
-     - The level of engagement with housing loans can also impact the customer’s willingness to engage with additional products, creating opportunities for cross-selling and upselling.
-   - **Implication**: 
-     - Marketing campaigns targeted at customers with housing loans should focus on financial services that complement or enhance their loan management, such as personal loan offers, insurance products, or bundled services. Offering loyalty-based incentives could increase engagement within this segment.
+## Recommandation of metrics for tracking campaign effectiveness over time
 
-## Metrics for Tracking Engagement
-
-To measure and optimize campaign effectiveness over time, the following key metrics should be tracked:
+To measure and optimize campaign effectiveness over time, we propose the following key metrics:
 
 - **Conversion Rate**: Percentage of customers who take the desired action (e.g., subscription, product purchase). High conversion rates indicate effective messaging and targeting, while low rates suggest areas for improvement.
   
@@ -632,40 +675,6 @@ To measure and optimize campaign effectiveness over time, the following key metr
 
 ---
 
-
-## Subgroup A
-- Question 1:
-- Question 2:
-- Question 3:
-- Optional 1:
-- Optional 2:
-- Optional 3: 
-How can we predict and mitigate customer churn using machine learning techniques?Develop a machine learning model to predict the likelihood of customer churn. Create an early warning system and recommend retention strategies.
-
-## Subgroup B
-- Question 1:
-- Question 2: 
-What strategies can we implement to optimize our marketing campaigns in real-time? Create an algorithm for dynamic campaign adjustment based on real-time performance metrics. Simulate the impact of proposed adjustments on campaign effectiveness.
-- Question 3: How can we measure and maximize the ROI of our personalized marketing efforts? Develop a model to calculate and predict ROI for different marketing strategies. Incorporate factors such as customer lifetime value, campaign costs, and conversion rates.
-- Optional 1:
-- Optional 2:
-- Optional 3:
-
----
-
-# Recommendations
-
-## Prioritized List of Recommendations
-1. Focus on high-engagement customers for targeted campaigns.
-2. Expand digital marketing to younger demographics.
-
-## Implementation Roadmap
-- Step-by-step guide for rolling out personalized campaigns based on findings.
-
-## Expected Impact of Each Recommendation
-- Anticipated improvements in engagement and conversion rates for each recommendation.
-
----
 
 # Group A BQ3: Customer Churn Prediction Model
 
