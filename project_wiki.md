@@ -37,24 +37,185 @@ Banks face challenges in targeting marketing effectively due to limited personal
 
 ---
 
-# Business Understanding
+# Subgroup A: Customer Segmentation and Behavior Analysis
 
-## Detailed Description of the Business Problem
-The project addresses the lack of personalization in bank marketing campaigns, which leads to low engagement and inefficient resource use. Traditional methods fail to leverage data effectively to meet individual customer needs.
+This section consists of all business questions for subgroup A. It demonstrates the segmentation of customers and subsequent investigation into customers' behaviour and preference across different segments (Question 1&3). Then it explores the key factors influencing customer engagement with our marketing campaigns (Question 2). 
 
-## Key Stakeholders and Their Needs
-- **Marketing Team**: Requires tools for creating effective, personalized campaigns.
-- **Bank Executives**: Seek better marketing ROI and enhanced customer satisfaction.
-- **IT Team**: Needs secure, reliable data systems.
-- **Customers**: Prefer relevant marketing that meets their interests and needs.
+## Question 1 & 3: How to effectively segment our customers based on their banking behavior and preferences? What are the unique characteristic in behavior and preferences across different customers?
 
-## Success Criteria for the Project
-- **Increased Engagement**: Higher engagement in personalized marketing campaigns.
-- **Higher Conversion Rates**: More conversions from targeted campaigns.
-- **Data-Driven Decisions**: Marketing strategies informed by model insights.
-- **Resource Efficiency**: Cost-effective campaigns due to targeted personalization.
+## Data Preparation
+### Feature Selection
+The segmentation should be based on customer banking behavior and preference in banking services and products, so only relevant features including transaction history, recency, average amount and product ownership information are selected as the dataset for this section.
+
+### Data Preprocessing
+Clustering models are often based on Euclidean distance, so feature scaling matters to ensure the clustering is not dominated by particular features. Categorical values are binary so binary encoding are applied.
+
+### Correlation Analysis
+<img src="image/characteristic_corr.png" alt="Clustering correlation"/>
+Results show low correlation for most features except a weak correlation between transaction frequency and recency. This weak correlation is due to the fact that more frequent transaction may indicate more recent account activity.
+
+## Modeling
+### Modeling Techniques Considered
+For customer segmentation, an unsupervised clustering model should be adopted. K-means clustering, Gaussian mixture, mean-shift, DBSCAN are considered
+
+### Detailed Description of the Chosen Models
+- **K-means**: Partitions data into a set number of clusters by minimizing the distance between points and their cluster centroids..
+- **Gaussian Mixture**: Models data as a mixture of several Gaussian distributions, each representing a cluster.
+- **Mean Shift**: Iteratively shifts data points toward areas of high density to form clusters. 
+- **DBSCAN (Density-Based Spatial Clustering of Applications with Noise)**: Groups data points that are close in space while marking points in sparse regions as noise.
+
+### Parametric Tuning
+<img src="image/elbow40.png" alt="Elbow Method to 40"/> 
+<img src="image/elbow15.png" alt="Elbow Method to 15"/>
+<img src="image/Kmeans_Silhouette_Score_Pattern.png" alt="Silhouette Score Pattern"/> 
+To determine the number of clusters, elbow method and Silhouette score analysis are adopted. From the graphs, we decided to choose seven as the optimal number of cluster - not more because it is impractical to have too many clusters for a real banking campaign. 
+
+## Evaluation
+### Performance Metrics
+<img src="image/Cluster_Model_Comparison.png" alt="Comparison of Clustering Models"/> 
+The best Silhouette score is compared among the models with maximum seven clusters. K-means model is selected for its good performance and interpretability. 
+
+### Limitations
+The model is sensitive to noise and outliners. If fed with new dataset with more outliners, the clustering may not perform as well. 
+
+## Analytical Findings
+
+### Segment Profiles
+<img src="image/Kmeans_PCA.png" alt="Cluster PCA_0"/>
+Each segment is described by unique behaviors and preferences, leading to specific engagement needs and marketing opportunities.
+<img src="image/Transaction_Frequency.png" alt="Cluster diagram_0"/>
+<img src="image/Product_ownership.png" alt="Cluster diagram_1"/>
+<img src="image/Transaction_Amount.png" alt="Cluster diagram_2"/>
+
+### Segment 0: Moderate Transaction Frequency, High Housing Loan Ownership
+- **Characteristics**: 
+  - Moderate transaction frequency and amount
+  - Low recency, indicating recent but infrequent interactions.
+  - High ownership of housing loans with no securities or CD accounts.
+- **Insight**: This segment predominantly holds housing loans, which suggests a strong preference for long-term financial commitments.
+
+- **Needs and opportunities**:
+  - **Financial Planning**: Assistance with managing or refinancing housing loans could meet this segment’s primary needs.
+  - **Loyalty Programs**: Reduced fees on other services or discounted rates on additional loans may enhance engagement and retention.
+  - **Cross-Selling Potential**: Customers comfortable with loans might respond well to bundled products like insurance or high-limit credit cards.
 
 ---
+
+### Segment 1: Low Transaction Activity, Low Product Ownership, High Housing Loan Ownership
+- **Characteristics**: 
+  - Lower transaction frequency and amount.
+  - Higher recency, indicating recent but sporadic engagement.
+  - High ownership of housing loans but minimal engagement with other products.
+- **Insight**: Customers in this segment primarily own housing loans but show minimal engagement with other products, signaling limited product interest.
+
+- **Needs and opportunities**:
+  - **Re-Engagement Campaigns**: Highlight benefits of digital banking services or products like savings accounts to re-engage this segment.
+  - **Educational Content**: Financial literacy materials on savings and basic financial management can increase understanding and comfort with more products.
+  - **Customized Loan Offers**: Additional loan products with flexible terms or refinancing options can appeal to this segment's need for financial security.
+
+---
+
+### Segment 2: Minimal Product Ownership and Transactions
+- **Characteristics**: 
+  - Very low transaction frequency and amount.
+  - Low engagement across all products.
+- **Insight**: These customers may be new or minimally engaged, showing little interest in existing financial products, which suggests potential for relationship-building.
+
+- **Needs and opportunities**:
+  - **Onboarding to Basic Products**: Introducing entry-level accounts, such as basic savings or debit card products, to build initial relationships.
+  - **Financial Literacy Campaigns**: Resources on budgeting, saving, and basic financial services to increase comfort and drive initial engagement.
+  - **Incentives for Engagement**: Offer introductory incentives like waived fees or cashback to encourage use of more bank services.
+
+---
+
+### Segment 3: Moderate Transaction Frequency, Strong Product Ownership
+- **Characteristics**: 
+  - Moderate transaction frequency with significant securities account ownership.
+  - Likely more financially savvy and interested in investment products.
+- **Insight**: Customers in this segment exhibit a strong interest in investment-related products, demonstrating greater financial literacy and a preference for wealth management.
+
+- **Needs and opportunities**:
+  - **Investment Products**: This group may be interested in additional options like mutual funds, retirement accounts, or brokerage services.
+  - **Wealth Management**: Advisory services to help diversify and grow their portfolio.
+  - **Advanced Educational Content**: Seminars or online courses on investment strategies and market trends could increase loyalty.
+
+---
+
+### Segment 4: High Transaction Frequency and Amount, Limited Loan Engagement
+- **Characteristics**: 
+  - Highest transaction frequency and amount.
+  - Limited ownership of housing loans.
+- **Insight**: These customers prefer products offering liquidity and rewards rather than debt-based offerings, indicating a higher focus on active financial management.
+
+- **Needs and opportunities**:
+  - **Premium Banking Services**: Offering VIP banking services, relationship managers, and exclusive perks for high-activity customers.
+  - **Reward Programs**: Incentives like cashback or fee discounts to acknowledge their high activity.
+  - **Cross-Sell Loan Products**: Products such as personal loans or lines of credit to support liquidity management.
+
+---
+
+### Segment 5: High CD Account Ownership, Balanced in Housing Loans and Transaction Frequency
+- **Characteristics**: 
+  - High ownership of low-risk CD accounts, indicating a preference for stable investments.
+  - Balanced engagement in housing loans and moderate transaction frequency.
+- **Insight**: Customers in this segment prefer secure, low-risk products, indicating a focus on stability and long-term savings.
+
+- **Needs and opportunities**:
+  - **Low-Risk Investment Products**: Fixed deposits, government bonds, and retirement accounts tailored to their risk tolerance.
+  - **Savings and Investment Advice**: Advice on diversifying with low-risk products to maintain engagement.
+  - **Loyalty Programs**: Benefits for CD account holders to increase long-term commitment.
+
+---
+
+### Segment 6: Loan-Focused, Moderate Engagement
+- **Characteristics**: 
+  - Low to moderate transaction frequency, moderate transaction amounts.
+  - High focus on loans with limited activity across other products.
+- **Insight**: These customers are primarily oriented around loans, with limited engagement in other products, suggesting a preference for borrowing over saving or investing.
+
+- **Needs and opportunities**:
+  - **Specialized Loan Products**: Tailored offers that suit their loan-heavy profile, such as refinancing or bundling options.
+  - **Engagement Strategies**: Targeted outreach to maintain engagement through personalized loan services.
+
+---
+
+
+## Question 2: What are the key factors influencing customer engagement with our marketing campaigns?
+
+## Data Preparation
+### Feature Selection
+All features related with campaigns are included, including both the banking behavior, product perferences above and the demographics of customers, and records of last campaign the bank conducted. The target predicting value is the 'y'-whether the customer engage in this campaign by subscribing to the term deposit.
+
+### Data Preprocessing
+Categorical columns with multiple possible values are preprocessed with one-hot encoding. Numberical columns are scaled for models that is sensitive to feature scales such as KNN while not applied for tree-based models. 
+
+### Data Imbalance Treatment
+The data is highly imbalanced with 1:5 NO to YES rate. Hence we applied SMOTE (Synthetic Minority Over-sampling Technique) to improve the performance of classifiers by balancing the class distribution.
+
+### Correlation Analysis
+<img src="image/num_corr.png" alt="Classifier correlation"/>
+In addition to the correlation in question 1&3, results show low correlation for most features except a moderate correlation between nunmber of days from last campaign and whether there is last campaign. This moderate correlation is due to the fact that only if there is a previous campaign, the number of days from that campaign can be positive.
+
+## Modeling
+### Modeling Techniques Considered
+This is a supervised learning task that train a classifier to predict whether the campaign is going to be successful on certain customer. Models including Logistic Regression, Random Forest, Gradient Boosting, K-Nearest Neighbour and Support Vector Machine are considered. 
+
+### Detailed Description of the Chosen Models
+- **Logistic Regression**: A linear model for binary classification that predicts probabilities using the logistic function.
+- **Random Forest**: An ensemble method that creates multiple decision trees and combines their predictions to reduce overfitting and improve accuracy.
+- **Gradient Boosting**: An ensemble technique that builds models sequentially to correct errors from previous models, improving accuracy.
+- **K-Nearest Neighbour**: A non-parametric classifier that assigns a data point to the majority class of its nearest neighbors.
+- **Support Vector Machine**: A classification algorithm that finds the hyperplane that maximizes the margin between classes.
+
+## Evaluation
+### Performance Metrics
+
+
+### Limitations
+The model is sensitive to noise and outliners. If fed with new dataset with more outliners, the clustering may not perform as well. 
+
+
+
 
 # Company Analysis
 
