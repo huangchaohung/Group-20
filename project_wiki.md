@@ -871,12 +871,13 @@ Best regards,
 This project aims to measure and maximize the ROI of personalized marketing efforts for a banking institution. Our campaign involves multiple digital strategies to engage customers and drive conversions while focusing on long-term retention. By calculating ROI and analyzing feature importance, we aim to determine which strategies most effectively enhance revenue and customer value.
 
 ## Marketing Strategy
-We utilized four primary marketing channels:
+We utilized five primary marketing channels:
 
-1. **Email** and **PPC Ads**: Targeted ads tailored to specific customer segments.
-2. **Social Media**: Building brand awareness and fostering customer engagement.
-3. **Referral**: Acquiring customers through existing clients.
-4. **SEO**: Improving search visibility and credibility.
+1. **Email** : Email ads tailored to specific customer segments.
+2. **PPC**: Pay per clicks ads tailored to specific customer segments.
+3. **Social Media**: Building brand awareness and fostering customer engagement.
+4. **Referral**: Acquiring customers through existing clients.
+5. **SEO**: Improving search visibility and credibility.
 
 Each campaign type aligned with different stages of the customer journey:
 - **Awareness**: Increasing brand visibility.
@@ -916,7 +917,7 @@ avg_revenue_per_conversion = 60000
 df_marketing['Revenue'] = df_marketing['ConversionRate'] * avg_revenue_per_conversion
 df_marketing['ROI'] = (df_marketing['Revenue'] - df_marketing['AdSpend']) / df_marketing['AdSpend']
 df_marketing['CLV'] = (avg_revenue_per_conversion + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
-
+```
 
 
 # Future Work
