@@ -159,13 +159,50 @@ Group-20/
     │   ├── real_time_segmentation_confusion.png
     │   ├── real_time_segmentation_importance.png
     ├── src/
+    │   ├── recommendation_models/
+    │   │   ├── cd_account_xgb_classifier_0.pkl
+    │   │   ├── contact_encoder.pkl
+    │   │   ├── default_encoder.pkl
+    │   │   ├── education_encoder.pkl
+    │   │   ├── features.json
+    │   │   ├── job_encoder.pkl
+    │   │   ├── loan_xgb_classifier_0.pkl
+    │   │   ├── martial_encoder.pkl
+    │   │   ├── month_encoder.pkl
+    │   │   ├── poutcome_encoder.pkl
+    │   │   ├── scaler.pkl
+    │   │   ├── securities_encoder.pkl
+    │   │   ├── securities_xgb_classifier_0.pkl
+    │   │   ├── term_deposit_encoder.pkl
+    │   │   ├── term_deposit_gradient_boosting_0.pkl
+    │   │   └── term_deposit_xgb_classifier_0.pkl
+    │   ├── roi_models/
+    │   │   └── random_forest_model_overall.pkl
+    │   ├── static/
+    │   │   ├── app.js
+    │   │   └── style.css
+    │   ├── templates/
+    │   │   ├── base.html
+    │   │   ├── campaign.html
+    │   │   ├── dashboard.html
+    │   │   ├── dynamic_email.html
+    │   │   ├── dynamic_email_result.html
+    │   │   ├── home.html
+    │   │   ├── predict.html
+    │   │   ├── recommendation.html
+    │   │   ├── result.html
+    │   │   └── roi.html
     │   ├── __init__.py
+    │   ├── dynamic_email.py
+    │   ├── main.py
+    │   ├── recommendation_system.py
+    │   └── roi.py
     ├── .DS_Store
+    ├── .Rhistory
     ├── Dockerfile
     ├── README.md
     ├── data_dictionary.xlsx
     ├── email_marketing_campaigns_with_demographics.csv
-    ├── main.py
     ├── project_wiki.md
     └── requirements.txt
 ```
