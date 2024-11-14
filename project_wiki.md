@@ -554,7 +554,6 @@ Thie Early Prediction model flags customers with high **churn risk scores of mor
 - Active customers with moderate balances will receive *standard follow-up and customer satisfaction surveys* (indicating a potentially less urgent but still important retention effort.)
 
 ![Summary Table of retention strategy](image/PresdictCustomerRentention_ShorterVer.png)
-
 By focusing on high-risk customers with personalized interventions, we can reduce churn rates more effectively and improve customer satisfaction. This combination of predictive modeling, interpretability, and actionable insights enables the organization to not only understand but also proactively address customer churn.
 ---
 # Recommendation System (Subgroup B: Question 1)
