@@ -992,18 +992,17 @@ Our analysis primarily focuses on **Conversion** and **Retention** stages, as th
 We calculated several metrics critical to evaluating marketing effectiveness and customer value.
 
 ### 1. ROI Calculation
-   - Average Revenue per Conversion: SGD $60,000.
+   - Using Revenue Earned per each customer and Ad Spend which references our campaign costs.
    - Formula:
      ```python
-     df_marketing['Revenue'] = df_marketing['ConversionRate'] * 60000
-     df_marketing['ROI'] = (df_marketing['Revenue'] - df_marketing['AdSpend']) / df_marketing['AdSpend']
+     df_marketing['ROI'] = (df_marketing['RevenueEarned'] - df_marketing['AdSpend']) / df_marketing['AdSpend'] 
      ```
 
 ### 2. Customer Lifetime Value (CLV)
-   - CLV focuses on expected revenue from a customer over a set period, adjusted by loyalty points and past purchase behavior.
+   - CLV focuses on average revenue earned per customer across the whole dataset over a set period, adjusted by loyalty points and past purchase behavior.
    - Formula:
      ```python
-     df_marketing['CLV'] = (60000 + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
+     df_marketing['CLV'] = (df_marketing['RevenueEarned'].mean() + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
      ```
 
 ### 3. Conversion Rates
@@ -1013,10 +1012,8 @@ We calculated several metrics critical to evaluating marketing effectiveness and
    - Represented by `AdSpend`, this is a significant contributor to campaign ROI.
 
 ```python
-avg_revenue_per_conversion = 60000
-df_marketing['Revenue'] = df_marketing['ConversionRate'] * avg_revenue_per_conversion
-df_marketing['ROI'] = (df_marketing['Revenue'] - df_marketing['AdSpend']) / df_marketing['AdSpend']
-df_marketing['CLV'] = (avg_revenue_per_conversion + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
+df_marketing['ROI'] = (df_marketing['RevenueEarned'] - df_marketing['AdSpend']) / df_marketing['AdSpend'] 
+df_marketing['CLV'] = (df_marketing['RevenueEarned'].mean() + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
 ```
 
 ## Feature Selection
@@ -1041,25 +1038,25 @@ Below is the results for the most important features to predict ROI
 
 ```
 Feature importances (sorted):
-AdSpend              0.741362
-Revenue              0.127274
-ConversionRate       0.110763
-Income               0.008516
-LoyaltyPoints        0.002780
-Age                  0.002495
-CLV                  0.002034
-PreviousPurchases    0.001966
-EmailClicks          0.001271
-Conversion           0.000772
-Gender               0.000462
-CampaignType         0.000306
+AdSpend              0.740448
+ConversionRate       0.120376
+RevenueEarned        0.117896
+Income               0.008714
+LoyaltyPoints        0.002882
+CLV                  0.002545
+Age                  0.002309
+EmailClicks          0.001793
+PreviousPurchases    0.001578
+Conversion           0.000747
+Gender               0.000464
+CampaignType         0.000247
 ```
 
-Campaign cost in this case is the greatest contributor to how effective our campaign is, followed by the revenue and conversion rate.
+Campaign cost in this case is the greatest contributor to how effective our campaign is, followed by conversion rate and revenue earned per customer.
 
 ## Model Training and Results
 
-Post Feature selection, we will begin training the model using linear regression, random forest and gradient boosting model for each of our 5 marketing strategies to predict the ROI and performance.
+Post Feature selection, we will begin training the model using linear regression, random forest and gradient boosting model for each of our 5 marketing strategies to predict the ROI and performance. We choose 6 of our top features that encompasses the necessary factors stated in the question.
 
 ### Linear Regression
 
@@ -1068,8 +1065,8 @@ Post Feature selection, we will begin training the model using linear regression
 if not os.path.exists('Models'):
     os.makedirs('Models')
 
-# Get the top 7 features so that we have CLV Inclusive
-top_features = feature_importances.nlargest(7).index
+# Get the top 6 features so that we have CLV Inclusive
+top_features = feature_importances.nlargest(6).index
 
 marketing_strategies = df_marketing['CampaignChannel'].unique().tolist()
 
@@ -1309,7 +1306,7 @@ Predicted ROI: 2.467867182157421
 
 ## Conclusion
 
-We will dynamically select the best model to predict the ROI for each strategy. For instance, random forest performed best on email, PPC and social media marketing strategies, whereas gradient boosting performed best on referral and SEO strategies, hence we will use the respective models to predict the ROI for each strategy. For marketing professionals looking to maximise ROI for their marketing strategies, they could focus more on the marketing strategy that has the highest predicted ROI and increase their resources channeled into such strategy to boost sales. We have created a website that easily allow them to visualise the predicted ROI for each of the marketing strategy.
+We will dynamically select the best model to predict the ROI for each strategy. For instance, random forest performed best on email, PPC, and social media marketing strategies, whereas gradient boosting performed best on referral and SEO strategies, hence we will use the respective models to predict the ROI for each strategy. For marketing professionals looking to maximise ROI for their marketing strategies, they could focus more on the marketing strategy that returns the highest predicted ROI and increase their resources channeled into such strategy to boost sales. We have created a website that easily allow them to visualise the predicted ROI for each of the marketing strategy.
 
 
 
