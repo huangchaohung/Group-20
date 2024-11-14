@@ -19,7 +19,7 @@ For more details, please refer to the full [project wiki](/project_wiki.md).
    ```
 
 2. **Install Python Dependencies**:  
-   This project uses Python 3.8+. It's recommended to set up a virtual environment:
+   This project uses Python 3.11+. It's recommended to set up a virtual environment:
    ```bash
    python3 -m venv env
    source env/bin/activate  # On Windows use `env\Scripts\activate`
