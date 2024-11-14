@@ -9,6 +9,13 @@ import seaborn as sns
 from wordcloud import WordCloud
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.decomposition import LatentDirichletAllocation
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import pandas as pd
+from collections import Counter
 
 # Sentiment analysis libraries
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
@@ -59,6 +66,7 @@ sia = SentimentIntensityAnalyzer()
 def analyze_sentiment(text):
     sentiment_score = sia.polarity_scores(text)
     compound_score = sentiment_score['compound']
+    df['sentiment_score'] = compound_score  # Store the actual score
     if compound_score >= 0.05:
         return 'Positive'
     elif compound_score <= -0.05:
@@ -75,97 +83,96 @@ sns.countplot(x='sentiment', data=df, order=['Positive', 'Neutral', 'Negative'])
 plt.title('Sentiment Distribution')
 plt.show()
 
-# Generate Word Cloud for each sentiment
-sentiments = ['Positive', 'Neutral', 'Negative']
-for sentiment in sentiments:
-    text = ' '.join(df[df['sentiment'] == sentiment]['cleaned_review'])
-    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
-    plt.figure(figsize=(15,7.5))
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis('off')
-    plt.title(f'Word Cloud for {sentiment} Reviews')
-    plt.show()
+def add_random_dates(df, start='2023-01-01', end='2023-12-31'):
+    start_date = pd.to_datetime(start)
+    end_date = pd.to_datetime(end)
+    
+    # Generate random dates
+    date_range = (end_date - start_date).days
+    random_days = np.random.randint(0, date_range, size=len(df))
+    random_dates = start_date + pd.to_timedelta(random_days, unit='D')
+    
+    df['date'] = random_dates
+    return df.sort_values('date')
 
-# Topic Modeling using LDA
-# Vectorize the text data
-tf_vectorizer = CountVectorizer(max_df=0.95, min_df=2, stop_words='english')
-tf = tf_vectorizer.fit_transform(df['cleaned_review'])
+# Apply the function
+df = add_random_dates(df)
 
-# Fit the LDA model
-num_topics = 5  # You can adjust the number of topics
-lda = LatentDirichletAllocation(n_components=num_topics, random_state=42)
-lda.fit(tf)
+def create_sentiment_dashboard(df):
+    # 1. Time Series of Sentiment Distribution
+    sentiment_over_time = df.groupby(['date', 'sentiment']).size().unstack(fill_value=0)
+    sentiment_over_time_pct = sentiment_over_time.div(sentiment_over_time.sum(axis=1), axis=0)
 
-# Display the top words for each topic
-def display_topics(model, feature_names, no_top_words):
-    for topic_idx, topic in enumerate(model.components_):
-        print(f"Topic {topic_idx+1}:")
-        print(", ".join([feature_names[i]
-                        for i in topic.argsort()[:-no_top_words - 1:-1]]))
-        print()
+    # 2. Extract top themes/keywords for each sentiment
+    def get_top_terms(text_series, n=10):
+    # Tokenize and clean the words
+        adjectives = []
+        for text in text_series:
+            # Process text with spaCy
+            doc = nlp(text.lower())
+            # Only keep adjectives (ADJ tag)
+            adj_tokens = [token.text for token in doc if token.pos_ == 'ADJ' 
+                            and token.text not in stopwords.words('english')]
+            adjectives.extend(adj_tokens)
 
-tf_feature_names = tf_vectorizer.get_feature_names_out()
-display_topics(lda, tf_feature_names, no_top_words=10)
+        # Count word frequencies
+        word_freq = Counter(adjectives)
 
-# Assign topics to reviews
-topic_values = lda.transform(tf)
-df['topic'] = topic_values.argmax(axis=1) + 1  # Adding 1 to start topics from 1
+        # Get the top N words and their counts
+        top_words = pd.DataFrame(word_freq.most_common(n), columns=['term', 'count'])
+        return top_words
 
-# Visualize Topics Distribution
-plt.figure(figsize=(8,6))
-sns.countplot(x='topic', data=df)
-plt.title('Topics Distribution')
-plt.show()
+# Optional: Add this debug code to see what adjectives are being foun
 
-# Save the processed data for the dashboard
-df.to_csv('processed_reviews.csv', index=False)
+    # Create subplots
+    fig = make_subplots(
+        rows=2, cols=2,
+        subplot_titles=('Sentiment Trends Over Time', 'Top Themes by Sentiment',
+                       'Sentiment Distribution'),
+        specs=[[{"type": "scatter"}, {"type": "bar"}],
+               [{"type": "pie"}, None]]
+    )
 
-# Create a Dashboard (Optional)
-# You can use Streamlit to create an interactive dashboard
-# Save the following code in a file named 'streamlit_app.py'
+    # 1. Sentiment Trends Over Time
+    for sentiment in sentiment_over_time_pct.columns:
+        fig.add_trace(
+            go.Scatter(x=sentiment_over_time_pct.index, 
+                        y=sentiment_over_time_pct[sentiment],
+                        name=sentiment,
+                        mode='lines'),
+            row=1, col=1
+        )
 
-'''
-import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+    # 2. Top Themes Bar Chart
+    for sentiment in ['Positive', 'Negative', 'Neutral']:
+        top_terms = get_top_terms(df[df['sentiment'] == sentiment]['cleaned_review'])
+        fig.add_trace(
+            go.Bar(x=top_terms['term'][:5],
+                    y=top_terms['count'][:5],
+                    name=f'{sentiment} themes'),
+            row=1, col=2
+        )
 
-# Load processed data
-df = pd.read_csv('processed_reviews.csv')
+    # 3. Overall Sentiment Distribution (Pie Chart)
+    sentiment_counts = df['sentiment'].value_counts()
+    fig.add_trace(
+        go.Pie(labels=sentiment_counts.index,
+                values=sentiment_counts.values,
+                hole=0.3),
+        row=2, col=1
+    )
 
-st.title('Customer Reviews Dashboard')
+    # Update layout
+    fig.update_layout(
+        height=800,
+        width=1200,
+        showlegend=True,
+        title_text="Sentiment Analysis Dashboard",
+        template="plotly_white"
+    )
 
-# Sentiment Distribution
-st.subheader('Sentiment Distribution')
-fig1, ax1 = plt.subplots()
-sns.countplot(x='sentiment', data=df, order=['Positive', 'Neutral', 'Negative'], ax=ax1)
-st.pyplot(fig1)
+    return fig
 
-# Topics Distribution
-st.subheader('Topics Distribution')
-fig2, ax2 = plt.subplots()
-sns.countplot(x='topic', data=df, ax=ax2)
-st.pyplot(fig2)
-
-# Word Clouds
-st.subheader('Word Clouds by Sentiment')
-sentiment = st.selectbox('Select Sentiment', ['Positive', 'Neutral', 'Negative'])
-from wordcloud import WordCloud
-
-text = ' '.join(df[df['sentiment'] == sentiment]['cleaned_review'])
-wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
-fig3, ax3 = plt.subplots(figsize=(10, 5))
-ax3.imshow(wordcloud, interpolation='bilinear')
-ax3.axis('off')
-st.pyplot(fig3)
-
-# Display sample reviews
-st.subheader('Sample Reviews')
-num_reviews = st.slider('Number of Reviews to Display', min_value=1, max_value=20, value=5)
-sample_reviews = df[['name', 'country', 'date_time', 'sentiment', 'review_text']].sample(num_reviews)
-st.write(sample_reviews)
-'''
-
-# Instructions:
-# 1. Save the above Streamlit code in a file named 'streamlit_app.py'.
-# 2. Run the dashboard using the command: streamlit run streamlit_app.py
+# Create and display the dashboard
+dashboard = create_sentiment_dashboard(df)
+dashboard.show()
