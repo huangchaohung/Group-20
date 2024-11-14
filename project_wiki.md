@@ -582,7 +582,7 @@ The system is integrated into a user-friendly website where agents can:
 
 This platform ensures data-driven decisions, increasing engagement and conversion rates while optimizing marketing efforts.
 
-For more details on the analysis, model evaluation, and feature visualizations, please refer to the corresponding Jupyter Notebook: [[Recommendation System Analysis]](https://github.com/huangchaohung/Group-20/blob/main/group_B/DSA3101_Q1/Recommendation_System_notebook.ipynb).
+#### For more details on the analysis, model evaluation, and feature visualizations, please refer to the corresponding Jupyter Notebook: [[Recommendation System Analysis]](https://github.com/huangchaohung/Group-20/blob/main/group_B/DSA3101_Q1/Recommendation_System_notebook.ipynb).
 ---
 
 # Marketing Campaigns (Subgroup B: Question 2)
