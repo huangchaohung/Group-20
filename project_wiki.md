@@ -13,7 +13,7 @@ Banks face challenges in targeting marketing effectively due to limited personal
 - [Industry Analysis](#industry-analysis)
 - [Competitive Landscape](#competitive-landscape)
 - [Data Understanding](#data-understanding)
-- [Sub A Question 1]
+- [Sub A Question 1](#data-preparation)
       - [Data Preparation](#data-preparation)
       - [Modeling](#modeling)
       - [Evaluation](#evaluation)
@@ -22,7 +22,7 @@ Banks face challenges in targeting marketing effectively due to limited personal
       - [Analytical Findings](#analytical-findings)
       - [Recommendations](#recommendations)
       - [Future Work](#future-work)
-- [Sub B Question 1]
+- [Sub B Question 1](#data-preparation)
       - [Data Preparation](#data-preparation)
       - [Modeling](#modeling)
       - [Evaluation](#evaluation)
