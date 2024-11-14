@@ -113,6 +113,7 @@ Many competitors emphasize digital and AI-driven campaigns, which the bank aims 
 - **Bank Personal Loan**: Complementary dataset for synthetic additional columns for other bank products. https://www.kaggle.com/datasets/mahnazarjmand/bank-personal-loan/data
 - **Bank Customer Segmentation** Complementary dataset for synthetic additional columns for other customer engagement data. https://www.kaggle.com/datasets/shivamb/bank-customer-segmentation
 - **Online Banking / Financial Review Dataset** Complementary dataset for customer comments analysis. https://www.kaggle.com/datasets/yanmaksi/reviews-data-for-classification-model?resource=download
+- **Digital Marketing Dataset** Complementary dataset for ROI prediction of marketing strategies. https://www.kaggle.com/datasets/arpit2712/digital-marketing-company
 
 ## Initial Data Exploration Findings
 - **Demographics**: Younger customers are more responsive to digital campaigns.
@@ -467,8 +468,7 @@ How can we predict and mitigate customer churn using machine learning techniques
 - Question 1:
 - Question 2: 
 What strategies can we implement to optimize our marketing campaigns in real-time? Create an algorithm for dynamic campaign adjustment based on real-time performance metrics. Simulate the impact of proposed adjustments on campaign effectiveness.
-
-- Question 3:
+- Question 3: How can we measure and maximize the ROI of our personalized marketing efforts? Develop a model to calculate and predict ROI for different marketing strategies. Incorporate factors such as customer lifetime value, campaign costs, and conversion rates.
 - Optional 1:
 - Optional 2:
 - Optional 3:
@@ -488,27 +488,28 @@ What strategies can we implement to optimize our marketing campaigns in real-tim
 - Anticipated improvements in engagement and conversion rates for each recommendation.
 
 ---
+
 # Group A BQ3: Customer Churn Prediction Model
 
 To predict and mitigate customer churn using machine learning, we can break down the process into three main steps: model development, interpretation of key drivers of churn, and implementation of an early warning system with tailored retention strategies.
 
 For this question, we will be using [this Churn Modelling data](data/Churn_Modelling.csv)
-
 Data Features:
-**RowNumber**: The sequential number assigned to each row in the dataset.
-**CustomerId**: A unique identifier for each customer.
-**Surname**: The surname of the customer.
-**CreditScore**: The credit score of the customer.
-**Geography**: The geographical location of the customer (e.g., country or region).
-**Gender**: The gender of the customer.
-**Age**: The age of the customer.
-**Tenure**: The number of years the customer has been with the bank.
-**Balance**: The account balance of the customer.
-**NumOfProducts**: The number of bank products the customer has.
-**HasCrCard**: Indicates whether the customer has a credit card (binary: yes/no).
-**IsActiveMember**: Indicates whether the customer is an active member (binary: yes/no).
-**EstimatedSalary**: The estimated salary of the customer.
-**Exited**: Indicates whether the customer has exited the bank (binary: yes/no).
+
+RowNumber: The sequential number assigned to each row in the dataset.
+CustomerId: A unique identifier for each customer.
+Surname: The surname of the customer.
+CreditScore: The credit score of the customer.
+Geography: The geographical location of the customer (e.g., country or region).
+Gender: The gender of the customer.
+Age: The age of the customer.
+Tenure: The number of years the customer has been with the bank.
+Balance: The account balance of the customer.
+NumOfProducts: The number of bank products the customer has.
+HasCrCard: Indicates whether the customer has a credit card (binary: yes/no).
+IsActiveMember: Indicates whether the customer is an active member (binary: yes/no).
+EstimatedSalary: The estimated salary of the customer.
+Exited: Indicates whether the customer has exited the bank (binary: yes/no).
 
 ### Model Development:
 We start by building a predictive model using Gradient Boosting that analyzes historical customer data, such as demographic information, number of products, account activity, and account balance. We train the model to identify patterns that are common among customers who left, allowing us to estimate the likelihood of churn for each current customer. The model is then evaluated using metrics such as accuracy and AUC-ROC to ensure reliable performance.
@@ -528,7 +529,7 @@ Older customers (blue dots) are more likely to churn, as indicated by their impa
 Active members (blue) tend to have lower churn probabilities, while inactive members (red) have higher churn risks. 
 Other Influential Features: 
 - Geographic location
-Customers from Germany (feature `Geography_Germany`) have a higher likelihood of churn compared to customers from Spain (feature `Geography_Spain`).
+Customers from Germany (feature Geography_Germany) have a higher likelihood of churn compared to customers from Spain (feature Geography_Spain).
 - Balance
 Customers with higher balances (blue dots) tend to have lower churn risks, while those with lower balances are more likely to leave. 
 
@@ -544,7 +545,106 @@ Thie Early Prediction model flags customers with high churn risk scores of more 
 
 ![Summary Table of retention strategy](image/PresdictCustomerRentention_ShorterVer.png)
 
-By focusing on high-risk customers with personalized interventions, we can reduce churn rates more effectively and improve customer satisfaction. This combination of predictive modeling, interpretability, and actionable insights enables the organization to not only understand but also proactively address customer churn.
+---
+# Recommendation System (Subgroup B: Question 1)
+
+The recommendation system developed leverages machine learning models to analyze customer data and predict the likelihood of a customer subscribing to specific financial products. This tool enables bank agents to assess the potential success of recommending a product before approaching a customer.
+
+## Input Features
+
+The recommendation system considers the following features to evaluate customer eligibility for various products:
+
+- **Age**: Customer's age.
+- **Job**: Type of employment.
+- **Marital Status**: Marital condition of the customer.
+- **Education**: Highest education level attained.
+- **Balance**: Average yearly account balance.
+- **Housing Loan**: Whether the customer has a housing loan (yes/no).
+- **Duration**: Duration of the last contact in seconds.
+- **Campaign**: Number of contacts during this campaign.
+- **Pdays**: Number of days since the customer was last contacted.
+- **Previous**: Number of contacts performed before this campaign.
+- **Contact Method**: Type of communication used.
+
+These features are integral to building predictive models and optimizing customer targeting strategies.
+
+## Machine Learning Models
+
+Several machine learning models were evaluated, including decision trees, random forests, SVM, gradient boosting, and XGBoost classifiers. Among these, **XGBoost** consistently delivered the highest accuracy across products, making it the chosen model for deployment.
+
+### Model Performance Metrics
+
+Below are the evaluation results for the XGBoost model across different financial products:
+
+1. **CD Account**:
+   - Accuracy: 94.97%
+   - Precision: 81.01%
+   - Recall: 80.32%
+   - F1 Score: 80.69%
+
+2. **Loan**:
+   - Accuracy: 83.61%
+   - Precision: 67.38%
+   - Recall: 56.18%
+   - F1 Score: 57.18%
+
+3. **Securities**:
+   - Accuracy: 97.88%
+   - Precision: 69.46%
+   - Recall: 58.61%
+   - F1 Score: 61.81%
+
+4. **Term Deposit**:
+   - Accuracy: 90.34%
+   - Precision: 76.54%
+   - Recall: 76.91%
+   - F1 Score: 76.72%
+
+## Feature Importance
+
+The most influential features driving product recommendations were derived using the XGBoost classifier:
+
+### CD Account:
+1. **Campaign**
+2. **Balance**
+3. **Age**
+4. **Marital Status**
+5. **Previous**
+
+### Loan:
+1. **Campaign**
+2. **Job**
+3. **Month**
+4. **Housing**
+5. **Age**
+
+### Securities:
+1. **Balance**
+2. **Campaign**
+3. **Age**
+4. **Month**
+5. **Job**
+
+### Term Deposit:
+1. **Contact**
+2. **Campaign**
+3. **Duration**
+4. **Housing**
+5. **Previous**
+
+These insights allow bank agents to tailor recommendations and refine marketing strategies for each product.
+
+## Usage and Integration
+
+The system is integrated into a user-friendly website where agents can:
+1. Select the product to recommend.
+2. Input customer data through an intuitive form.
+3. Receive a machine learning-powered recommendation, indicating whether the customer is likely to subscribe to the product.
+
+This platform ensures data-driven decisions, increasing engagement and conversion rates while optimizing marketing efforts.
+
+#### For more details on the analysis, model evaluation, and feature visualizations, please refer to the corresponding Jupyter Notebook: [[Recommendation System Analysis]](https://github.com/huangchaohung/Group-20/blob/main/group_B/DSA3101_Q1/Recommendation_System_notebook.ipynb).
+---
 
 # Marketing Campaigns (Subgroup B: Question 2)
 
@@ -925,6 +1025,350 @@ This offer won’t last long—take advantage of this exclusive opportunity to m
 Best regards,
 [Your Bank Name]
 ```
+
+# ROI Prediction For Marketing Campaigns (Subgroup B: Question 3)
+
+## Project Overview
+This project aims to measure and maximize the ROI of personalized marketing efforts for a banking institution. Our campaign involves multiple digital strategies to engage customers and drive conversions while focusing on long-term retention. By calculating ROI and analyzing feature importance, we aim to determine which strategies most effectively enhance revenue and customer value.
+
+## Marketing Strategy
+We utilized five primary marketing channels:
+
+1. **Email** : Email ads tailored to specific customer segments.
+2. **PPC**: Pay per clicks ads tailored to specific customer segments.
+3. **Social Media**: Building brand awareness and fostering customer engagement.
+4. **Referral**: Acquiring customers through existing clients.
+5. **SEO**: Improving search visibility and credibility.
+
+Each campaign type aligned with different stages of the customer journey:
+- **Awareness**: Increasing brand visibility.
+- **Consideration**: Educating potential customers.
+- **Conversion**: Encouraging sign-ups and account openings.
+- **Retention**: Engaging existing customers to foster loyalty.
+
+Our analysis primarily focuses on **Conversion** and **Retention** stages, as they are most relevant to immediate ROI impact and long-term customer value.
+
+## Feature Engineering
+
+We calculated several metrics critical to evaluating marketing effectiveness and customer value.
+
+### 1. ROI Calculation
+   - Using Revenue Earned per each customer and Ad Spend which references our campaign costs.
+   - Formula:
+     ```python
+     df_marketing['ROI'] = (df_marketing['RevenueEarned'] - df_marketing['AdSpend']) / df_marketing['AdSpend'] 
+     ```
+
+### 2. Customer Lifetime Value (CLV)
+   - CLV focuses on average revenue earned per customer across the whole dataset over a set period, adjusted by loyalty points and past purchase behavior.
+   - Formula:
+     ```python
+     df_marketing['CLV'] = (df_marketing['RevenueEarned'].mean() + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
+     ```
+
+### 3. Conversion Rates
+   - Conversion rates for each customer are recorded in the dataset.
+
+### 4. Campaign Costs
+   - Represented by `AdSpend`, this is a significant contributor to campaign ROI.
+
+```python
+df_marketing['ROI'] = (df_marketing['RevenueEarned'] - df_marketing['AdSpend']) / df_marketing['AdSpend'] 
+df_marketing['CLV'] = (df_marketing['RevenueEarned'].mean() + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
+```
+
+## Feature Selection
+To identify which features most impact ROI, we used a Random Forest Regressor to compute feature importance.
+
+```python
+X = df_marketing.drop(columns=['ROI', 'CampaignChannel'])
+y = df_marketing['ROI']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+rf = RandomForestRegressor(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+
+feature_importances = pd.Series(rf.feature_importances_, index=X_train.columns)
+feature_importances_sorted = feature_importances.sort_values(ascending=False)
+print("Feature importances (sorted):")
+print(feature_importances_sorted)
+
+```
+
+Below is the results for the most important features to predict ROI
+
+```
+Feature importances (sorted):
+AdSpend              0.740448
+ConversionRate       0.120376
+RevenueEarned        0.117896
+Income               0.008714
+LoyaltyPoints        0.002882
+CLV                  0.002545
+Age                  0.002309
+EmailClicks          0.001793
+PreviousPurchases    0.001578
+Conversion           0.000747
+Gender               0.000464
+CampaignType         0.000247
+```
+
+Campaign cost in this case is the greatest contributor to how effective our campaign is, followed by conversion rate and revenue earned per customer.
+
+## Model Training and Results
+
+Post Feature selection, we will begin training the model using linear regression, random forest and gradient boosting model for each of our 5 marketing strategies to predict the ROI and performance. We choose 6 of our top features that encompasses the necessary factors stated in the question.
+
+### Linear Regression
+
+```python
+# Ensure the 'Models' directory exists
+if not os.path.exists('Models'):
+    os.makedirs('Models')
+
+# Get the top 6 features so that we have CLV Inclusive
+top_features = feature_importances.nlargest(6).index
+
+marketing_strategies = df_marketing['CampaignChannel'].unique().tolist()
+
+# Conduct analysis for each marketing strategy
+for strategy in marketing_strategies:
+    print(f"========== {strategy} ==========")
+
+    # Filter dataset for the current strategy
+    X_strategy = df_marketing[df_marketing['CampaignChannel'] == strategy]
+    Y_strategy = X_strategy['ROI']
+    X_strategy = X_strategy.drop(columns=['ROI', 'CampaignChannel'])
+    X_strategy = X_strategy[top_features]
+
+    # Split the data
+    X_train, X_test, y_train, y_test = train_test_split(X_strategy, Y_strategy, test_size=0.2, random_state=42)
+
+    # Train the model
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+
+    # Make predictions
+    y_pred = model.predict(X_test)
+
+    # Calculate performance metrics
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+
+    # Display results
+    print(f"Mean Absolute Error (MAE): {mae}")
+    print(f"Root Mean Squared Error (RMSE): {rmse}")
+    print(f"R2 Score: {r2}")
+    print(f'Predicted ROI: {np.mean(y_pred)}')
+    print()
+
+    # Save the model
+    model_filename = f"Models/linear_regression_model_{strategy}.pkl"
+    with open(model_filename, 'wb') as file:
+        pickle.dump(model, file)
+
+```
+
+Results for linear regression below:
+
+```
+========== Email ==========
+R2 Score: 0.3434977186033117
+Predicted ROI: 1.6946128351597802
+========== PPC ==========
+R2 Score: 0.32562338597022045
+Predicted ROI: 1.3330641359771054
+========== Social Media ==========
+R2 Score: 0.27380509728666835
+Predicted ROI: 2.4489878903419156
+========== Referral ==========
+R2 Score: 0.2836530701122941
+Predicted ROI: 1.8576880607150315
+========== SEO ==========
+R2 Score: 0.36805139997725345
+Predicted ROI: 1.9171140411773933
+```
+
+
+### Random Forest
+```python
+# Randomized Search CV to get the best given parameters that will return the best results
+def rf_best_params(X_train, y_train):
+    param_dist = {
+        'n_estimators': [50, 100, 200],
+        'max_depth': [5, 10, 15],
+        'min_samples_split': [2, 5, 10],
+        'min_samples_leaf': [1, 2, 4]
+    }
+
+    random_search = RandomizedSearchCV(RandomForestRegressor(random_state=42), param_distributions=param_dist, n_iter=20, cv=5, scoring='neg_mean_squared_error', random_state=42)
+    random_search.fit(X_train, y_train)
+
+    best_params = random_search.best_params_
+    return best_params
+
+# Ensure the 'Models' directory exists
+if not os.path.exists('Models'):
+    os.makedirs('Models')
+
+# Get the unique strategies
+marketing_strategies = df_marketing['CampaignChannel'].unique().tolist()
+
+# Conduct analysis for each strategy
+for strategy in marketing_strategies:
+    print(f"========== {strategy} ==========")
+
+    # Filter dataset for the current strategy
+    X_strategy = df_marketing[df_marketing['CampaignChannel'] == strategy]
+    Y_strategy = X_strategy['ROI']
+    X_strategy = X_strategy.drop(columns=['ROI', 'CampaignChannel'])
+    X_strategy = X_strategy[top_features]
+
+    # Split the data
+    X_train, X_test, y_train, y_test = train_test_split(X_strategy, Y_strategy, test_size=0.2, random_state=42)
+
+    # Get the best parameters for RandomForestRegressor
+    best_params = rf_best_params(X_train, y_train)
+
+    # Train the model
+    model = RandomForestRegressor(**best_params, random_state=42)
+    model.fit(X_train, y_train)
+
+    # Make predictions
+    y_pred = model.predict(X_test)
+
+    # Calculate performance metrics
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+
+    # Display results
+    print(f"Mean Absolute Error (MAE): {mae}")
+    print(f"Root Mean Squared Error (RMSE): {rmse}")
+    print(f"R2 Score: {r2}")
+    print(f'Predicted ROI: {np.mean(y_pred)}')
+    print()
+
+    # Save the model
+    model_filename = f"Models/random_forest_model_{strategy}.pkl"
+    with open(model_filename, 'wb') as file:
+        pickle.dump(model, file)
+    
+```
+
+Results for random forest below:
+
+```
+========== Email ==========
+R2 Score: 0.8999945739883014
+Predicted ROI: 1.5767875577365391
+========== PPC ==========
+R2 Score: 0.990498427443445
+Predicted ROI: 1.2427470419154543
+========== Social Media ==========
+R2 Score: 0.8633737953258844
+Predicted ROI: 2.2731811451307222
+========== Referral ==========
+R2 Score: 0.7735972963734217
+Predicted ROI: 2.374696632115653
+========== SEO ==========
+R2 Score: 0.6674107186663398
+Predicted ROI: 2.7396803604615543
+```
+
+### Gradient Boosting
+
+```python
+# Ensure the 'Models' directory exists
+if not os.path.exists('Models'):
+    os.makedirs('Models')
+
+# Define the parameter grid for hyperparameter tuning
+param_grid = {
+    'n_estimators': [50, 100, 150],
+    'learning_rate': [0.1, 0.2, 0.3],
+    'max_depth': [3, 4, 5]
+}
+
+# Get the unique strategies
+marketing_strategies = df_marketing['CampaignChannel'].unique().tolist()
+
+# Conduct analysis for each strategy
+for strategy in marketing_strategies:
+    print(f"========== {strategy} ==========")
+
+    # Filter dataset for the current strategy
+    X_strategy = df_marketing[df_marketing['CampaignChannel'] == strategy]
+    Y_strategy = X_strategy['ROI']
+    X_strategy = X_strategy.drop(columns=['ROI', 'CampaignChannel'])
+    X_strategy = X_strategy[top_features]
+
+    # Split the data
+    X_train, X_test, y_train, y_test = train_test_split(X_strategy, Y_strategy, test_size=0.2, random_state=42)
+
+    # Initialize the model
+    model = GradientBoostingRegressor(random_state=42)
+
+    # Perform GridSearchCV for hyperparameter tuning
+    grid_search = RandomizedSearchCV(estimator=model, param_distributions=param_grid, scoring='neg_mean_squared_error', cv=3, n_jobs=-1)
+    grid_search.fit(X_train, y_train)
+
+    # Get the best parameters
+    best_params = grid_search.best_params_
+    
+
+    # Train the model with the best parameters
+    model = GradientBoostingRegressor(**best_params, random_state=42)
+    model.fit(X_train, y_train)
+
+    # Make predictions
+    y_pred = model.predict(X_test)
+
+    # Calculate performance metrics
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+
+    # Display results
+    print(f"Mean Absolute Error (MAE): {mae}")
+    print(f"Root Mean Squared Error (RMSE): {rmse}")
+    print(f"R2 Score: {r2}")
+    print(f'Predicted ROI: {np.mean(y_pred)}')
+    print()
+
+    # Save the model
+    model_filename = f"Models/gradient_boosting_model_{strategy}.pkl"
+    with open(model_filename, 'wb') as file:
+        pickle.dump(model, file)
+    
+
+```
+
+Gradient boosting model results below:
+
+```
+========== Email ==========
+R2 Score: 0.8998841420419087
+Predicted ROI: 1.5392578749485981
+========== PPC ==========
+R2 Score: 0.9898216013495315
+Predicted ROI: 1.252372127498507
+========== Social Media ==========
+R2 Score: 0.5862012779478349
+Predicted ROI: 2.2680550241447874
+========== Referral ==========
+R2 Score: 0.9662770578315517
+Predicted ROI: 2.24952482745914
+========== SEO ==========
+R2 Score: 0.9063279671968358
+Predicted ROI: 2.467867182157421
+```
+
+## Conclusion
+
+We will dynamically select the best model to predict the ROI for each strategy. For instance, random forest performed best on email, PPC, and social media marketing strategies, whereas gradient boosting performed best on referral and SEO strategies, hence we will use the respective models to predict the ROI for each strategy. For marketing professionals looking to maximise ROI for their marketing strategies, they could focus more on the marketing strategy that returns the highest predicted ROI and increase their resources channeled into such strategy to boost sales. We have created a website that easily allow them to visualise the predicted ROI for each of the marketing strategy.
+
 
 
 # Future Work
