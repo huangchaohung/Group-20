@@ -114,6 +114,7 @@ Many competitors emphasize digital and AI-driven campaigns, which the bank aims 
 - **Bank Customer Segmentation** Complementary dataset for synthetic additional columns for other customer engagement data. https://www.kaggle.com/datasets/shivamb/bank-customer-segmentation
 - **Online Banking / Financial Review Dataset** Complementary dataset for customer comments analysis. https://www.kaggle.com/datasets/yanmaksi/reviews-data-for-classification-model?resource=download
 - **Digital Marketing Dataset** Complementary dataset for ROI prediction of marketing strategies. https://www.kaggle.com/datasets/arpit2712/digital-marketing-company
+- **Banking Customer Churn Prediction Dataset** Complementary dataset for Customer Churn prediction. https://www.kaggle.com/datasets/saurabhbadole/bank-customer-churn-prediction-dataset/versions/1/data 
 
 ## Initial Data Exploration Findings
 - **Demographics**: Younger customers are more responsive to digital campaigns.
@@ -676,7 +677,7 @@ What strategies can we implement to optimize our marketing campaigns in real-tim
 
 To predict and mitigate customer churn using machine learning, we can break down the process into three main steps: model development, interpretation of key drivers of churn, and implementation of an early warning system with tailored retention strategies.
 
-For this question, we will be using [Churn Modelling data](data/Churn_Modelling.csv)
+For this question, we will be using [Churn Modelling data](data/Churn_Modelling.csv) for customer churn prediction:
 
 *Data Features*:
 
@@ -699,7 +700,8 @@ For this question, we will be using [Churn Modelling data](data/Churn_Modelling.
 We start by building a predictive model using *Gradient Boosting* that analyzes historical customer data, such as demographic information, number of products, account activity, and account balance. We train the model to identify patterns that are common among customers who left, allowing us to estimate the likelihood of churn for each current customer. 
 
 The model is then evaluated using metrics such as accuracy and AUC-ROC to ensure reliable performance.
-<img src="image/CustomerChurnGradientBoostingModelEvaluation.png" alt="Accuracy and AUC-ROC results" width="250"/>
+
+<img src="image/CustomerChurnGradientBoostingModelEvaluation.png" alt="Accuracy and AUC-ROC results" width="300"/>
 
 ### Interpretation of Key Drivers of Churn:
 To understand what drives churn, we apply Explainable AI techniques, such as SHAP (SHapley Additive exPlanations), which allow us to break down the impact of each feature on the churn prediction. 
@@ -708,24 +710,23 @@ A SHAP summary bar graph below indicate that factors like the number of products
 ![Feature Importance using SHAP](image/feature_importance.png)
 
 
-<img src="image/shap_summary.png" alt="SHAP Summary" width="100"/>
+![SHAP Summary](image/shap_summary.png)
+
 **From the SHAP summary plot we could observe that:**
-1. Number Of Products has the strongest influence on churn prediction. 
 
+1. **Number Of Products has the strongest influence on churn prediction：**
 Customers with fewer products (represented by the red dots on the left) have a higher chance of churn, while those with more products (blue dots) are less likely to churn. 
-2. Age
 
+2. **Age：**
 Older customers (blue dots) are more likely to churn, as indicated by their impact on the positive SHAP values. 
-3. Memeber activity status
 
+3. **Memeber activity status：**
 Active members (blue) tend to have lower churn probabilities, while inactive members (red) have higher churn risks. 
 
-Other Influential Features: 
-- Geographic location
-
+4. **Other Influential Features:** 
+- Geographic location: 
 Customers from Germany (feature Geography_Germany) have a higher likelihood of churn compared to customers from Spain (feature Geography_Spain).
-- Balance
-
+- Balance:
 Customers with higher balances (blue dots) tend to have lower churn risks, while those with lower balances are more likely to leave. 
 
 ### Early Warning System and Tailored Retention Strategies:
@@ -740,6 +741,7 @@ Thie Early Prediction model flags customers with high **churn risk scores of mor
 ![Summary Table of retention strategy](image/PresdictCustomerRentention_ShorterVer.png)
 
 By focusing on high-risk customers with personalized interventions, we can reduce churn rates more effectively and improve customer satisfaction. This combination of predictive modeling, interpretability, and actionable insights enables the organization to not only understand but also proactively address customer churn.
+
 ---
 # Recommendation System (Subgroup B: Question 1)
 
@@ -1603,7 +1605,9 @@ Tariq, H. (2022). Challenges and Opportunities in European Retail Banking. *Euro
 
 - **Appendix C: Synthetic Data Generation Notebook**
   - **Description**: Documents the process of generating synthetic product columns using a machine learning model. Includes the full methodology and code.
-  - **Link**: [Link to `[product_synthetic_generation.ipynb](https://github.com/huangchaohung/Group-20/edit/main/project_wiki.md)`]
+  - **Link**: [Link to `[product_synthetic_generation.ipynb](https://github.com/huangchaohung/Group-20/blob/main/group_B/product_synthetic_generation.ipynb)`]
+  - **Description**: Documents the process of generating synthetic transaction information columns using a data merging through mapping. Includes the full methodology and code.
+  - **Link**: [Link to `[transaction_data_generation.py](https://github.com/huangchaohung/Group-20/blob/main/group_A/transaction_data_generation.py)`]
  
 ## Any Additional Information That Doesn't Fit into the Main Sections
 - Extended data exploration summaries and additional analyses.
