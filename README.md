@@ -238,7 +238,7 @@ Three complementary datasets from Kaggle were used to generate the synthetic dat
 
 The API serves as the interface to retrieve predictions for customer engagement based on demographic and marketing data. Below is a summary of the primary endpoints:
 
-## Endpoints
+### Endpoints
 
 ### Home Page
 **`GET /`**  
