@@ -464,8 +464,7 @@ xgboost==2.1.2
 - Question 1:
 - Question 2: 
 What strategies can we implement to optimize our marketing campaigns in real-time? Create an algorithm for dynamic campaign adjustment based on real-time performance metrics. Simulate the impact of proposed adjustments on campaign effectiveness.
-
-- Question 3:
+- Question 3: 3. How can we measure and maximize the ROI of our personalized marketing efforts? Develop a model to calculate and predict ROI for different marketing strategies. Incorporate factors such as customer lifetime value, campaign costs, and conversion rates.
 - Optional 1:
 - Optional 2:
 - Optional 3:
@@ -865,6 +864,59 @@ This offer won’t last long—take advantage of this exclusive opportunity to m
 Best regards,
 [Your Bank Name]
 ```
+
+# ROI Prediction For Marketing Campaigns (Subgroup B: Question 3)
+
+## Project Overview
+This project aims to measure and maximize the ROI of personalized marketing efforts for a banking institution. Our campaign involves multiple digital strategies to engage customers and drive conversions while focusing on long-term retention. By calculating ROI and analyzing feature importance, we aim to determine which strategies most effectively enhance revenue and customer value.
+
+## Marketing Strategy
+We utilized four primary marketing channels:
+
+1. **Email** and **PPC Ads**: Targeted ads tailored to specific customer segments.
+2. **Social Media**: Building brand awareness and fostering customer engagement.
+3. **Referral**: Acquiring customers through existing clients.
+4. **SEO**: Improving search visibility and credibility.
+
+Each campaign type aligned with different stages of the customer journey:
+- **Awareness**: Increasing brand visibility.
+- **Consideration**: Educating potential customers.
+- **Conversion**: Encouraging sign-ups and account openings.
+- **Retention**: Engaging existing customers to foster loyalty.
+
+Our analysis primarily focuses on **Conversion** and **Retention** stages, as they are most relevant to immediate ROI impact and long-term customer value.
+
+## Feature Engineering
+
+We calculated several metrics critical to evaluating marketing effectiveness and customer value.
+
+### 1. ROI Calculation
+   - Average Revenue per Conversion: SGD $60,000.
+   - Formula:
+     ```python
+     df_marketing['Revenue'] = df_marketing['ConversionRate'] * 60000
+     df_marketing['ROI'] = (df_marketing['Revenue'] - df_marketing['AdSpend']) / df_marketing['AdSpend']
+     ```
+
+### 2. Customer Lifetime Value (CLV)
+   - CLV focuses on expected revenue from a customer over a set period, adjusted by loyalty points and past purchase behavior.
+   - Formula:
+     ```python
+     df_marketing['CLV'] = (60000 + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
+     ```
+
+### 3. Conversion Rates
+   - Conversion rates for each customer are recorded in the dataset.
+
+### 4. Campaign Costs
+   - Represented by `AdSpend`, this is a significant contributor to campaign ROI.
+
+```python
+avg_revenue_per_conversion = 60000
+df_marketing['Revenue'] = df_marketing['ConversionRate'] * avg_revenue_per_conversion
+df_marketing['ROI'] = (df_marketing['Revenue'] - df_marketing['AdSpend']) / df_marketing['AdSpend']
+df_marketing['CLV'] = (avg_revenue_per_conversion + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
+
 
 
 # Future Work
