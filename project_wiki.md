@@ -939,7 +939,7 @@ print(feature_importances_sorted)
 
 Below is the results for the most important features to predict ROI
 
-```python
+```
 Feature importances (sorted):
 AdSpend              0.741362
 Revenue              0.127274
@@ -955,6 +955,114 @@ Gender               0.000462
 CampaignType         0.000306
 ```
 
+Campaign cost in this case is the greatest contributor to how effective our campaign is, followed by the revenue and conversion rate.
+
+## Model Training and Results
+
+Post Feature selection, we will begin training the model using linear regression, random forest and gradient boosting model for each of our 5 marketing strategies to predict the ROI and performance.
+
+### Linear Regression
+
+Results for linear regression below
+
+========== Email ==========
+Mean Absolute Error (MAE): 1.9251074787062414
+Root Mean Squared Error (RMSE): 3.746296124529667
+R2 Score: 0.3434977186033117
+ROI Mean: 1.4581831090204065
+
+========== PPC ==========
+Mean Absolute Error (MAE): 2.23897003707027
+Root Mean Squared Error (RMSE): 3.044893197613124
+R2 Score: 0.32562338597022045
+ROI Mean: 1.8895801537151282
+
+========== Social Media ==========
+Mean Absolute Error (MAE): 2.843349904873616
+Root Mean Squared Error (RMSE): 4.909859329905014
+R2 Score: 0.27380509728666835
+ROI Mean: 2.1971547087470658
+
+========== Referral ==========
+Mean Absolute Error (MAE): 2.5325268410516353
+Root Mean Squared Error (RMSE): 5.603152694203044
+R2 Score: 0.2836530701122941
+ROI Mean: 1.8996245008144463
+
+========== SEO ==========
+Mean Absolute Error (MAE): 2.5891701625823655
+Root Mean Squared Error (RMSE): 4.682717672043169
+R2 Score: 0.36805139997725345
+ROI Mean: 1.9732796784077806
+
+### Random Forest
+Results for random forest below:
+
+========== Email ==========
+Mean Absolute Error (MAE): 0.3635846723121918
+Root Mean Squared Error (RMSE): 1.4621629173026365
+R2 Score: 0.8999945739883014
+ROI Mean: 1.4581831090204065
+
+========== PPC ==========
+Mean Absolute Error (MAE): 0.13090542932784355
+Root Mean Squared Error (RMSE): 0.3614253063283053
+R2 Score: 0.990498427443445
+ROI Mean: 1.8895801537151282
+
+========== Social Media ==========
+Mean Absolute Error (MAE): 0.517514965653648
+Root Mean Squared Error (RMSE): 2.1296559773232175
+R2 Score: 0.8633737953258844
+ROI Mean: 2.1971547087470658
+
+========== Referral ==========
+Mean Absolute Error (MAE): 0.7038192118197603
+Root Mean Squared Error (RMSE): 3.1500072996704787
+R2 Score: 0.7735972963734217
+ROI Mean: 1.8996245008144463
+
+========== SEO ==========
+Mean Absolute Error (MAE): 0.8148669522459936
+Root Mean Squared Error (RMSE): 3.3971226004689283
+R2 Score: 0.6674107186663398
+ROI Mean: 1.9732796784077806
+
+# Gradient Boosting
+
+Gradient boosting model results below:
+
+========== Email ==========
+Mean Absolute Error (MAE): 0.31036795282328883
+Root Mean Squared Error (RMSE): 1.4629699982375177
+R2 Score: 0.8998841420419087
+ROI Mean: 1.4581831090204065
+
+========== PPC ==========
+Mean Absolute Error (MAE): 0.15835061863844893
+Root Mean Squared Error (RMSE): 0.37407659944440647
+R2 Score: 0.9898216013495315
+ROI Mean: 1.8895801537151282
+
+========== Social Media ==========
+Mean Absolute Error (MAE): 0.8069433342812458
+Root Mean Squared Error (RMSE): 3.7075425880202606
+R2 Score: 0.5859170068090196
+ROI Mean: 2.1971547087470658
+
+========== Referral ==========
+Mean Absolute Error (MAE): 0.37660525726015814
+Root Mean Squared Error (RMSE): 1.236299045631206
+R2 Score: 0.9651256954110944
+ROI Mean: 1.8996245008144463
+
+========== SEO ==========
+Mean Absolute Error (MAE): 0.5236326716013449
+Root Mean Squared Error (RMSE): 1.9131095551317019
+R2 Score: 0.8945211250078701
+ROI Mean: 1.9732796784077806
+
+We will dynamically select the best model to predict the ROI for each strategy.
 
 
 # Future Work
