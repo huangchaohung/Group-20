@@ -230,7 +230,7 @@ Four complementary datasets from Kaggle were used to generate the synthetic data
 - ***Complementary Dataset 2***: [Bank Customer Segmentation](https://www.kaggle.com/datasets/shivamb/bank-customer-segmentation)
 - ***Complementary Dataset 3***: [Online Banking / Financial Review Dataset](https://www.kaggle.com/datasets/yanmaksi/reviews-data-for-classification-model?resource=download)
 - ***Complementary Dataset 4***: [Banking Customer Churn Prediction Dataset](https://www.kaggle.com/datasets/saurabhbadole/bank-customer-churn-prediction-dataset/versions/1/data)
-- ***Comlementary Dataset 5***: [Digital Marketing Dataset](https://www.kaggle.com/datasets/arpit2712/digital-marketing-company)
+- ***Complementary Dataset 5***: [Digital Marketing Dataset](https://www.kaggle.com/datasets/arpit2712/digital-marketing-company)
 
 ## Instructions for Building and Running the Docker Container(s)
 
