@@ -883,6 +883,26 @@ To measure and optimize campaign effectiveness over time, we propose the followi
 
 ---
 
+# Group A BQ1: Natural Language Processing Pipeline and Dashboard for emerging themes
+
+In order to have the Natural Language Processing Pipeline, we need to fix our input and output. Our input for the Processing pipeline is a csv file containing customer review data. [reviews_for_classification](data/reviews_for_classification.csv) The question encompasses two parts, namely Natural Language Processing pipeline and Dashboard for emerging themes. 
+
+*Data Features*:
+
+
+- **name**: The name of the customer writing the review
+- **country**: The country the customer is from
+- **date_time**: Date for writing the review, however, it is absent from the original data, therefore we generated this randomly
+- **stars**: number of starts the customer gave for the review, however, since it is a natural language processing task, we decide not to use it
+- **review_head**: The first few words for the review
+- **review_body**: The full sentences of the review.
+
+### NLP Pipeline Development:
+
+  
+
+
+
 
 # Group A BQ3: Customer Churn Prediction Model
 
