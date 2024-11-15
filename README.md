@@ -346,3 +346,7 @@ The API serves as the interface to retrieve predictions for customer engagement 
 
 ---
 
+## Instructions for Dashboard Generation Using New Dataset
+
+The dashboards shown in the application interface of 'main.py' is generated based on the images in the image folder. If you would like to apply new dataset to generate a different dashboard, there is an image generator dedicated for outputing images that create the dashboard: [segmentation_analysis.py](https://github.com/huangchaohung/Group-20/blob/main/group_A/segmentation_analysis/segmentation_analysis.py). With new images plotted, the user can create new dashboard by running main.py. 
+
