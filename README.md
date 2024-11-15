@@ -217,7 +217,6 @@ Group-20/
     ├── README.md
     ├── data_dictionary.xlsx
     ├── email_marketing_campaigns_with_demographics.csv
-    ├── project_wiki.md
     └── requirements.txt
 ```
 
