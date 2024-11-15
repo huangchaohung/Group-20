@@ -63,7 +63,7 @@ def recommendation():
 def roi_analysis():
     # Define paths for the overall model and dataset
     overall_model_path = os.path.join(os.path.dirname(__file__), "roi_models", "random_forest_model_overall.pkl")
-    dataset_path = os.path.join(os.path.dirname(__file__), "../data/digital_marketing_campaign_dataset.csv")
+    dataset_path = os.path.join(os.path.dirname(__file__), "../data/banking_marketing_strategies.csv")
 
     # Generate the ROI plot
     plot_url = calculate_and_plot_all_rois(overall_model_path, dataset_path)

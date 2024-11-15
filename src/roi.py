@@ -26,11 +26,11 @@ def load_and_prepare_data(file_path):
 
     # Filter by campaign type
     df_marketing = df[df['CampaignType'].isin(['Conversion', 'Retention'])]
-
+    df_marketing = df_marketing.rename(columns = {'RevenueEarned': 'Revenue'})
     # Calculate revenue and ROI
-    df_marketing['ROI'] = (df_marketing['RevenueEarned'] - df_marketing['AdSpend']) / df_marketing['AdSpend'] 
+    df_marketing['ROI'] = (df_marketing['Revenue'] - df_marketing['AdSpend']) / df_marketing['AdSpend']
     # Calculate CLV, assuming a standard period of 1 year
-    df_marketing['CLV'] = (df_marketing['RevenueEarned'].mean() + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
+    df_marketing['CLV'] = (df_marketing['Revenue'].mean() + df_marketing['LoyaltyPoints']) * df_marketing['PreviousPurchases']
 
     # Label Encoding
     gender_encoder = LabelEncoder()
@@ -47,50 +47,60 @@ def load_model(filename):
     with open(filename, 'rb') as f:
         return pickle.load(f)
 
+"""
 # Function to Get Top Features
 def get_top_features(df, overall_model_path):
     X = df.drop(columns=['ROI', 'CampaignChannel'])
     rf = load_model(overall_model_path)
-    top_features = pd.Series(rf.feature_importances_, index=X.columns).nlargest(6).index
+    top_features = pd.Series(rf.feature_importances_, index=X.columns).index
     return top_features
+"""
 
 # Model Analysis Function
-def analyze_models(df, top_features, strategy_input):
+def analyze_models(df, strategy_input):
     # Filter data by the selected strategy
+
     df_strategy = df[df['CampaignChannel'] == strategy_input]
 
-    X = df_strategy[top_features]
+    X = df_strategy
     y = df_strategy['ROI']
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Define model paths relative to BASE_DIR
-    model_dir = os.path.join(BASE_DIR, "roi_models")
     model_files = {
-        'RandomForest': os.path.join(model_dir, f"random_forest_model_{strategy_input}.pkl"),
-        'GradientBoosting': os.path.join(model_dir, f"gradient_boosting_model_{strategy_input}.pkl"),
-        'LinearRegression': os.path.join(model_dir, f"linear_regression_model_{strategy_input}.pkl")
+        'RandomForest': os.path.join(BASE_DIR, f"roi_models/random_forest_model_{strategy_input}.pkl"),
+        'GradientBoosting': os.path.join(BASE_DIR, f"roi_models/gradient_boosting_model_{strategy_input}.pkl"),
+        'LinearRegression': os.path.join(BASE_DIR, f"roi_models/linear_regression_model_{strategy_input}.pkl")
     }
 
     best_model_name = None
     best_model = None
     best_r2 = -float('inf')
-
+    best_train_features = None
     # Load and evaluate each model
     for model_name, file_path in model_files.items():
         if os.path.exists(file_path):
             model = load_model(file_path)
-            y_pred = model.predict(X_test)
+            trained_features = model.feature_names_in_
+            y_pred = model.predict(X_test[trained_features])
+            mae = mean_absolute_error(y_test, y_pred)
+            rmse = np.sqrt(mean_squared_error(y_test, y_pred))
             r2 = r2_score(y_test, y_pred)
+
+            # print(f"{model_name} - MAE: {mae}, RMSE: {rmse}, R2: {r2}")
 
             # Track the best model by R²
             if r2 > best_r2:
                 best_r2 = r2
                 best_model_name = model_name
                 best_model = model
+                best_train_features = trained_features
+        else:
+            print(f"Model file for {model_name} in strategy '{strategy_input}' not found.")
 
     if best_model is not None:
         # Use the best model to predict ROI for the given strategy
-        best_model_predictions = best_model.predict(X)
+        best_model_predictions = best_model.predict(X[best_train_features])
         mean_predicted_roi = np.mean(best_model_predictions)
         return {
             "strategy": strategy_input,
@@ -115,8 +125,7 @@ def calculate_and_plot_all_rois(overall_model_path, dataset_path):
 
     # Calculate ROI for each strategy
     for strategy in strategies:
-        top_features = get_top_features(df, overall_model_path)
-        result = analyze_models(df, top_features, strategy)
+        result = analyze_models(df, strategy)
 
         if "mean_predicted_roi" in result:
             roi_values.append(result["mean_predicted_roi"])
