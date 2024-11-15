@@ -439,13 +439,13 @@ Group-20/
    ```
 
 ## Dependency Management
-﻿Flask==3.0.3
-Werkzeug==3.1.3
-pandas==2.2.2
-numpy==2.1.0
-scikit-learn==1.5.1
-matplotlib==3.9.2
-xgboost==2.1.2
+- ﻿Flask==3.0.3
+- Werkzeug==3.1.3
+- pandas==2.2.2
+- numpy==2.1.0
+- scikit-learn==1.5.1
+- matplotlib==3.9.2
+- xgboost==2.1.2
 
 ## Code Style Guide Adherence
 - Follows PEP8 and internal coding standards.
