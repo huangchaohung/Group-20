@@ -8,7 +8,7 @@ This project aims to enhance marketing efficiency for a Portuguese bank by devel
 - Leverage data-driven insights to improve personalized marketing.
 - Enhance marketing efficiency through AI and machine learning.
 
-For more details, please refer to the full [project wiki](/project_wiki.md).
+For more details, please refer to the full [project wiki](https://github.com/huangchaohung/Group-20/wiki).
 
 ## Instructions for Setting Up the Environment and Running the Code
 
