@@ -54,6 +54,8 @@ Group-20/
     │   ├── train.csv
     │   └── train_data.csv
     ├── group_A/
+    │   ├── DSA3101 BQ3/
+    │   │   └── predict_customer_churn.py
     │   ├── models/
     │   │   └── real_time_segmentation.pkl
     │   ├── segmentation_analysis/
@@ -93,6 +95,7 @@ Group-20/
     │   │   │   ├── scaler.pkl
     │   │   │   ├── securities_xgb_classifier_0.pkl
     │   │   │   └── term_deposit_xgb_classifier_0.pkl
+    │   │   ├── .DS_Store
     │   │   ├── Recommendation_System_notebook.ipynb
     │   │   └── recommendation_system.py
     │   ├── DSA3101_Q2/
@@ -104,6 +107,7 @@ Group-20/
     │   │   └── email_campaign_adjustment_final.ipynb
     │   ├── DSA3101_Q3/
     │   │   ├── data/
+    │   │   │   ├── .DS_Store
     │   │   │   └── digital_marketing_campaign_dataset.csv
     │   │   ├── Models/
     │   │   │   ├── .DS_Store
@@ -135,11 +139,13 @@ Group-20/
     │   └── product_synthetic_generation.ipynb
     ├── image/
     │   ├── Cluster_Model_Comparison.png
+    │   ├── CustomerChurnGradientBoostingModelEvaluation.png
     │   ├── Gradient Boosting_confusion.png
     │   ├── KNN_confusion.png
     │   ├── Kmeans_PCA.png
     │   ├── Kmeans_Silhouette_Score_pattern.png
     │   ├── Logistic Regression_confusion.png
+    │   ├── PredictCustomerRentention_ShorterVer.png
     │   ├── Production_ownership.png
     │   ├── Random Forest_confutsion.png
     │   ├── Recency.png
@@ -148,16 +154,20 @@ Group-20/
     │   ├── Transaction_Frequency.png
     │   ├── campaign_feature_importance.png
     │   ├── characteristic_corr.png
+    │   ├── churn_risk_histogram.png
     │   ├── confusion.png
     │   ├── duration_against_subscription.png
     │   ├── elbow15.png
     │   ├── elbow40.png
+    │   ├── feature_importance.png
     │   ├── name_ROC.png
     │   ├── num_corr.png
     │   ├── num_distribution.png
     │   ├── poutcome_summary_table.png
+    │   ├── predict_customer_churn_high_risk_customers.png
     │   ├── real_time_segmentation_confusion.png
     │   ├── real_time_segmentation_importance.png
+    │   └── shap_summary.png
     ├── src/
     │   ├── recommendation_models/
     │   │   ├── cd_account_xgb_classifier_0.pkl
@@ -178,6 +188,8 @@ Group-20/
     │   │   └── term_deposit_xgb_classifier_0.pkl
     │   ├── roi_models/
     │   │   └── random_forest_model_overall.pkl
+    │   ├── segmentation_models/
+    │   │   └── real_time_segmentation.pkl
     │   ├── static/
     │   │   ├── app.js
     │   │   └── style.css
@@ -192,9 +204,11 @@ Group-20/
     │   │   ├── recommendation.html
     │   │   ├── result.html
     │   │   └── roi.html
+    │   ├── .DS_Store
     │   ├── __init__.py
     │   ├── dynamic_email.py
     │   ├── main.py
+    │   ├── predict_customer_churn.py
     │   ├── recommendation_system.py
     │   └── roi.py
     ├── .DS_Store
