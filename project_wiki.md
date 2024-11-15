@@ -899,13 +899,13 @@ In order to have the Natural Language Processing Pipeline, we need to fix our in
 
 ### NLP Pipeline Development:
 To start with, we briefly clean the data by removing the dataset's uppercase letters and fill empty cells with ''. After having a cleaned dataset, we use SentimentAnalyser in python to calculate the sentiment scores for each of the reviews, and if the score>=0.05, the sentiment is classified as 'Positive', if the score is between -0.05 and 0.05, we classify it as neutral, if it is smaller than -0.05, it is considered as negative. The reason for choosing 0.05 as the division line is that we feel the division should be significant for it to be considered as positive or negative, but not too significant to make the number of positive and negative sentiments too small. After that, we make a plot for the number of reviews for each sentiment.
-<img src="image/sentiment_analysis_plot.png" alt="sentiment_analysis_plot" width="300"/>
+<img src="image/sentiment_analysis_plot.png" alt="sentiment_analysis_plot"/>
 
 ### Dashboard for emerging themes:
 In this part, we hope to see which themes are emerging from each of the categories. However, for us to visualize emerging themes, we need to add a time column so that we could see which reviews are more recent. While this column is absent from the dataset, we have to manually add a column called date_time to randomly generate the date each review is written. However, that does not affect the general effectiveness of the model as once we have the real date data, the model is going to work as fine.
 
 For the emerging themes, previously we choose to find the top-frequency words for each of the categories. However, the most frequent words are often 'money' and 'account' and we cannot see the meaning behind these nouns. Therefore, we only select the adjectives from the reviews using the nlp package in python. Taking only the adjectives allow us to visualize which areas we need improvement in. We also generated a sentiment trend for us to see which sentiments are prevailing recently and how they have changed in the past. Finally, we plot all of them and merge them into a newly created dashboard.
-<img src="image/Dashboard_for_emerging_themes.png" alt="Dashboard_for_emerging_themes" width="300"/>
+<img src="image/Dashboard_for_emerging_themes.png" alt="Dashboard_for_emerging_themes"/>
 
 From this dashboard, we are able to see the most recent sentiment trends, as well as top themes for each categories. The sentiment does not show a clear trend because the time data is randomly generated. However, once there is real time data, the model could show the recent sentiment trends accurately.
 
