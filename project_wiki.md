@@ -4,8 +4,8 @@
 Banks face challenges in targeting marketing effectively due to limited personalization, resulting in low engagement and inefficient use of resources. This project seeks to develop an AI-driven system using machine learning to personalize marketing campaigns, aiming to improve engagement, conversion rates, and support data-driven marketing strategies.
 
 ## Team Members
-- **Data Scientists (Group A)**: Develop machine learning models and perform data analysis.
-- **Data Scientists (Group B)**: Develop machine learning models and perform data analysis.
+- **Data Scientists (Group A)**: Lyu Zhengxiang, Chen Xinpeng, Chen Yiru, Yu Zizhen, Huang Chao Hung
+- **Data Scientists (Group B)**: Ho Kah Poh Michaen, Dominic Cheong Cheng Hung, Lim Ting Kai, Leo Zhen Yu Melvin
 
 ## Quick Links to Key Sections
 - [Business Understanding](#business-understanding)
