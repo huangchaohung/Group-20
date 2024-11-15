@@ -316,15 +316,100 @@ For a more detailed evaluation, please refer to the [Model Evaluation Section in
 
 ## API Documentation
 
+The API serves as the interface to retrieve predictions for customer engagement based on demographic and marketing data. Below is a summary of the primary endpoints:
+
 ### Endpoints
-- `/predict`: Accepts customer data for conversion likelihood prediction.
 
-### Request/Response Formats
-- **Request**: JSON with customer attributes.
-- **Response**: JSON with predicted conversion probability.
+### Home Page
+**`GET /`**  
+- **Description**: Renders the homepage.
+- **Returns**: HTML page.
 
-### Usage Examples
-- Sample code for calling the API and interpreting responses.
+### Recommendation Page
+**`GET /recommendation`**  
+- **Description**: Renders the product recommendation page.
+- **Returns**: HTML page.
+
+### ROI Analysis Page
+**`GET /roi_analysis`**  
+- **Description**: Generates ROI analysis visualization and displays it.
+- **Returns**: HTML page with ROI plot.
+
+### Get Product Recommendations
+**`POST /recommend`**  
+- **Description**: Provides personalized product recommendations based on user data.
+- **Request**:
+  - JSON body with fields:
+    - `product_choice` (string): Product category for recommendation.
+    - `user_data` (object): User data dictionary.
+- **Response**: JSON object with recommended products.
+- **Example**:
+  ```json
+  {
+    "product_choice": "savings",
+    "user_data": {
+      "age": 30,
+      "income": 70000
+    }
+  }
+  ```
+
+### Get Feature Descriptions
+**`GET /feature_descriptions`**  
+- **Description**: Returns descriptions of features used in the recommendation model.
+- **Response**: JSON object with feature descriptions.
+
+### Get Product Features
+**`GET /product_features`**  
+- **Description**: Returns details about different product features.
+- **Response**: JSON object with product features.
+
+### Dynamic Email Modification
+**`GET /dynamic_email`**  
+- **Description**: Displays dynamic email modification tool.
+- **POST** `/dynamic_email`
+  - **Description**: Processes a CSV file for dynamic email comparison.
+  - **Request**: File upload of CSV with recent email data.
+  - **Response**: Renders HTML page with similarities and differences in email data.
+
+### Download Features
+**`GET /download_features`**  
+- **Description**: Downloads a processed CSV file.
+- **Request**: Query parameter `download_path` specifying file path.
+- **Response**: CSV file or 404 error if file not found.
+
+### Segmentation Dashboard
+**`GET /segmentation`**  
+- **Description**: Displays the segmentation analysis dashboard.
+- **Returns**: HTML page with various segmentation analysis sections.
+
+### Campaign Dashboard
+**`GET /campaign`**  
+- **Description**: Displays the campaign analysis dashboard.
+- **Returns**: HTML page with campaign analysis sections.
+
+### Display Images
+**`GET /images/<filename>`**  
+- **Description**: Serves images by filename, used in dashboards.
+- **Request**: `filename` path parameter.
+- **Returns**: Requested image or 404 error if file not found.
+
+### Real-Time Segmentation Prediction
+**`GET /predict`**  
+- **Description**: Displays the prediction form for segmentation.
+- **POST /predict**
+  - **Description**: Uses user-provided data to predict customer segment.
+  - **Request**:
+    - Form data:
+      - `housing` (int): Indicator for housing loan.
+      - `loan` (int): Indicator for personal loan.
+      - `cd_account` (int): Indicator for certificate of deposit account.
+      - `securities` (int): Indicator for securities account.
+      - `TransactionFrequency` (float): Transaction frequency.
+      - `Recency` (float): Recency of last transaction.
+      - `AverageTransactionAmount` (float): Average transaction amount.
+  - **Response**: Renders HTML page with the predicted cluster.
+
 
 ## Instructions for Running the Docker Container
 1. **Build the Docker Image**:  
